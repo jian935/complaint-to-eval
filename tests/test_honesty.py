@@ -43,6 +43,12 @@ class TestHonestyLocks(unittest.TestCase):
         self.assertIn("not a labelled example", text.lower())
         self.assertIn("fix the labels, not the engine", text.lower())
 
+    def test_skill_entry_point_declares_the_boundary(self):
+        text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("name: complaint-to-eval", text)
+        self.assertIn("candidate", text.lower())
+        self.assertIn("human review", text.lower())
+
     def test_private_data_dir_is_gitignored(self):
         self.assertIn(".local/", (ROOT / ".gitignore").read_text(encoding="utf-8"))
 
