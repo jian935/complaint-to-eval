@@ -1,0 +1,4 @@
+// labels.jsonl TEMPLATE - 0 labels yet. Delete nothing from this header.
+// Copy to eval/labels.jsonl and add one JSON object per line. See ANNOTATION_GUIDE.md.
+// Required: case_id, failure_mode, decision (accepted|rejected|unsure), annotator, note.
+// Candidates come from out/demo/report.json (FABRICATED demo) or your own licensed corpus.

@@ -1,0 +1,6 @@
+// FABRICATED annotation fixtures for validating the label-file checker ONLY.
+// These are not real labels, not human agreement data, and must never be used
+// to compute any metric. See eval/ANNOTATION_GUIDE.md.
+{"case_id":"cte-0001","failure_mode":"wrong_fact","decision":"accepted","annotator":"fixture","note":"fabricated"}
+{"case_id":"cte-0002","failure_mode":"loop_cost","decision":"rejected","annotator":"fixture","note":"fabricated, wrong mode"}
+{"case_id":"cte-0003","failure_mode":"ux_friction","decision":"unsure","annotator":"anonymous","note":"fabricated, needs arbitration"}

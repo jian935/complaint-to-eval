@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "complaint-to-eval"
+version = "0.1.0"
+description = "Turn real user complaints into reviewable agent regression-test candidates. Zero-key, deterministic, standard library only."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "jian935" }]
+keywords = ["llm", "agent", "evals", "feedback", "regression", "product-management"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.scripts]
+cte = "complaint_to_eval.cli:main"
+
+[tool.setuptools]
+packages = ["complaint_to_eval"]
+
+[tool.setuptools.package-data]
+complaint_to_eval = ["demo.jsonl"]

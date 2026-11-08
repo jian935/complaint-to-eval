@@ -1,0 +1,15 @@
+// FABRICATED DATASET. Every line below was invented by the author to demonstrate the pipeline.
+// It contains NO real users, NO real product, and NO real feedback. Do not compute or quote
+// any metric from it. See eval/ANNOTATION_GUIDE.md and the warnings in every generated report.
+{"id":"demo-001","text":"回答里直接编造数据，说转化率是 87%，但我根本没给原始数据。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-002","text":"没有编造数据；但工具调用失败了，重试三次还是报错，联系我邮箱 a.li@example.com","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-003","text":"让它按指定语言输出，提示词写明了要用中文，结果还是英文。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-004","text":"跨轮矛盾，前面说预算 10 万，后一轮又说是 20 万，完全忘了前面说的。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-005","text":"未经确认就执行了删除操作，还把敏感信息发给了 13800138000。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-006","text":"只做了一半就停了，执行步骤漏了最后两步。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-007","text":"agent 进入死循环，无限重试，token 烧完也没结果。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-008","text":"打断不了，也没有进度提示，界面反馈差。","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-009","text":"The answer contained a hallucinated number and a fake citation.","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-010","text":"It did not follow the prompt, wrong output format. Also ignored constraints.","source":"fabricated","product":"demo-agent","version":"v1"}
+{"id":"demo-011","text":"没有编造数据，也没有工具调用失败，一切都正常。","source":"fabricated","product":"demo-agent","version":"v2"}
+{"id":"demo-012","text":"这个数字挺好看的。","source":"fabricated","product":"demo-agent","version":"v2"}
