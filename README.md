@@ -111,6 +111,10 @@ A candidate looks like this:
   to prevent.
 - **Not an agent framework, harness, or memory layer.** Those positions are
   taken.
+- **Not a release gate.** A companion project decides whether a build can
+  ship; this project decides what is worth testing in the first place.
+  Upstream and downstream, with different inputs and outputs — no results
+  or numbers are shared between them.
 - **Not a requirement-to-test generator.** `responsibleai/ASSERT` starts from a
   requirements document; this starts from what users actually complained about.
 - **Not a paper taxonomy.** MAST classifies multi-agent failures academically;
