@@ -1,0 +1,5 @@
+{"id":"dfix-1","text":"Uncaught ImportError in main.py line 12.","source":"fixture","product":"x"}
+{"id":"dfix-2","text":"Security: path traversal lets a model access files outside the repository.","source":"fixture","product":"x"}
+{"id":"dfix-3","text":"The sidebar hover preview is covered by main content and drops keyboard focus.","source":"fixture","product":"x"}
+{"id":"dfix-4","text":"No crash was observed during the run.","source":"fixture","product":"x"}
+{"id":"dfix-5","text":"Uncaught ValueError occurred. Uncaught TypeError occurred again.","source":"fixture","product":"x"}

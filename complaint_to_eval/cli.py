@@ -7,6 +7,13 @@ import json
 from pathlib import Path
 
 from . import __version__
+from .defects import (
+    DEFECT_MODES,
+    DEFECT_VERSION,
+    analyze_defects,
+    to_defect_markdown,
+    validate_defect_taxonomy,
+)
 from .diff import compare
 from .exporters import to_json, to_markdown, to_promptfoo_candidates
 from .pipeline import analyze, load_records
@@ -141,6 +148,46 @@ def _cmd_taxonomy(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_defects(args: argparse.Namespace) -> int:
+    synthetic = True if args.synthetic else (False if args.real else None)
+    records = load_records(args.input)
+    report = analyze_defects(
+        records,
+        dataset_label=args.label or Path(args.input).name,
+        synthetic=synthetic,
+    )
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "defects.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    (out_dir / "defects.md").write_text(to_defect_markdown(report), encoding="utf-8")
+    h = report["honesty"]
+    print(f"records={report['dataset']['records']} classified={h['classified_records']} "
+          f"unclassified={h['unclassified_records']} candidates={h['candidate_cases']} "
+          f"provenance={report['dataset']['provenance']}")
+    if synthetic is None:
+        print("WARNING: provenance unspecified; declare --synthetic or --real")
+    print("NOTE: defect candidates from deterministic rules, in-sample; "
+          "not validated, no precision/recall claimed")
+    print(f"wrote {out_dir / 'defects.json'}")
+    print(f"wrote {out_dir / 'defects.md'}")
+    return 0
+
+
+def _cmd_defect_taxonomy(_args: argparse.Namespace) -> int:
+    problems = validate_defect_taxonomy()
+    if problems:
+        for problem in problems:
+            print(f"INVALID {problem}")
+        return 1
+    print(f"defect-taxonomy={DEFECT_VERSION} modes={len(DEFECT_MODES)} (DRAFT, in-sample)")
+    for mode, meaning in DEFECT_MODES.items():
+        print(f"{mode}: {meaning}")
+    print("No precision or recall is claimed: signals are in-sample, not validated.")
+    return 0
+
+
 def _cmd_privacy(args: argparse.Namespace) -> int:
     targets: list[Path] = []
     root = Path(args.path)
@@ -211,6 +258,22 @@ def build_parser() -> argparse.ArgumentParser:
 
     taxonomy = sub.add_parser("taxonomy", help="print the draft failure-mode taxonomy")
     taxonomy.set_defaults(func=_cmd_taxonomy)
+
+    defects = sub.add_parser(
+        "defects", help="classify a defect-report corpus (issue trackers) into defect modes"
+    )
+    defects.add_argument("--input", required=True)
+    defects.add_argument("--out", default="out/defects")
+    defects.add_argument("--label", default="")
+    dorigin = defects.add_mutually_exclusive_group()
+    dorigin.add_argument("--synthetic", action="store_true", help="data is fabricated")
+    dorigin.add_argument("--real", action="store_true", help="licence and consent checked")
+    defects.set_defaults(func=_cmd_defects)
+
+    defect_taxonomy = sub.add_parser(
+        "defect-taxonomy", help="print the draft defect taxonomy and verify invariants"
+    )
+    defect_taxonomy.set_defaults(func=_cmd_defect_taxonomy)
 
     privacy = sub.add_parser("privacy", help="scan data files for residual personal data")
     privacy.add_argument("--path", required=True)
