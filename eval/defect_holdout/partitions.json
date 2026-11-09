@@ -1,0 +1,49 @@
+{
+  "rule": "sort by md5(record_id); first N per corpus is hold-out",
+  "holdout": {
+    "aider": [
+      "aider-5902",
+      "aider-5835",
+      "aider-5796",
+      "aider-5919",
+      "aider-5970",
+      "aider-5834",
+      "aider-5909",
+      "aider-5849",
+      "aider-5900",
+      "aider-5803",
+      "aider-5923",
+      "aider-5866",
+      "aider-5837",
+      "aider-5785",
+      "aider-5922",
+      "aider-5833",
+      "aider-5779",
+      "aider-5913",
+      "aider-5853",
+      "aider-5811",
+      "aider-5841",
+      "aider-5914",
+      "aider-5898",
+      "aider-5802"
+    ],
+    "dify": [
+      "dify-45799",
+      "dify-45792",
+      "dify-45732",
+      "dify-45844",
+      "dify-45842",
+      "dify-45753",
+      "dify-45920",
+      "dify-45746",
+      "dify-45839",
+      "dify-45833",
+      "dify-45882",
+      "dify-45747",
+      "dify-45886",
+      "dify-45921",
+      "dify-45754",
+      "dify-45894"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{"record_id":"aider-5902","modes":["crash_or_error"],"annotator":"model","note":"Uncaught FileNotFoundError + traceback (auto crash report)"}
+{"record_id":"aider-5835","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ModuleNotFoundError (auto crash report)"}
+{"record_id":"aider-5796","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5919","modes":[],"annotator":"model","note":"feature proposal (session recorder), not a defect"}
+{"record_id":"aider-5970","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ModuleNotFoundError (auto crash report)"}
+{"record_id":"aider-5834","modes":["crash_or_error"],"annotator":"model","note":"Uncaught PermissionError (auto crash report)"}
+{"record_id":"aider-5909","modes":["crash_or_error"],"annotator":"model","note":"Uncaught IsADirectoryError (auto crash report)"}
+{"record_id":"aider-5849","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5900","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5803","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5923","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5866","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5837","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5785","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NoSuchPathError (auto crash report)"}
+{"record_id":"aider-5922","modes":["crash_or_error"],"annotator":"model","note":"Uncaught error in fun.py (auto crash report)"}
+{"record_id":"aider-5833","modes":["crash_or_error"],"annotator":"model","note":"Uncaught UnicodeEncodeError (auto crash report)"}
+{"record_id":"aider-5779","modes":["docs"],"annotator":"model","note":"request to document DemonRoute (documentation)"}
+{"record_id":"aider-5913","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5853","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5811","modes":[],"annotator":"model","note":"third-party eval promo, not a defect"}
+{"record_id":"aider-5841","modes":["crash_or_error"],"annotator":"model","note":"uncaught exception + traceback (auto crash report)"}
+{"record_id":"aider-5914","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5898","modes":["data_integrity"],"annotator":"model","note":"benchmark leaves tests silently unexecuted (silent incompleteness) - closest mode"}
+{"record_id":"aider-5802","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"dify-45799","modes":["data_integrity"],"annotator":"model","note":"valid archive rejected, filename recovery bug (data handling)"}
+{"record_id":"dify-45792","modes":["data_integrity"],"annotator":"model","note":"statistics exclude selected end date (wrong count/range)"}
+{"record_id":"dify-45732","modes":[],"annotator":"model","note":"feature request (add vector store backend)"}
+{"record_id":"dify-45844","modes":["docs"],"annotator":"model","note":"zh-CN README omits a setup step (documentation gap)"}
+{"record_id":"dify-45842","modes":["ui_or_ux"],"annotator":"model","note":"Schedule Trigger node fails to render (rendering)"}
+{"record_id":"dify-45753","modes":["regression"],"annotator":"model","note":"explicit 'regression in 1.19.0'"}
+{"record_id":"dify-45920","modes":["config_or_env","ui_or_ux"],"annotator":"model","note":"ALLOW_UNSAFE_DATA_SCHEME not honored; images not rendered"}
+{"record_id":"dify-45746","modes":["data_integrity"],"annotator":"model","note":"deletes upload_files still referenced (data loss)"}
+{"record_id":"dify-45839","modes":["ui_or_ux"],"annotator":"model","note":"variable pickers hide integer variables (UI)"}
+{"record_id":"dify-45833","modes":[],"annotator":"model","note":"number param cannot bind to integer variable - functional type bug, no clean mode"}
+{"record_id":"dify-45882","modes":["data_integrity"],"annotator":"model","note":"filename keeps trailing quote in metadata (wrong data)"}
+{"record_id":"dify-45747","modes":[],"annotator":"model","note":"HTTP 500 on plugin upgrade - server error, not exception/crash"}
+{"record_id":"dify-45886","modes":["crash_or_error"],"annotator":"model","note":"chat conversation crashes on malformed URL"}
+{"record_id":"dify-45921","modes":[],"annotator":"model","note":"third-party review promo, not a defect"}
+{"record_id":"dify-45754","modes":[],"annotator":"model","note":"hardcoded 200-char limit inconsistency - functional bug, no clean mode"}
+{"record_id":"dify-45894","modes":[],"annotator":"model","note":"refactor/chore, not a defect"}
