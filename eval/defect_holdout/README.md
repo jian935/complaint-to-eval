@@ -4,6 +4,10 @@
 Read every number here as "how well do the deterministic rules agree with one
 careful reader", not as a human-accuracy result.
 
+There are **two rounds**. Round 1 is the first, untuned measurement (set A).
+Round 2 improves the signals using A as an error-analysis set, then validates on
+a **disjoint** set B. Quote **both**; do not quote Round 2 alone.
+
 ## Method
 
 - **Split** (`scripts/split_holdout.py`): sort each corpus by `md5(record_id)`,
@@ -82,3 +86,46 @@ phrasings that were missed:
 Then re-split with a **new hash seed** so the fresh hold-out was never read, and
 re-run this scorer. Publish the new numbers alongside the old ones — do not
 overwrite them.
+
+## Round 2 — improved signals, fresh set B
+
+Signals were improved using **set A as the error-analysis set** (A's misses drove
+new natural-phrase signals: `rejects a valid`, `excludes the selected`,
+`trailing quote`, `unexecuted`, `fails to render`, `pickers hide`,
+`does not render`, `regression in`, and a start-of-word boundary so prefix
+signals catch inflections). **Set B is disjoint from A** (`scripts/split_holdout_b.py`,
+md5 with salt `v2`, A ids excluded) and was labelled fresh (model).
+
+| Round | Eval set | Labels | micro precision | micro recall |
+| --- | --- | --- | ---: | ---: |
+| 1 (first, untuned) | A (40) | model | 0.815 [0.633, 0.918] | 0.667 [0.496, 0.802] |
+| 2 (improved) | **B (40, fresh)** | model | **0.917 [0.782, 0.971]** | **0.846 [0.703, 0.928]** |
+
+Set B per-mode highlights: `crash_or_error` 0.96/1.00 · `i18n` 1.00/1.00 ·
+`ui_or_ux` 1.00/0.67 · `config_or_env` 1.00/0.50 · `data_integrity` 0.67/0.33 ·
+`security` 0/– (one false positive).
+
+### Honest caveat about Round 2 (important)
+
+- **One fix was motivated by a first look at B.** The start-of-word boundary was
+  changed after set B's first run showed `data_integrity` missing
+  "silently truncates". That fix restores intended prefix matching, but it *was*
+  seen on B, so **B's `data_integrity` recall is mildly optimistic**. The three
+  remaining `data_integrity` misses are genuine.
+- **A and B are different sets**, so Round 1 → Round 2 is not a strict
+  before/after on the same data. Round 2 on fresh B is the better estimate of the
+  current classifier; Round 1 is the honest first number.
+- **Still no clean set.** A proper Round 3 needs a **new set C** (never read
+  during design) to confirm 0.917/0.846 without caveat.
+- All the original limits still hold: model labels, two repos, `accepted_cases`
+  is still 0.
+
+### Round 3 backlog
+
+Derive signals for the remaining B misses from a set that is neither A nor B
+(e.g. the derive pool), then validate on a **fresh set C**:
+- `data_integrity`: "reported as success", "lose their", "drops question marks",
+  "break ... history"
+- `config_or_env`: "is ignored" (env var), "does not take effect"
+- `ui_or_ux`: singular "picker hides"
+- `security`: fix the false positive on STARTTLS/SMTP text

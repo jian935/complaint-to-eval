@@ -1,6 +1,10 @@
 # Defect-report taxonomy (`defect-0.1.0-draft`)
 
-**Status: DRAFT, in-sample, unvalidated. No precision or recall is claimed.**
+**Status: DRAFT. Model-evaluated on a hold-out, NOT human-validated.**
+Precision/recall below are measured against MODEL labels on two disjoint hold-out
+sets — see [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
+No human labels exist; `accepted_cases` is always 0.
+
 This document explains why this taxonomy exists, how it was derived, what it does
 on real data, and exactly where it is still weak. Read it before trusting any
 number it produces.
@@ -80,11 +84,13 @@ been measured, because there is no held-out labelled set.
 
 ## Next step (the actual work)
 
-1. Split the 191 issues into **dev / hold-out** by record hash.
-2. Model-label the hold-out (tagged `annotator: model`, never posing as human).
-3. Measure **precision/recall with Wilson intervals** on the hold-out and publish
-   the misses, not just the hits.
-4. Only then wire `defects` into `ci.yml` and write it into the public README.
+1. ✅ Split into **dev / hold-out** by record hash.
+2. ✅ Model-label the hold-out (tagged `annotator: model`, never posing as human).
+3. ✅ Measure **precision/recall with Wilson intervals** and publish the misses.
+   Round 1 (first, untuned): 0.815 / 0.667. Round 2 (improved signals, fresh set
+   B): **0.917 / 0.846**. See `eval/defect_holdout/README.md`.
+4. ⏳ **Fresh set C** to confirm Round 2 without the one acknowledged caveat, then
+   wire `defects` into `ci.yml` and write it into the public README.
 
-Until step 3 exists, treat `cte defects` as a working prototype on real data and
-nothing more.
+Until step 4 exists, treat `cte defects` as a working prototype with a decent but
+not-yet-human-validated hold-out score.

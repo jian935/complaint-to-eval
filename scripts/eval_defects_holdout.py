@@ -11,6 +11,7 @@ Usage:
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 from collections import Counter, defaultdict
@@ -40,11 +41,17 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
 
 
 def main() -> int:
-    records = load_records(HOLDOUT)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--holdout", default=str(HOLDOUT))
+    ap.add_argument("--labels", default=str(LABELS))
+    ap.add_argument("--out", default=str(ROOT / "out/eval_defects.json"))
+    args = ap.parse_args()
+
+    records = load_records(Path(args.holdout))
     report = analyze_defects(records, dataset_label="holdout", synthetic=False)
 
     labels: dict[str, set[str]] = {}
-    for line in LABELS.read_text(encoding="utf-8").splitlines():
+    for line in Path(args.labels).read_text(encoding="utf-8").splitlines():
         line = line.strip()
         if not line:
             continue
@@ -118,7 +125,7 @@ def main() -> int:
     for rid, mode in false_pos[:25]:
         print(f"  - {rid} :: {mode}")
 
-    out = ROOT / "out/eval_defects.json"
+    out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
         json.dumps(

@@ -59,6 +59,10 @@ class DefectTaxonomyTests(unittest.TestCase):
         # but the real word still fires
         self.assertIn("performance", modes_of("the worker hangs and never returns"))
 
+    def test_prefix_signal_matches_inflection(self):
+        # start-of-word boundary keeps inflection matching: 'truncat' -> 'truncated'
+        self.assertIn("data_integrity", modes_of("rows are silently truncated on export"))
+
 
 class DefectAnalyzeTests(unittest.TestCase):
     def test_dedup_one_candidate_per_record_per_mode(self):

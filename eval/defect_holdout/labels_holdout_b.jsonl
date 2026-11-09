@@ -1,0 +1,40 @@
+{"record_id":"aider-5890","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5960","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5908","modes":["crash_or_error"],"annotator":"model","note":"Uncaught FileNotFoundError (auto crash report)"}
+{"record_id":"aider-5953","modes":["crash_or_error"],"annotator":"model","note":"Uncaught UnicodeEncodeError (auto crash report)"}
+{"record_id":"aider-5801","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5862","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5819","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5838","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5873","modes":["crash_or_error","config_or_env"],"annotator":"model","note":"invalid color reset to None (config) then every reply crashes"}
+{"record_id":"aider-5888","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5927","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ValueError (auto crash report)"}
+{"record_id":"aider-5879","modes":["data_integrity"],"annotator":"model","note":"failed file write reported as success and counted as edit (silent false state)"}
+{"record_id":"aider-5836","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5800","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5774","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5783","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5906","modes":["crash_or_error"],"annotator":"model","note":"Uncaught AttributeError (auto crash report)"}
+{"record_id":"aider-5961","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5771","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5794","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5792","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ModuleNotFoundError (auto crash report)"}
+{"record_id":"aider-5840","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5806","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5903","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"dify-45856","modes":[],"annotator":"model","note":"refactor/chore, not a defect"}
+{"record_id":"dify-45880","modes":["crash_or_error"],"annotator":"model","note":"crashes with TypeError on empty yaml"}
+{"record_id":"dify-45734","modes":["performance"],"annotator":"model","note":"pagination query saturates PostgreSQL read IOPS"}
+{"record_id":"dify-45934","modes":["ui_or_ux"],"annotator":"model","note":"detail sidebar collapse drops keyboard focus"}
+{"record_id":"dify-45900","modes":["crash_or_error"],"annotator":"model","note":"runtime crashes with TypeError on NoneType"}
+{"record_id":"dify-45802","modes":["data_integrity"],"annotator":"model","note":"long queries lose their key terms (data lost in scoring)"}
+{"record_id":"dify-45798","modes":["data_integrity"],"annotator":"model","note":"serialization drops question marks from query values"}
+{"record_id":"dify-45928","modes":["i18n_or_locale"],"annotator":"model","note":"zh-Hant contacts.json missing keys (labelled refactor but is i18n)"}
+{"record_id":"dify-45914","modes":["data_integrity"],"annotator":"model","note":"empty attachment IDs break knowledge retrieval history"}
+{"record_id":"dify-45881","modes":["data_integrity"],"annotator":"model","note":"uuidv7 silently truncates timestamps"}
+{"record_id":"dify-45908","modes":["config_or_env"],"annotator":"model","note":"SMTP_LOCAL_HOSTNAME env var ignored"}
+{"record_id":"dify-45872","modes":["crash_or_error"],"annotator":"model","note":"chat message crashes on malformed encoding"}
+{"record_id":"dify-45784","modes":[],"annotator":"model","note":"email validator accepts bad dots - functional validation bug, no clean mode"}
+{"record_id":"dify-45933","modes":["ui_or_ux"],"annotator":"model","note":"detail sidebar hover preview covered by main content"}
+{"record_id":"dify-45783","modes":["data_integrity"],"annotator":"model","note":"reports the wrong page count (miscount)"}
+{"record_id":"dify-45810","modes":["ui_or_ux"],"annotator":"model","note":"variable picker hides integer variables (UI)"}

@@ -67,6 +67,8 @@ RULES: tuple[DefectRule, ...] = (
             "truncat", "corrupt", "silently wraps", "silently truncat",
             "loses its", "lost data", "data loss", "disappear",
             "wrong count", "wrong page count", "drops the",
+            "rejects a valid", "excludes the selected", "trailing quote",
+            "keeps a trailing", "unexecuted",
             "丢失", "截断", "错乱", "数据丢失", "数据损坏",
         ),
     ),
@@ -83,6 +85,7 @@ RULES: tuple[DefectRule, ...] = (
         strong=(
             "sidebar", "hover", "layout", "clips", "clipped", "misalign",
             "chevron", "tooltip", "drops keyboard focus", "covered by main content",
+            "fails to render", "pickers hide", "does not render", "hidden from",
             "界面", "布局", "侧边栏", "样式", "遮挡",
         ),
     ),
@@ -115,7 +118,8 @@ RULES: tuple[DefectRule, ...] = (
         "regression",
         strong=(
             "a regression", "regression bug", "caused a regression",
-            "introduced a regression", "regressed", "used to work",
+            "introduced a regression", "regressed", "regression in",
+            "regressed in", "used to work",
             "worked before", "since version", "stopped working",
             "no longer works",
             "回归缺陷", "之前正常", "以前的版本",
@@ -179,14 +183,16 @@ def _ascii_only(text: str) -> bool:
 def _find_signal(lowered: str, phrase: str) -> int:
     """Position of ``phrase`` in ``lowered``, or -1.
 
-    Latin signals match on whole-word boundaries, so 'hang' does not fire on
-    'changes'. CJK signals match as plain substrings (no word delimiters).
-    This deliberately differs from the LLM-behaviour taxonomy in taxonomy.py,
-    whose feedback text concatenates words; defect reports are well-formed.
+    Latin signals match on a **start-of-word** boundary only, so a prefix signal
+    still catches inflections ('truncat' -> 'truncated', 'hang' -> 'hangs') while
+    'hang' does NOT fire inside 'changes' (the 'c' before it is alphanumeric).
+    CJK signals match as plain substrings (no word delimiters). This deliberately
+    differs from the LLM-behaviour taxonomy in taxonomy.py, whose feedback text
+    concatenates words; defect reports are well-formed.
     """
     p = phrase.lower()
     if _ascii_only(p):
-        m = re.search(r"(?<![a-z0-9])" + re.escape(p) + r"(?![a-z0-9])", lowered)
+        m = re.search(r"(?<![a-z0-9])" + re.escape(p), lowered)
         return m.start() if m else -1
     return lowered.find(p)
 
