@@ -1,0 +1,39 @@
+{"record_id":"aider-5832","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ValueError (auto crash report)"}
+{"record_id":"aider-5971","modes":["crash_or_error"],"annotator":"model","note":"Uncaught AttributeError (auto crash report)"}
+{"record_id":"aider-5842","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5775","modes":["crash_or_error"],"annotator":"model","note":"Uncaught UnicodeDecodeError (auto crash report)"}
+{"record_id":"aider-5772","modes":["security"],"annotator":"model","note":"Untrusted repo config escalates to host code execution"}
+{"record_id":"aider-5882","modes":["config_or_env"],"annotator":"model","note":"aider-install reported installed but not found on PATH; install/env broken"}
+{"record_id":"aider-5797","modes":[],"annotator":"model","note":"Feature proposal (compiler-backed context for .spx), no defect asserted"}
+{"record_id":"aider-5831","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5925","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5872","modes":["config_or_env"],"annotator":"model","note":"Boundary case: unreadable --message-file is not surfaced (chat loop, exit 0). No uncaught exception. Taxonomy has no 'silent wrong exit' mode; CLI input handling is the closest fit — recorded as a taxonomy gap."}
+{"record_id":"aider-5814","modes":["crash_or_error"],"annotator":"model","note":"Uncaught KeyError (auto crash report)"}
+{"record_id":"aider-5817","modes":["config_or_env"],"annotator":"model","note":"OR_SITE_URL / OR_APP_NAME overwritten unconditionally instead of respected"}
+{"record_id":"aider-5793","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5848","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5889","modes":[],"annotator":"model","note":"Feature proposal (batch mode), no defect asserted"}
+{"record_id":"aider-5886","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5946","modes":["crash_or_error"],"annotator":"model","note":"Uncaught AttributeError (auto crash report)"}
+{"record_id":"aider-5962","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError during repo scan; submodule/git setup mentioned but worked around, crash is the defect"}
+{"record_id":"aider-5901","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5870","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5949","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5773","modes":["security"],"annotator":"model","note":"Edit format writes/deletes outside repo root, bypassing confirmation"}
+{"record_id":"aider-5777","modes":["crash_or_error"],"annotator":"model","note":"Uncaught OSError (auto crash report)"}
+{"record_id":"aider-5865","modes":[],"annotator":"model","note":"Feature request (model pipeline profiles), no defect asserted"}
+{"record_id":"dify-45744","modes":[],"annotator":"model","note":"Refactor request (use ExposeService), no defect asserted"}
+{"record_id":"dify-45898","modes":["ui_or_ux"],"annotator":"model","note":"Chevron points the wrong direction"}
+{"record_id":"dify-45829","modes":["i18n_or_locale"],"annotator":"model","note":"Relative time falls back to English for most locales"}
+{"record_id":"dify-45836","modes":["ui_or_ux"],"annotator":"model","note":"Chart clips first x-axis label on narrow cards"}
+{"record_id":"dify-45813","modes":["i18n_or_locale"],"annotator":"model","note":"Relative-time labels fall back to English for Arabic and Lao"}
+{"record_id":"dify-45779","modes":["performance"],"annotator":"model","note":"Preview timeout keeps waiting for workers and publishes late results"}
+{"record_id":"dify-45777","modes":["data_integrity"],"annotator":"model","note":"XLSX formula-only rows vanish during extraction"}
+{"record_id":"dify-45789","modes":["data_integrity"],"annotator":"model","note":"UUIDv7 timestamp silently wraps above 48 bits (wrong values)"}
+{"record_id":"dify-45863","modes":["crash_or_error"],"annotator":"model","note":"Auth/webapp pages crash on malformed percent-encoding"}
+{"record_id":"dify-45901","modes":["ui_or_ux"],"annotator":"model","note":"Upload queue always shows unavailable character count"}
+{"record_id":"dify-45817","modes":["data_integrity"],"annotator":"model","note":"Boundary case: integer variables compared as text, producing wrong comparison results. No dedicated 'type/logic bug' mode; grouped under wrong-value handling."}
+{"record_id":"dify-45776","modes":["data_integrity"],"annotator":"model","note":"Content-control display values missing from extracted DOCX text"}
+{"record_id":"dify-45740","modes":["data_integrity"],"annotator":"model","note":"ReAct payload closes early on a brace, silently skipping the tool call"}
+{"record_id":"dify-45916","modes":["security"],"annotator":"model","note":"Permissioned member gets 403 on monitoring source filter (authorization bug)"}
+{"record_id":"dify-45929","modes":["data_integrity"],"annotator":"model","note":"Boundary case: schedule trigger fires twice on DST fall-back (duplicate execution). Grouped under miscounted/duplicated work."}

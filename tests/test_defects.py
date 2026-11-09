@@ -46,7 +46,18 @@ class DefectTaxonomyTests(unittest.TestCase):
         )
 
     def test_ui(self):
-        self.assertIn("ui_or_ux", modes_of("The sidebar hover preview is covered"))
+        # Fault-shaped UI phrases fire.
+        self.assertIn("ui_or_ux", modes_of("The sidebar preview is covered by main content"))
+        self.assertIn("ui_or_ux", modes_of("the chevron points in the wrong direction"))
+
+    def test_bare_topic_nouns_do_not_fire(self):
+        # "sidebar"/"tooltip"/"locale"/"security"/"performance" are topics, not
+        # defect claims. A feature request mentioning them is not a defect report.
+        self.assertEqual([], modes_of("Please add a sidebar, a tooltip and a chevron icon"))
+        self.assertNotIn("i18n_or_locale", modes_of("this enables doc translation workflows"))
+        self.assertNotIn("security", modes_of("we discussed security concerns in the roadmap"))
+        self.assertNotIn("performance", modes_of("it uses high-performance models"))
+        self.assertNotIn("regression", modes_of("a regression test should be added with the fix"))
 
     def test_negation_cancels_crash(self):
         # 'uncaught' is a real signal; a negator right before it cancels the hit.
@@ -62,6 +73,28 @@ class DefectTaxonomyTests(unittest.TestCase):
     def test_prefix_signal_matches_inflection(self):
         # start-of-word boundary keeps inflection matching: 'truncat' -> 'truncated'
         self.assertIn("data_integrity", modes_of("rows are silently truncated on export"))
+
+    def test_quoted_inline_code_does_not_fire(self):
+        # A report that *names* an exception in code is not reporting a crash.
+        self.assertNotIn(
+            "crash_or_error",
+            modes_of("InputOutput.read_text() catches `ValueError` and prints its own error."),
+        )
+
+    def test_quoted_fenced_block_does_not_fire(self):
+        text = "The handler is:\n\n```\nexcept ValueError:\n    timeout=120\n```\n\nIt returns None.\n"
+        self.assertEqual([], modes_of(text))
+
+    def test_prose_crash_still_fires_next_to_a_fence(self):
+        text = "Uncaught ValueError in main.py line 12.\n\n```\nTraceback\n```\n"
+        self.assertIn("crash_or_error", modes_of(text))
+
+    def test_blanking_preserves_offsets_and_original_quote(self):
+        text = "Prefix `timeout` then the worker hangs forever."
+        hit = next(h for h in find_defect_hits(text) if h.mode == "performance")
+        self.assertEqual(text[hit.start:hit.end], text[hit.start:hit.end])
+        self.assertIn("worker hangs forever", hit.quote)
+        self.assertIn("`timeout`", hit.quote)  # quote is sliced from the original text
 
 
 class DefectAnalyzeTests(unittest.TestCase):

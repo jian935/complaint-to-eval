@@ -1,0 +1,40 @@
+{"record_id":"aider-5827","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5941","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ValueError (auto crash report)"}
+{"record_id":"aider-5968","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5867","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5820","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5926","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5917","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5874","modes":["config_or_env"],"annotator":"model","note":"Boundary case: /undo discards raw_cmd_undo's return value, so the model is never told the change was reverted. Silent non-effect; no dedicated mode."}
+{"record_id":"aider-5948","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5795","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5969","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5788","modes":[],"annotator":"model","note":"Off-topic request ('complete my website for me'), not a defect report"}
+{"record_id":"aider-5821","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5787","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5956","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5781","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5885","modes":["security"],"annotator":"model","note":"Arbitrary command execution via auto-loaded .aider.conf.yml keys"}
+{"record_id":"aider-5897","modes":["crash_or_error"],"annotator":"model","note":"Uncaught OSError (auto crash report)"}
+{"record_id":"aider-5938","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5847","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5769","modes":[],"annotator":"model","note":"Feature proposal (Decision Gate); latency is the motivation, not a reported defect"}
+{"record_id":"aider-5951","modes":["crash_or_error"],"annotator":"model","note":"Uncaught UnicodeEncodeError (auto crash report)"}
+{"record_id":"aider-5920","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5875","modes":["data_integrity"],"annotator":"model","note":"patch 'Add File' rejects a valid new file and leaves an empty file behind"}
+{"record_id":"dify-45655","modes":["ui_or_ux"],"annotator":"model","note":"Hidden unavailable overlay blocks pointer input on the audio player"}
+{"record_id":"dify-45486","modes":["ui_or_ux"],"annotator":"model","note":"Server-rendered page omits inline code from the initial HTML"}
+{"record_id":"dify-45526","modes":["data_integrity"],"annotator":"model","note":"Indexing strips leading markdown/code syntax from chunks"}
+{"record_id":"dify-45384","modes":["data_integrity"],"annotator":"model","note":"Suggested-question traces lose the persisted user query"}
+{"record_id":"dify-45723","modes":["crash_or_error"],"annotator":"model","note":"Install-count 404 aborts plugin upgrade with HTTP 500"}
+{"record_id":"dify-45557","modes":["data_integrity"],"annotator":"model","note":"Boundary case: reasoning and ENDTHINKFLAG leak into the answer text. Read as wrong output content rather than pure display."}
+{"record_id":"dify-45431","modes":["data_integrity"],"annotator":"model","note":"Workflow tool file inputs hidden from the model, so calls run with files=[]"}
+{"record_id":"dify-45365","modes":["performance"],"annotator":"model","note":"Indexing hangs at ~90% with Milvus (blocked gRPC under gevent)"}
+{"record_id":"dify-45724","modes":["data_integrity"],"annotator":"model","note":"NULL retrieval_model makes retrieval silently return an empty result"}
+{"record_id":"dify-45608","modes":["security"],"annotator":"model","note":"CSV formula injection sanitizer misses characters behind leading whitespace"}
+{"record_id":"dify-45444","modes":["data_integrity"],"annotator":"model","note":"DETAIL tab double-encodes workflow outputs as a JSON string"}
+{"record_id":"dify-45674","modes":[],"annotator":"model","note":"Feature/UX request (make the search palette usable on mobile), no defect asserted"}
+{"record_id":"dify-45454","modes":["crash_or_error"],"annotator":"model","note":"Negative chunk_overlap is accepted and then fails during chunking"}
+{"record_id":"dify-45417","modes":[],"annotator":"model","note":"Refactor request (remove dead empty-string fallbacks); i18n is the context, not the defect"}
+{"record_id":"dify-45556","modes":["i18n_or_locale"],"annotator":"model","note":"Admin rating column is mistranslated as 'operation rate' in most locales"}
+{"record_id":"dify-45398","modes":[],"annotator":"model","note":"Feature request (summary mode for thinking), no defect asserted"}

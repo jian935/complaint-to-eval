@@ -12,13 +12,18 @@ pipeline can turn real defect reports into regression-test candidates.
 Discipline carried over unchanged (see ANNOTATION_GUIDE.md):
 * No bare nouns; only specific multi-word signals.
 * A negator immediately before the hit cancels it ("no crash" is not a crash).
-* English is matched as a substring, deliberately without word boundaries.
-* Evidence offsets refer to REDACTED text.
+* English matches on a start-of-word boundary, so prefix signals catch
+  inflections without firing inside longer words ('hang' never hits 'changes').
+* Fenced code blocks and inline code are blanked before matching: defect
+  reports quote code, and a quoted `ValueError` is not a reported crash.
+* Evidence offsets refer to REDACTED text and stay exact through blanking.
 
-Status: DRAFT ``defect-0.1.0-draft``. The signals were read off aider/dify
-issues and are measured on the same corpus (in-sample). They are NOT validated
-on held-out data and claim NO precision/recall. Sorting this out properly needs
-a labelled dev/hold-out split, which is the next step.
+Status: DRAFT ``defect-0.1.0-draft``. Signals were read off aider/dify issues and
+measured over five disjoint model-labelled splits (see
+eval/defect_holdout/README.md). Current estimate on the three uncontaminated
+splits: precision 0.71-0.77, recall 0.63-0.77. Only ``crash_or_error`` is
+well validated (0.95-1.00 precision); the other eight modes are aspirational.
+Labels are MODEL-generated, never human.
 """
 
 from __future__ import annotations
@@ -83,43 +88,51 @@ RULES: tuple[DefectRule, ...] = (
     DefectRule(
         "ui_or_ux",
         strong=(
-            "sidebar", "hover", "layout", "clips", "clipped", "misalign",
-            "chevron", "tooltip", "drops keyboard focus", "covered by main content",
-            "fails to render", "pickers hide", "does not render", "hidden from",
-            "界面", "布局", "侧边栏", "样式", "遮挡",
+            # Fault-shaped only. Bare UI nouns ("sidebar", "tooltip", "layout")
+            # were removed: a report may mention them while requesting a feature.
+            "clips", "clipped", "misalign", "overlaps", "overlapping",
+            "covered by main content", "hidden from", "hidden behind",
+            "fails to render", "does not render", "not visible",
+            "drops keyboard focus", "keyboard focus", "pickers hide",
+            "wrong direction", "cut off", "off-screen", "stale",
+            "does not update", "doesn't update",
+            "界面", "布局", "侧边栏", "样式", "遮挡", "错位", "被遮挡",
         ),
     ),
     DefectRule(
         "i18n_or_locale",
         strong=(
-            "locale", "translation", "zh-cn", "zh-hant", "i18n",
-            "fall back to english", "falls back to english", "missing keys",
-            "翻译", "多语言", "语言包", "繁中",
+            # Bare "locale"/"translation"/"i18n" were removed: they appear in
+            # feature requests ("doc translation") and in neutral prose.
+            "fall back to english", "falls back to english", "fallback to english",
+            "not translated", "untranslated", "missing translation",
+            "wrong language", "zh-cn", "zh-hant", "missing keys",
+            "未翻译", "回退到英文", "硬编码英文", "语言包", "繁中",
         ),
     ),
     DefectRule(
         "security",
         strong=(
-            "security", "path traversal", "outside the repo",
-            "outside the repository", "unauthorized", "bypass",
-            "without confirmation", "arbitrary command", "command execution",
-            "安全", "越权", "命令执行", "路径穿越", "未经确认",
+            # Bare "security" was removed: it appeared in "security concerns" and
+            # in a list of requirements, neither of which is a reported defect.
+            "path traversal", "outside the repo", "outside the repository",
+            "unauthorized", "bypass", "without confirmation",
+            "arbitrary command", "command execution",
+            "越权", "命令执行", "路径穿越", "未经确认",
         ),
     ),
     DefectRule(
         "performance",
         strong=(
             "slow", "timeout", "timed out", "hang", "hangs", "memory leak",
-            "latency", "performance",
-            "超时", "卡顿", "性能", "内存泄漏",
+            "超时", "卡顿", "内存泄漏",
         ),
     ),
     DefectRule(
         "regression",
         strong=(
-            "a regression", "regression bug", "caused a regression",
-            "introduced a regression", "regressed", "regression in",
-            "regressed in", "used to work",
+            "regression bug", "caused a regression", "introduced a regression",
+            "regressed", "regression in", "used to work",
             "worked before", "since version", "stopped working",
             "no longer works",
             "回归缺陷", "之前正常", "以前的版本",
@@ -180,6 +193,27 @@ def _ascii_only(text: str) -> bool:
     return all(ord(c) < 128 for c in text)
 
 
+_FENCE_RE = re.compile(r"```.*?```", re.DOTALL)
+_INLINE_CODE_RE = re.compile(r"`[^`\n]{1,120}`")
+
+
+def blank_code(text: str) -> str:
+    """Replace fenced blocks and inline code spans with spaces, same length.
+
+    Defect reports *quote* code: a repro snippet contains ``timeout=120``, an
+    error name appears in ``except ValueError``, and a traceback is pasted in a
+    fence. Matching inside those regions produces false positives that have
+    nothing to do with what the report is complaining about.
+
+    Length is preserved (newlines kept) so every offset still points at the
+    same character in the original text; evidence quotes therefore stay exact.
+    """
+    def _blank(match: re.Match[str]) -> str:
+        return "".join("\n" if ch == "\n" else " " for ch in match.group(0))
+
+    return _INLINE_CODE_RE.sub(_blank, _FENCE_RE.sub(_blank, text))
+
+
 def _find_signal(lowered: str, phrase: str) -> int:
     """Position of ``phrase`` in ``lowered``, or -1.
 
@@ -198,9 +232,15 @@ def _find_signal(lowered: str, phrase: str) -> int:
 
 
 def find_defect_hits(text: str) -> list[DefectHit]:
-    """Return at most one hit per (defect mode, clause), ordered by offset."""
+    """Return at most one hit per (defect mode, clause), ordered by offset.
+
+    Matching runs on ``blank_code(text)`` so quoted code and pasted tracebacks
+    cannot trigger a signal, while the reported quote is sliced from ``text``
+    (offsets are identical because blanking preserves length).
+    """
     hits: list[DefectHit] = []
-    for base, clause in _clauses(text):
+    masked = blank_code(text)
+    for base, clause in _clauses(masked):
         lowered = clause.lower()
         for rule in RULES:
             for phrase in rule.strong:
@@ -208,7 +248,13 @@ def find_defect_hits(text: str) -> list[DefectHit]:
                 if pos == -1 or _is_negated(clause, pos):
                     continue
                 hits.append(
-                    DefectHit(rule.mode, phrase, base + pos, base + pos + len(phrase), clause)
+                    DefectHit(
+                        rule.mode,
+                        phrase,
+                        base + pos,
+                        base + pos + len(phrase),
+                        text[base:base + len(clause)],
+                    )
                 )
                 break  # one hit per mode per clause
     return sorted(hits, key=lambda h: (h.start, h.mode))

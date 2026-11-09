@@ -1,0 +1,50 @@
+{
+  "rule": "exclude sets A, B and C; sort by md5('v4:'+id); first N per corpus",
+  "holdout": {
+    "aider": [
+      "aider-5852",
+      "aider-5808",
+      "aider-5850",
+      "aider-5869",
+      "aider-5924",
+      "aider-5871",
+      "aider-5825",
+      "aider-5904",
+      "aider-5830",
+      "aider-5876",
+      "aider-5786",
+      "aider-5799",
+      "aider-5887",
+      "aider-5864",
+      "aider-5815",
+      "aider-5839",
+      "aider-5944",
+      "aider-5912",
+      "aider-5768",
+      "aider-5895",
+      "aider-5789",
+      "aider-5816",
+      "aider-5805",
+      "aider-5972"
+    ],
+    "dify": [
+      "dify-45658",
+      "dify-45403",
+      "dify-45705",
+      "dify-45715",
+      "dify-45442",
+      "dify-45718",
+      "dify-45532",
+      "dify-45611",
+      "dify-45625",
+      "dify-45558",
+      "dify-45358",
+      "dify-45638",
+      "dify-45583",
+      "dify-45443",
+      "dify-45362",
+      "dify-45441"
+    ]
+  },
+  "capped": {}
+}
