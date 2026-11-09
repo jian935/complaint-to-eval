@@ -7,6 +7,11 @@ an evidence-backed failure taxonomy, a minimal reproducible input for every
 finding, and a diff between two versions. Deterministic, standard library only,
 no API key, no model calls.
 
+![complaint-to-eval running the demo in a terminal](assets/demo.gif)
+
+_Generated from a real `cte demo` run by `scripts/make_demo_gif.py`; the numbers
+in the GIF are parsed from that run's output, not hand-typed._
+
 ```text
 $ python -m complaint_to_eval demo
 records=12 candidates=11 accepted=0

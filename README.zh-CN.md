@@ -6,6 +6,11 @@
 每条发现对应的最小复现输入、以及两个版本之间的 diff。确定性规则、纯标准库、
 零 API Key、不调用模型。
 
+![complaint-to-eval 在终端跑 demo](assets/demo.gif)
+
+_由 `scripts/make_demo_gif.py` 直接抓真实 `cte demo` 输出渲染；gif 里的数字来自
+那次真实运行，不是手敲的。_
+
 ```text
 $ python -m complaint_to_eval demo
 records=12 candidates=11 accepted=0
