@@ -1,0 +1,53 @@
+{
+  "salt": "v9",
+  "name": "h",
+  "strategy": "stratified by crash template",
+  "holdout": {
+    "aider_crash": [
+      "aider-5473",
+      "aider-5642",
+      "aider-5728",
+      "aider-5703",
+      "aider-5680",
+      "aider-5766"
+    ],
+    "aider_other": [
+      "aider-5341",
+      "aider-5292",
+      "aider-5321",
+      "aider-5596",
+      "aider-5308",
+      "aider-5471",
+      "aider-5396",
+      "aider-5354",
+      "aider-5358",
+      "aider-5382",
+      "aider-5516",
+      "aider-5385",
+      "aider-5288",
+      "aider-5376"
+    ],
+    "dify": [
+      "dify-44735",
+      "dify-45227",
+      "dify-44904",
+      "dify-44737",
+      "dify-45424",
+      "dify-45319",
+      "dify-45183",
+      "dify-44844",
+      "dify-44797",
+      "dify-45238",
+      "dify-45275",
+      "dify-44933",
+      "dify-45004",
+      "dify-44987",
+      "dify-45003",
+      "dify-44952",
+      "dify-45434",
+      "dify-45070",
+      "dify-45071",
+      "dify-44834"
+    ]
+  }
+}
