@@ -1,8 +1,10 @@
 # Defect hold-out evaluation
 
 **Labels are MODEL-generated (`annotator: model`) for splits A–G.** Split H is
-different: it has one independent human reader under the rewritten v2 rule and no
-model labels at all — see [`human_agreement_v2.md`](human_agreement_v2.md). Every
+different: it has one filled workbook under the rewritten v2 rule and no model
+labels at all. Its annotator provenance is **unconfirmed** and a second returned
+workbook was **rejected as non-independent** — see
+[`contamination_h.md`](contamination_h.md). Every
 number here means "how well the deterministic rules agree with one careful
 reader", not human accuracy. `accepted_cases` is still 0.
 
@@ -64,8 +66,9 @@ fact changes what the numbers above mean. Writeups:
 The v2 rule (`eval/GRANULARITY_RULE.md`) fixes what the first four readers were
 never told: **exactly one primary mode, decided by an ordered symptom checklist,
 with causes in a separate optional column**. H is a fresh 40-row stratified split
-with zero overlap with A–G, so nobody has seen it before. One person filled it
-blind; 28 rows were judged defects, 12 not, 0 unclear.
+with zero overlap with A–G, so nobody had seen it before. One workbook was
+returned: 28 rows judged defects, 12 not, 0 unclear. **Its annotator provenance
+is unconfirmed — see the contamination notice below.**
 
 | Metric, primary mode only | Value |
 | --- | ---: |
@@ -84,8 +87,17 @@ times — the v1 "everything is logic" pattern was partly a template problem.
 **Do not compare 0.545 with G's 0.31.** H is 70% defective (G was 50/50), it was
 stratified rather than hand-picked, and the scoring instrument changed. Most
 importantly, **v2 exists to fix agreement between people and one reader cannot
-measure that** — no reader-reader κ under v2 exists yet. Full writeup, baselines
+measure that** — no reader-to-reader κ under v2 exists yet. Full writeup, baselines
 and the disagreement table: [`human_agreement_v2.md`](human_agreement_v2.md).
+
+> **Contamination notice (2026-11-10).** A second filled workbook was returned
+> for H and **rejected**: every label matched (κ = 1.000 on 39 scored rows), the
+> optional cause column was identical on 40/40 rows, and reasons were
+> paraphrases rather than independent writing. It is not a second reader. The
+> first workbook's provenance is also unconfirmed, so all "human" wording in
+> this section is conditional. See
+> [`contamination_h.md`](contamination_h.md). **The v2 hypothesis remains
+> untested; no reader-reader κ is published.**
 
 ### Prior sensitivity (record level, from set G, n_clean = 20)
 
@@ -267,9 +279,9 @@ That is the other honest limit: **most modes are simply too rare here to measure
 
 1. **The A–G labels are model-written, one reader, one pass.** Four independent
    human readers *did* label G afterwards (Fleiss κ = 0.922 binary, mode-level
-   agreement low), and one human reader labelled H under the v2 rule. Neither is
-   an accepted eval set. **No reader-to-reader κ exists under v2 yet**, so the H
-   mode-level figure still means agreement with one person.
+   agreement low). H has one workbook of unconfirmed provenance plus a rejected
+   second one. Neither is an accepted eval set. **No reader-to-reader κ exists
+   under v2**, and no "human" figure from H may be quoted as verified.
 2. **Precision is a function of the prior.** Never quote one precision figure without
    saying which class mix it came from. The 0.944 on F is a 90%-defect feed; the useful
    number for deployment planning is the 25% row of the prior-sensitivity table (0.36).

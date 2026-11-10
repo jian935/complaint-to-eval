@@ -23,8 +23,9 @@ measured over the A–G disjoint model-labelled splits (see
 eval/defect_holdout/README.md). Current estimate on the three uncontaminated
 splits: precision 0.71-0.77, recall 0.63-0.77. Only ``crash_or_error`` is
 well validated (0.95-1.00 precision); the other nine modes are aspirational.
-The A–G labels are MODEL-generated; H is a separate human-labelled check under
-a rewritten one-primary-mode rule and is not part of this range.
+The A–G labels are MODEL-generated; H is a separate one-workbook check under
+a rewritten one-primary-mode rule, with UNCONFIRMED annotator provenance, and
+is not part of this range. See eval/defect_holdout/contamination_h.md.
 """
 
 from __future__ import annotations
@@ -396,7 +397,8 @@ def analyze_defects(
             "unclassified_records": len(records) - len(classified),
             "note": "Defect candidates from deterministic rules. Accuracy was measured "
                     "on seven disjoint MODEL-labelled hold-out splits (A–G); "
-                    "G and H also have human readers, but none is an accepted "
+                    "G has four human readers; H has one unconfirmed workbook and one "
+                    "rejected as non-independent. None is an accepted "
                     "case set. Quote the range, not one point. Human review required.",
         },
         "counts": dict(counts),

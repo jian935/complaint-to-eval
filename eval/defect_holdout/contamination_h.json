@@ -1,0 +1,52 @@
+{
+  "workbooks": {
+    "H_r1": {
+      "rows": 40,
+      "answered_rows": 40
+    },
+    "H_r2_unverified": {
+      "rows": 40,
+      "answered_rows": 40
+    }
+  },
+  "pairs": [
+    {
+      "left": "H_r1",
+      "right": "H_r2_unverified",
+      "common_rows": 40,
+      "scored_rows": 39,
+      "source_text_differences": 0,
+      "binary": {
+        "agreement": 1.0,
+        "kappa": 1.0
+      },
+      "primary_mode": {
+        "agreement": 1.0,
+        "kappa": 1.0
+      },
+      "secondary": {
+        "row_exact_rate": 1.0,
+        "row_exact": 40,
+        "jaccard": 1.0,
+        "intersection": 25,
+        "union": 25
+      },
+      "reasons": {
+        "mean_similarity": 0.8428367912685516,
+        "median_similarity": 0.8888888888888888,
+        "min_similarity": 0.21052631578947367,
+        "byte_identical_rows": 0
+      },
+      "verdict": "SUSPECT",
+      "flags": [
+        "optional cause column is identical on >=95% of rows",
+        "free-text reasons are 0.84 similar on average",
+        "reasons are consistently reworded, never byte-identical (paraphrase signature, not independent writing)",
+        "perfect agreement on >=20 scored rows is implausible for independent readers on ambiguous reports"
+      ],
+      "scope": "A 'NO_RED_FLAG' result does not certify that either reader is human, blind, or independent. Only the reader's provenance can."
+    }
+  ],
+  "overall": "SUSPECT",
+  "note": "This checks independence, not humanness. A model and a human can agree for bad reasons; two models can agree perfectly."
+}

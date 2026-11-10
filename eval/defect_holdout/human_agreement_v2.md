@@ -1,5 +1,16 @@
 # One reader on the H split, under the v2 rule
 
+> **2026-11-10 update — read this before quoting anything below.** A second
+> filled workbook was returned and failed the independence check: every label
+> matched, the optional cause column was identical on 40/40 rows, and the
+> reasons were paraphrases (mean similarity 0.843, 0 byte-identical). It is
+> **not** a second independent reader. See
+> [`contamination_h.md`](contamination_h.md). In addition, the first workbook's
+> provenance was never confirmed, so `annotator_status` in the result JSON is
+> **`unconfirmed`**: if a model produced or assisted it, the word "human" and
+> the "machine vs person" framing below are wrong. **The v2 hypothesis is still
+> untested. Do not publish a reader-to-reader κ from these two workbooks.**
+
 **Read this line first: one reader is not an agreement study.** The v2 rule was
 written to fix a *between-people* problem — readers splitting into "one label"
 and "symptom plus cause" camps. A second reader on the same workbook is the only

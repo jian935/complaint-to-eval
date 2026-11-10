@@ -39,7 +39,11 @@ class V2ArtefactTests(unittest.TestCase):
         cls.data = result()
 
     def test_result_is_human_and_not_accepted(self):
+        # 'annotator' is the CLAIM that came with the workbook, not a verified
+        # fact. The status field and the contamination writeup are the guard.
         self.assertEqual("human", self.data["annotator"])
+        self.assertEqual("unconfirmed", self.data["annotator_status"])
+        self.assertIn("provenance", self.data["provenance_warning"])
         self.assertIn("v2", self.data["rule"])
         self.assertNotIn("accepted_cases", self.data)
         self.assertEqual([], self.data["problems"].get("H_r1", ["missing"]))
@@ -128,8 +132,26 @@ class V2ArtefactTests(unittest.TestCase):
         # The second reader is sent ONE file. If these lines disappear from the
         # generator, a regenerated workbook silently loses its instructions.
         src = SCRIPT.with_name("make_labeling_workbook.py").read_text(encoding="utf-8")
-        for phrase in ("单独发这一个", "另有人填过", "不要硬猜", "十问顺序"):
+        for phrase in ("单独发这一个", "另有人填过", "不要硬猜", "十问顺序",
+                       "不要把这张表交给 AI"):
             self.assertIn(phrase, src)
+
+    def test_contamination_round_is_recorded_and_not_published_as_agreement(self):
+        c = json.loads((BASE / "contamination_h.json").read_text(encoding="utf-8"))
+        self.assertEqual("SUSPECT", c["overall"])
+        pair = c["pairs"][0]
+        self.assertEqual("SUSPECT", pair["verdict"])
+        self.assertEqual(1.0, pair["binary"]["kappa"])
+        self.assertEqual(1.0, pair["primary_mode"]["kappa"])
+        self.assertEqual(1.0, pair["secondary"]["row_exact_rate"])
+        self.assertEqual(0, pair["reasons"]["byte_identical_rows"])
+        # no reader-reader kappa may be published anywhere in the result file
+        self.assertNotIn("reader_reader", self.data)
+        md = (BASE / "contamination_h.md").read_text(encoding="utf-8")
+        for phrase in ("STILL untested", "must never be published", "paraphrase"):
+            self.assertIn(phrase, md)
+        # the warning must also be visible from the H writeup
+        self.assertIn("unconfirmed", WRITEUP.read_text(encoding="utf-8"))
 
 
 @unittest.skipUnless(importlib.util.find_spec("openpyxl"),
@@ -164,6 +186,33 @@ class V2HelperTests(unittest.TestCase):
         self.assertEqual(["a", "b"], self.mod.split_secondary("a，b"))
         self.assertEqual(["a"], self.mod.split_secondary(" a "))
         self.assertEqual([], self.mod.split_secondary(""))
+
+    def test_independence_checker_catches_a_paraphrase_and_passes_real_disagreement(self):
+        path = ROOT / "scripts" / "check_labeling_independence.py"
+        spec = importlib.util.spec_from_file_location("independence", path)
+        assert spec and spec.loader
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        def row(verdict, primary, secondary, reason):
+            return {"text": "same source text", "verdict": verdict,
+                    "primary": primary, "secondary": secondary, "reason": reason}
+
+        # 25 rows, identical labels, reworded reasons -> must be flagged
+        a = {f"r{i:02d}": row("是", "data_integrity", "logic_or_validation",
+                              f"内容丢失了，第{i}条") for i in range(1, 26)}
+        b = {f"r{i:02d}": row("是", "data_integrity", "logic_or_validation",
+                              f"内容缺失，第{i}条") for i in range(1, 26)}
+        self.assertEqual("SUSPECT", mod.compare(a, b, "a", "b")["verdict"])
+
+        # genuinely different readers -> no red flag
+        c = {f"r{i:02d}": row("不是" if i % 3 == 0 else "是",
+                              "" if i % 3 == 0 else "ui_or_ux",
+                              "" if i % 2 else "docs",
+                              f"我读到的是第{i}个不同现象") for i in range(1, 26)}
+        clean = mod.compare(a, c, "a", "c")
+        self.assertEqual("NO_RED_FLAG", clean["verdict"])
+        self.assertIn("does not certify", clean["scope"])
 
 
 if __name__ == "__main__":

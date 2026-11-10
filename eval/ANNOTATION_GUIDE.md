@@ -1,7 +1,10 @@
 # Annotation guide
 
-**Current status: two splits have human labels — G (four readers, v1) and H (one
-reader, v2) — and 0 accepted cases.** Every other measurement is compared against
+**Current status: split G has four independent human readers (v1). Split H has
+one filled workbook under v2 whose annotator provenance is UNCONFIRMED, and a
+second workbook rejected as non-independent — see
+[`defect_holdout/contamination_h.md`](defect_holdout/contamination_h.md).
+0 accepted cases.** Every other measurement is compared against
 **model-generated** labels (`annotator: model`), and every result file says so. On
 split G the four readers agreed strongly on *whether* a row is a defect
 (Fleiss κ = 0.922) but not on its mode; single-mode labels fell inside the
