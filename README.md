@@ -3,7 +3,7 @@
 **Your users already wrote your eval set. You just never turned it into one.**
 
 Turn user complaints into **unreviewed regression-test candidates** for AI agents:
-an evidence-backed failure taxonomy, a minimal reproducible input for every
+an evidence-backed failure taxonomy, the exact source sentence behind every
 finding, and a diff between two versions. Deterministic, standard library only,
 no API key, no model calls.
 
