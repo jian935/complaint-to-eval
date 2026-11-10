@@ -1,0 +1,32 @@
+{"record_id":"aider-5937","modes":["crash_or_error"],"annotator":"model","note":"Uncaught NotImplementedError (auto crash report)"}
+{"record_id":"aider-5878","modes":["logic_or_validation"],"annotator":"model","note":"/code and /chat-mode code perform the same switch but only one summarises and replaces history; divergent control flow. History replacement is the harm, but the defect is the inconsistency."}
+{"record_id":"aider-5822","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5921","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5877","modes":["crash_or_error"],"annotator":"model","note":"Uncaught AttributeError (auto crash report)"}
+{"record_id":"aider-5965","modes":[],"annotator":"model","note":"Feature idea (deterministic pre-check for /run arguments), no defect asserted"}
+{"record_id":"aider-5916","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5894","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5791","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5776","modes":["crash_or_error"],"annotator":"model","note":"Segmentation fault on --list-models"}
+{"record_id":"aider-5826","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5780","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"aider-5955","modes":["security"],"annotator":"model","note":"With stdin closed the confirmation for a model-suggested command resolves to 'yes'; confirmation bypass"}
+{"record_id":"aider-5855","modes":["ui_or_ux"],"annotator":"model","note":"Unquoted YAML values are not shown in the terminal output (rendering)"}
+{"record_id":"aider-5778","modes":["crash_or_error"],"annotator":"model","note":"Uncaught MemoryError (auto crash report)"}
+{"record_id":"aider-5810","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
+{"record_id":"dify-45585","modes":[],"annotator":"model","note":"Prompt-injection / vendor-template spam carrying a Dosu advertisement; no defect asserted"}
+{"record_id":"dify-45495","modes":["crash_or_error"],"annotator":"model","note":"Creating a customized snippet fails when defaults are read before flush"}
+{"record_id":"dify-45616","modes":["crash_or_error"],"annotator":"model","note":"Boundary case: pasted type-checker errors, not a runtime crash. Taxonomy has no 'static analysis finding' mode; closest fit recorded."}
+{"record_id":"dify-45656","modes":["ui_or_ux"],"annotator":"model","note":"Custom video controls disappear in native fullscreen"}
+{"record_id":"dify-45575","modes":[],"annotator":"model","note":"Feature request (show which apps use a model), no defect asserted"}
+{"record_id":"dify-45438","modes":["logic_or_validation"],"annotator":"model","note":"Charts keep querying yesterday's date range after midnight; stale computed range"}
+{"record_id":"dify-45671","modes":[],"annotator":"model","note":"Feature request (collapsible inline threads), no defect asserted"}
+{"record_id":"dify-45566","modes":["crash_or_error"],"annotator":"model","note":"Weighted rerank raises TypeError when an external document has no score; reported as a crash"}
+{"record_id":"dify-45577","modes":[],"annotator":"model","note":"Feature request (bring back annotation reply), no defect asserted"}
+{"record_id":"dify-45568","modes":["data_integrity"],"annotator":"model","note":"A NaN embedding makes every later document store the previous document's vector"}
+{"record_id":"dify-45712","modes":["ui_or_ux"],"annotator":"model","note":"Audio playback resets when an equal srcs array is re-rendered"}
+{"record_id":"dify-45672","modes":["logic_or_validation"],"annotator":"model","note":"Multiple-select constants stringified to Python repr and then fail validation; coercion"}
+{"record_id":"dify-45324","modes":["logic_or_validation"],"annotator":"model","note":"Parser overwrites action_name with non-input keys and collapses multi-block fences"}
+{"record_id":"dify-45531","modes":["logic_or_validation"],"annotator":"model","note":"is_valid_trace_id accepts a trailing newline and bypasses the length limit; validation gap"}
+{"record_id":"dify-45551","modes":["ui_or_ux"],"annotator":"model","note":"Cannot move to the next category to edit after saving"}
+{"record_id":"dify-45405","modes":["config_or_env"],"annotator":"model","note":"Bundled vector stores miss client defaults; sandbox token can diverge"}

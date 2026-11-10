@@ -2,43 +2,66 @@
 
 **Your users already wrote your eval set. You just never turned it into one.**
 
-Turn user complaints into **unreviewed regression-test candidates** for AI agents:
-an evidence-backed failure taxonomy, the exact source sentence behind every
-finding, and a diff between two versions. Deterministic, standard library only,
-no API key, no model calls.
+Turn raw complaints into **unreviewed regression-test candidates** for AI tools:
+an evidence-backed defect taxonomy, a quote from the report behind every finding,
+and a diff between two versions. Deterministic, standard library only, no API key,
+no model calls.
 
 ![complaint-to-eval running the demo in a terminal](assets/demo.gif)
 
-_Generated from a real `cte demo` run by `scripts/make_demo_gif.py`; the numbers
-in the GIF are parsed from that run's output, not hand-typed._
+_Generated from a real `cte demo` run by `scripts/make_demo_gif.py`; the numbers in
+the GIF are parsed from that run's output, not hand-typed._
 
 ```text
 $ python -m complaint_to_eval demo
 records=12 candidates=11 accepted=0
 provenance=synthetic (FABRICATED; demo artefact only, never a metric)
-wrote out/demo/report.json
-wrote out/demo/report.md
-wrote out/demo/promptfoo-candidates.json
 ```
 
-**Note:** `accepted = 0`. There is no human-labelled set yet. Every case produced
-by this tool is a **candidate**, not a labelled example. Nothing here may be used
-to report accuracy, precision, recall, coverage, or a fix rate. See
-[Honesty contract](#honesty-contract).
-
 [中文说明](README.zh-CN.md)
+
+## Read this before trying it
+
+This repo's most useful result so far is a **negative** one, and it is published in
+full rather than buried:
+
+| Claim | Status |
+| --- | --- |
+| "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest clean split. |
+| "The mode labels are right" | ⚠️ Mode-level precision 0.71–0.77 over four clean splits, unchanged across four rounds of signal work. |
+| "It beats flagging everything" | ⚠️ **Only on precision.** Always-flag scores recall 1.000; this does not. |
+| "It produces a human-labelled eval set" | ❌ No. `accepted_cases` is `0`. Every output is a candidate. |
+
+Full method, six rounds of numbers, misses and false positives:
+[`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
 
 ## Why this exists
 
 Teams that run agents already collect complaints: GitHub issues, support tickets,
 app reviews, chat logs. Those complaints almost never become tests. Meanwhile the
 downstream tooling is mature: [promptfoo](https://github.com/promptfoo/promptfoo)
-and [Langfuse](https://github.com/langfuse/langfuse) will happily run an eval
-suite and gate CI on it. The missing piece is upstream: **where does the suite
-come from, and who decided that this complaint means this failure mode?**
+and [Langfuse](https://github.com/langfuse/langfuse) will happily run an eval suite
+and gate CI on it. The missing piece is upstream: **where does the suite come from,
+and who decided that this complaint means this failure mode?**
 
-This project works on that gap. It does not run evals. It produces the raw
-material a human can turn into an eval set.
+This project works on that gap. It does not run evals. It produces the raw material
+a human can turn into an eval set.
+
+### What the first version got wrong (kept, not hidden)
+
+v0.1 shipped eight **LLM-behaviour** modes (`wrong_fact`, `loop_cost`,
+`context_loss`, …) written against a fabricated demo file. Run over **272 real
+GitHub issues** (aider 136, dify 136, lobe 8), **1 of 81 strong signals** ever
+appeared, and the original 191-issue snapshot produced a single candidate.
+
+The cause was not only over-fitting to the demo. It is that **issue trackers of AI
+tools are software defect trackers, not complaint corpora**: 79% of aider issues are
+auto-filed crash reports, and dify issues are UI/config/data bugs. Nobody writes
+"it hallucinated" in an issue tracker; they paste a traceback.
+
+So the repo now carries two taxonomies. `cte run` keeps the original eight modes for
+the feedback-shaped text they were designed for. `cte defects` classifies what
+actually appears in trackers. The measurement above is for `cte defects`.
 
 ## Quickstart
 
@@ -47,17 +70,18 @@ No install needed:
 ```bash
 git clone <this-repo> && cd complaint-to-eval
 python -m complaint_to_eval demo
+python -m complaint_to_eval defects --input issues.jsonl --real --out out/defects
 ```
 
 Or install the `cte` command:
 
 ```bash
 pip install .
-cte run --input feedback.jsonl --real --out out/report
+cte defects --input issues.jsonl --real --out out/defects
 ```
 
-`--real` is a declaration that you checked the licence and consent for that
-corpus. Use `--synthetic` for fabricated data. Omitting both marks the report
+`--real` is a declaration that you checked the licence and consent for that corpus.
+Use `--synthetic` for fabricated data. Omitting both marks the report
 `provenance: unspecified` and prints a warning.
 
 ## Input format
@@ -65,101 +89,108 @@ corpus. Use `--synthetic` for fabricated data. Omitting both marks the report
 `.jsonl` or `.csv`. Lines starting with `//` are ignored.
 
 ```json
-{"id":"r1","text":"回答里直接编造数据，说转化率是 87%。","source":"github-issues","product":"demo","version":"v1"}
+{"id":"r1","text":"Uncaught ImportError in main.py line 12.","source":"github-issues","product":"demo","version":"v1"}
 ```
 
 Accepted text fields: `text`, `feedback`, `body`, `content`, `comment`.
 Optional: `source`, `product`, `version`. Rows without text are skipped.
 
-Personal data is redacted **before** classification and before anything is
-quoted. Evidence offsets refer to the redacted text.
-
-## What you get
-
-| File | Content |
-| --- | --- |
-| `report.json` | findings, candidates, counts, provenance, warnings |
-| `report.md` | readable report with the honesty header repeated |
-| `promptfoo-candidates.json` | staged tests for a human to copy into a config |
-
-A candidate looks like this:
-
-```json
-{
-  "id": "cte-0001",
-  "failure_mode": "wrong_fact",
-  "input": "回答里直接编造数据，说转化率是 87%",
-  "assertion": {"type": "must_not_reproduce_failure_mode", "value": "wrong_fact"},
-  "status": "candidate",
-  "human_review_required": true,
-  "review": null
-}
-```
+Personal data is redacted **before** classification and before anything is quoted.
+Evidence offsets refer to the redacted text.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
 | `cte demo` | run the built-in FABRICATED demo dataset |
-| `cte run --input F --out D [--synthetic\|--real]` | analyse a feedback file |
+| `cte run --input F --out D [--synthetic\|--real]` | LLM-behaviour modes (8) over feedback text |
+| `cte defects --input F --out D [--synthetic\|--real]` | defect modes (10) over issue-tracker text |
 | `cte diff --base A.json --head B.json` | diff two runs (candidates only) |
 | `cte validate --labels F.jsonl` | check label-file structure |
-| `cte taxonomy` | print the draft taxonomy and verify its invariants |
+| `cte taxonomy` | print the LLM-behaviour taxonomy and verify its invariants |
+| `cte defect-taxonomy` | print the defect taxonomy and verify its invariants |
 | `cte privacy --path DIR` | scan data files for residual personal data |
+
+Both analysis commands emit `report.json` / `defects.json`, a Markdown twin, and
+(for `run`) `promptfoo-candidates.json` — deliberately **not** a runnable promptfoo
+config, because shipping unreviewed candidates straight into CI is the mistake this
+project exists to prevent.
+
+## The ten defect modes
+
+| Mode | Fires on | Measured? |
+| --- | --- | --- |
+| `crash_or_error` | uncaught exception, traceback, crash, segfault | **yes** — 0.95–1.00 precision |
+| `data_integrity` | lost, dropped, truncated, corrupted, miscounted data | weak |
+| `logic_or_validation` | coercion, missing validation, duplicate run, wrong exit status | **no** — 0 of 5 caught on the clean split |
+| `config_or_env` | env var / config ignored, install broken | weak |
+| `ui_or_ux` | clipping, misalignment, blocked input, lost focus, stale render | weak |
+| `i18n_or_locale` | missing/wrong translation, English fallback | too rare to measure |
+| `security` | traversal, unauthorized action, bypass, arbitrary exec | too rare to measure |
+| `performance` | slow, timeout, hang, leak | weak |
+| `regression` | worked before, stopped working, regressed since a version | too rare to measure |
+| `docs` | missing/undocumented setup step, README gap | too rare to measure |
+
+Design rules, all enforced by tests: no bare topic nouns (a topic is not a claim);
+negation scope cancels a hit ("no crash" is not a crash); fenced code and inline
+code are blanked before matching, so a *quoted* `ValueError` is not a reported
+crash; redaction happens first; one candidate per (record, mode).
 
 ## Scope: what this is not
 
 - **Not an eval framework and not an observability platform.** It *feeds*
-  promptfoo / Langfuse; it does not replace them. `promptfoo-candidates.json`
-  is deliberately **not** a runnable promptfoo config, because shipping
-  unreviewed candidates straight into CI is the mistake this project exists
-  to prevent.
-- **Not an agent framework, harness, or memory layer.** Those positions are
-  taken.
+  promptfoo / Langfuse; it does not replace them.
+- **Not an agent framework, harness, or memory layer.** Those positions are taken.
 - **Not a release gate.** [release-contract](https://github.com/jian935/release-contract)
-  decides whether a build can ship from offline evidence; this project decides
-  what is worth testing in the first place. Upstream and downstream, with
-  different inputs and outputs — no results or numbers are shared between them.
+  decides whether a build can ship from offline evidence; this project decides what
+  is worth testing in the first place. Upstream and downstream, with different
+  inputs and outputs — no results or numbers are shared between them.
 - **Not a requirement-to-test generator.** `responsibleai/ASSERT` starts from a
   requirements document; this starts from what users actually complained about.
-- **Not a paper taxonomy.** MAST classifies multi-agent failures academically;
-  this ships a working, versionable, reproducible pipeline around a draft
-  taxonomy.
-- **Not a continuation of the author's earlier projects.** `ai-claim-audit`
-  audits numbers inside AI output, `experiment-copilot` decides whether an A/B
-  result can ship, and `career-loop` matches JDs to experience. Different input,
-  different output, different question. What carries over is the method:
-  context-constrained signals, negation scope, human labels, and redaction first.
+- **Not a paper taxonomy.** MAST classifies multi-agent failures academically; this
+  ships a versionable, reproducible pipeline around a draft taxonomy.
+- **Not a continuation of the author's earlier projects.** `ai-claim-audit` audits
+  numbers inside AI output, `experiment-copilot` decides whether an A/B result can
+  ship, and `career-loop` matches JDs to experience. Different input, different
+  output, different question. What carries over is the method.
 
 ## Honesty contract
 
-1. Everything generated is an unreviewed **candidate**. `accepted_cases` is
-   always `0` in v0.1 because no human labels exist.
-2. `complaint_to_eval/demo.jsonl` is **fabricated**. It was written to contain
-   the exact phrases in the taxonomy, so a high hit count is a property of how
-   the file was authored, not evidence of quality. Every report repeats this.
-3. The taxonomy is a **draft** (`0.1.0-draft`). No precision, recall, coverage,
-   or agreement figure is claimed, computed, or implied anywhere.
-4. `cte diff` compares matched phrases on candidates. It reports
+1. Everything generated is an unreviewed **candidate**. `accepted_cases` is always
+   `0`; no human-labelled set exists.
+2. `complaint_to_eval/demo.jsonl` is **fabricated**. It was written to contain the
+   exact phrases in the taxonomy, so a high hit count is a property of how the file
+   was authored, not evidence of quality. Every report repeats this.
+3. Precision/recall figures exist **only** in `eval/defect_holdout/README.md`, only
+   for `cte defects`, and only against **model-generated labels** (`annotator:
+   model`) — never described as human accuracy. Quote the range, not one point, and
+   quote the trivial baselines alongside it.
+4. Six disjoint hold-out splits exist (A–F). Once a split's misses have been read,
+   that split is contaminated forever; every claim is measured on a split that no
+   change had seen. Numbers are never overwritten.
+5. `cte diff` compares matched phrases on candidates. It reports
    `resolved_candidates`, explicitly **not** a fix rate.
-5. When human labels disagree with the rules, fix the labels, not the engine.
-   Full rules in [eval/ANNOTATION_GUIDE.md](eval/ANNOTATION_GUIDE.md).
-6. Raw corpora belong in `.local/` (gitignored). Only aggregate numbers and
-   redacted quotes belong in a public repo.
+6. When human labels disagree with the rules, fix the labels, not the engine.
+   Rules in [eval/ANNOTATION_GUIDE.md](eval/ANNOTATION_GUIDE.md).
+7. Raw corpora belong in `.local/` (gitignored). Only aggregate numbers and redacted
+   quotes belong in a public repo.
 
 ## Roadmap
 
 | Stage | Deliverable |
 | --- | --- |
 | L1 (now) | single-purpose CLI plus an installable Agent Skill |
-| L2 | 300 human-labelled cases, two annotators, agreement + confusion published, dev/hold-out split, versioned accepted set in CI |
+| L2 | 300 human-labelled cases, two annotators, agreement + confusion published, versioned accepted set in CI |
 | L3 | community badcase submissions and a weekly regression report |
 
-Contributions to L1 are welcome in the form of **reverse tests**: a sentence
-that the rules currently misclassify, plus the correct judged mode. Do not send
-a new keyword without a case showing the failure and a precision check against
-the labelled set; generic words are constrained by same-clause context, not
-added bare.
+The known blocker before L2 is design, not effort: four rounds of adding, removing
+and stripping signals left precision flat at 0.71–0.77. A phrase list cannot express
+"topic word plus fault word in the same clause", which is what a human reader is
+doing. That redesign is the next step, and it needs human labels to be judged at all.
+
+Contributions are welcome as **reverse tests**: a sentence the rules currently
+misclassify plus the correct mode. Do not send a new keyword without a case showing
+the failure and a precision check against a labelled split.
 
 ## License
 

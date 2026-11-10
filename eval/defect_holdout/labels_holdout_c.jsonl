@@ -7,7 +7,7 @@
 {"record_id":"aider-5797","modes":[],"annotator":"model","note":"Feature proposal (compiler-backed context for .spx), no defect asserted"}
 {"record_id":"aider-5831","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
 {"record_id":"aider-5925","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
-{"record_id":"aider-5872","modes":["config_or_env"],"annotator":"model","note":"Boundary case: unreadable --message-file is not surfaced (chat loop, exit 0). No uncaught exception. Taxonomy has no 'silent wrong exit' mode; CLI input handling is the closest fit — recorded as a taxonomy gap."}
+{"record_id":"aider-5872","modes":["logic_or_validation"],"annotator":"model","note":"unreadable --message-file still exits 0; wrong exit status, not config (round 6: was config_or_env)"}
 {"record_id":"aider-5814","modes":["crash_or_error"],"annotator":"model","note":"Uncaught KeyError (auto crash report)"}
 {"record_id":"aider-5817","modes":["config_or_env"],"annotator":"model","note":"OR_SITE_URL / OR_APP_NAME overwritten unconditionally instead of respected"}
 {"record_id":"aider-5793","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
@@ -32,8 +32,8 @@
 {"record_id":"dify-45789","modes":["data_integrity"],"annotator":"model","note":"UUIDv7 timestamp silently wraps above 48 bits (wrong values)"}
 {"record_id":"dify-45863","modes":["crash_or_error"],"annotator":"model","note":"Auth/webapp pages crash on malformed percent-encoding"}
 {"record_id":"dify-45901","modes":["ui_or_ux"],"annotator":"model","note":"Upload queue always shows unavailable character count"}
-{"record_id":"dify-45817","modes":["data_integrity"],"annotator":"model","note":"Boundary case: integer variables compared as text, producing wrong comparison results. No dedicated 'type/logic bug' mode; grouped under wrong-value handling."}
+{"record_id":"dify-45817","modes":["logic_or_validation"],"annotator":"model","note":"integer variables compared as text; type coercion (round 6: was data_integrity)"}
 {"record_id":"dify-45776","modes":["data_integrity"],"annotator":"model","note":"Content-control display values missing from extracted DOCX text"}
 {"record_id":"dify-45740","modes":["data_integrity"],"annotator":"model","note":"ReAct payload closes early on a brace, silently skipping the tool call"}
 {"record_id":"dify-45916","modes":["security"],"annotator":"model","note":"Permissioned member gets 403 on monitoring source filter (authorization bug)"}
-{"record_id":"dify-45929","modes":["data_integrity"],"annotator":"model","note":"Boundary case: schedule trigger fires twice on DST fall-back (duplicate execution). Grouped under miscounted/duplicated work."}
+{"record_id":"dify-45929","modes":["logic_or_validation"],"annotator":"model","note":"schedule trigger runs twice on DST fall-back; duplicate execution (round 6: was data_integrity)"}

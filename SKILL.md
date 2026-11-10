@@ -1,6 +1,6 @@
 ---
 name: complaint-to-eval
-description: Turn user complaints, GitHub issues, app reviews or support feedback into UNREVIEWED agent regression-test candidates with evidence quotes and a draft failure-mode taxonomy. Use when someone pastes a batch of negative feedback and asks "what should we test", "help me build an eval set from these complaints", "which failure modes keep coming back", or wants to compare which complaints disappeared between two releases. Also triggers on "把这些吐槽变成评测集" and "看看用户反馈里该测什么". Does NOT run evals, does NOT score a model, and never reports accuracy or a fix rate.
+description: Turn user complaints, GitHub issues, app reviews or support feedback into UNREVIEWED agent regression-test candidates with evidence quotes and a draft failure-mode taxonomy. Use when someone pastes a batch of negative feedback or issue exports and asks "what should we test", "help me build an eval set from these complaints", "which failure modes keep coming back", or wants to compare which complaints disappeared between two releases. Also triggers on "把这些吐槽变成评测集" and "看看用户反馈里该测什么". Does NOT run evals, does NOT score a model, and never reports a fix rate.
 ---
 
 # Complaint to Eval
@@ -26,24 +26,35 @@ ground truth.
 
 - Running evals, scoring a model, or gating CI. Use promptfoo / Langfuse after
   a human has accepted the cases.
-- Reporting accuracy, precision, recall, coverage, agreement or a fix rate.
-  This skill produces no numbers that could support those claims.
+- Computing a fresh accuracy number on someone's corpus. Labels do not exist yet,
+  so any figure would be self-scored.
 - Auditing numbers inside AI output (that is the `ai-claim-audit` skill).
 - Deciding whether an A/B experiment can ship (that is `experiment-copilot`).
 
 ## Workflow
 
-### 1. Establish provenance first
+### 1. Establish provenance first, then pick the taxonomy
 
-Ask where the text came from and whether redistribution is allowed. Then run:
+Ask where the text came from and whether redistribution is allowed. Then decide
+**which** taxonomy fits — this matters more than any flag:
 
 ```bash
-cte run --input feedback.jsonl --real --out out/report      # licence checked
-cte run --input feedback.jsonl --synthetic --out out/report # fabricated data
+# Issue-tracker export (GitHub/GitLab issues): defect modes, 10 classes
+cte defects --input issues.jsonl --real --out out/defects
+
+# Free-form feedback (reviews, chat logs, support tickets): LLM-behaviour modes
+cte run --input feedback.jsonl --real --out out/report
+
+# Fabricated data in either case
+cte defects --input issues.jsonl --synthetic --out out/defects
 ```
 
-Never omit both flags unless you are explicitly okay with an
-`unspecified` provenance warning. Never paste private tickets into a public
+Rule of thumb: if the text contains tracebacks, env vars and file paths it is a
+**defect report**, not a complaint, and `cte run` will find almost nothing
+(measured: 1 of 81 behaviour signals appeared across 272 real issues). If it says
+"it made something up" in prose, use `cte run`.
+
+Never omit both provenance flags. Never paste private tickets into a public
 repo. Raw corpora belong in `.local/`.
 
 ### 2. Read the honesty header before the table
@@ -95,23 +106,33 @@ This project feeds promptfoo / Langfuse; it does not replace them.
 ## Hard rules
 
 1. Every generated case is an unreviewed **candidate**. Never call it a label,
-   a ground truth, or an eval set.
-2. Never report accuracy, precision, recall, coverage, agreement or a fix rate
-   from this tool. No labelled set exists in v0.1.
-3. The built-in demo is FABRICATED. Never quote its hit count as evidence.
-4. Never add a keyword without a failing example and a precision check against
-   labelled data. No bare nouns; English signals keep substring matching.
-5. Redact before quoting, logging, or publishing.
+   a ground truth, or an eval set. `accepted_cases` is always 0.
+2. The only precision/recall figures that exist are in
+   `eval/defect_holdout/README.md`, measured against **model** labels on six
+   disjoint splits. Cite the range (mode-level precision 0.71-0.77) and say
+   "model-labelled", never "human accuracy". Do not compute a new accuracy
+   number from a user's corpus — there is nothing to compare it to.
+3. Be blunt about coverage: the engine is validated only for crashes. On the
+   newest clean split it caught 13 of 15 crash reports and 2 of 12 other defects.
+   If a user's corpus is mostly UI/i18n/data bugs, say the tool is weak there
+   before they rely on it.
+4. The built-in demo is FABRICATED. Never quote its hit count as evidence.
+5. Never add a keyword without a failing example and a precision check against
+   labelled data. No bare nouns (a topic word is not a defect claim); English
+   signals match on a start-of-word boundary; quoted code is blanked before
+   matching.
+6. Redact before quoting, logging, or publishing.
 
 ## Command reference
 
 | Command | Purpose |
 | --- | --- |
 | `cte demo` | FABRICATED wiring demo |
-| `cte run --input F --out D [--real\|--synthetic]` | analyse a corpus |
+| `cte defects --input F --out D [--real\|--synthetic]` | defect modes (10) for issue trackers |
+| `cte run --input F --out D [--real\|--synthetic]` | LLM-behaviour modes (8) for feedback text |
 | `cte diff --base A --head B` | candidate diff between runs |
 | `cte validate --labels F` | label-file structure check |
-| `cte taxonomy` | draft taxonomy + invariants |
+| `cte taxonomy` / `cte defect-taxonomy` | print a taxonomy + verify invariants |
 | `cte privacy --path DIR` | residual personal-data scan |
 
 Requires `pip install .` (or run `python -m complaint_to_eval` from the repo

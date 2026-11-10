@@ -20,9 +20,9 @@
 {"record_id":"aider-5811","modes":[],"annotator":"model","note":"third-party eval promo, not a defect"}
 {"record_id":"aider-5841","modes":["crash_or_error"],"annotator":"model","note":"uncaught exception + traceback (auto crash report)"}
 {"record_id":"aider-5914","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
-{"record_id":"aider-5898","modes":["data_integrity"],"annotator":"model","note":"benchmark leaves tests silently unexecuted (silent incompleteness) - closest mode"}
+{"record_id":"aider-5898","modes":["logic_or_validation"],"annotator":"model","note":"benchmark leaves tests silently unexecuted; silent false state, not lost data (round 6: was data_integrity)"}
 {"record_id":"aider-5802","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
-{"record_id":"dify-45799","modes":["data_integrity"],"annotator":"model","note":"valid archive rejected, filename recovery bug (data handling)"}
+{"record_id":"dify-45799","modes":["logic_or_validation"],"annotator":"model","note":"valid archive rejected; input validation, not data corruption (round 6: was data_integrity)"}
 {"record_id":"dify-45792","modes":["data_integrity"],"annotator":"model","note":"statistics exclude selected end date (wrong count/range)"}
 {"record_id":"dify-45732","modes":[],"annotator":"model","note":"feature request (add vector store backend)"}
 {"record_id":"dify-45844","modes":["docs"],"annotator":"model","note":"zh-CN README omits a setup step (documentation gap)"}

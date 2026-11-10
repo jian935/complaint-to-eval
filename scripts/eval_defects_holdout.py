@@ -95,10 +95,52 @@ def main() -> int:
     mp_lo, mp_hi = wilson(total_tp, total_pred)
     mr_lo, mr_hi = wilson(total_tp, total_label)
 
+    # --- Record-level detection -------------------------------------------------
+    # Mode-level scores punish a right-issue-wrong-bucket call twice (once as a
+    # false positive, once as a miss). For a triage tool the first question is
+    # "did it flag an issue that really has a defect?", so this level is reported
+    # alongside and is the fairer headline for that use.
+    flagged = {rid for rid in scored if engine.get(rid)}
+    has_defect = {rid for rid in scored if labels[rid]}
+    clean = set(scored) - has_defect
+    hit = flagged & has_defect
+    det_p = len(hit) / len(flagged) if flagged else 0.0
+    det_r = len(hit) / len(has_defect) if has_defect else 0.0
+    dp_lo, dp_hi = wilson(len(hit), len(flagged))
+    dr_lo, dr_hi = wilson(len(hit), len(has_defect))
+    clean_flags = sorted(flagged & clean)
+
+    # --- Baselines --------------------------------------------------------------
+    # These corpora are defect-heavy, so a trivial rule can score well. Without
+    # these two lines every number below is uninterpretable.
+    #   always-flag: call every record defective (record level)
+    #   majority-mode: predict the most common labelled mode on every record
+    base_det_p = len(has_defect) / len(scored) if scored else 0.0
+    base_det_r = 1.0 if has_defect else 0.0
+    majority = label_n.most_common(1)[0][0] if label_n else None
+    base_mode_tp = label_n[majority] if majority else 0
+    base_mode_p = base_mode_tp / len(scored) if scored else 0.0
+    base_mode_r = base_mode_tp / total_label if total_label else 0.0
+
     print(f"hold-out records scored: {len(scored)}  (labels are MODEL, not human)")
     print(f"engine candidates: {total_pred}  |  label-positive instances: {total_label}  |  TP: {total_tp}")
-    print(f"MICRO precision = {micro_p:.3f}  [95% Wilson {mp_lo:.3f}, {mp_hi:.3f}]")
-    print(f"MICRO recall    = {micro_r:.3f}  [95% Wilson {mr_lo:.3f}, {mr_hi:.3f}]")
+    print(f"MODE-LEVEL micro precision = {micro_p:.3f}  [95% Wilson {mp_lo:.3f}, {mp_hi:.3f}]")
+    print(f"MODE-LEVEL micro recall    = {micro_r:.3f}  [95% Wilson {mr_lo:.3f}, {mr_hi:.3f}]")
+    print()
+    print(
+        f"RECORD-LEVEL detection precision = {det_p:.3f}  [95% Wilson {dp_lo:.3f}, {dp_hi:.3f}]"
+        f"   ({len(hit)}/{len(flagged)} flagged records really have a defect)"
+    )
+    print(
+        f"RECORD-LEVEL detection recall    = {det_r:.3f}  [95% Wilson {dr_lo:.3f}, {dr_hi:.3f}]"
+        f"   ({len(hit)}/{len(has_defect)} defect records flagged)"
+    )
+    print(f"clean records wrongly flagged: {len(clean_flags)} of {len(clean)}"
+          + (f"  {clean_flags}" if clean_flags else ""))
+    print()
+    print("BASELINES (a trivial rule must not beat the engine):")
+    print(f"  always-flag every record        -> record P {base_det_p:.3f} / R {base_det_r:.3f}")
+    print(f"  always-predict '{majority}'  -> mode   P {base_mode_p:.3f} / R {base_mode_r:.3f}")
     print()
     print(f"{'mode':16} {'prec':>6} {'rec':>6} {'TP':>4} {'pred':>5} {'label':>6}   Wilson(P)")
     for mode in DEFECT_MODES:
@@ -135,6 +177,23 @@ def main() -> int:
                 "micro": {"precision": micro_p, "recall": micro_r,
                           "precision_ci": [mp_lo, mp_hi], "recall_ci": [mr_lo, mr_hi],
                           "candidates": total_pred, "label_positive": total_label, "tp": total_tp},
+                "record_level": {
+                    "detection_precision": det_p,
+                    "detection_recall": det_r,
+                    "precision_ci": [dp_lo, dp_hi],
+                    "recall_ci": [dr_lo, dr_hi],
+                    "flagged": len(flagged),
+                    "defect_records": len(has_defect),
+                    "clean_records": len(clean),
+                    "clean_wrongly_flagged": clean_flags,
+                },
+                "baselines": {
+                    "always_flag_record_precision": base_det_p,
+                    "always_flag_record_recall": base_det_r,
+                    "majority_mode": majority,
+                    "majority_mode_precision": base_mode_p,
+                    "majority_mode_recall": base_mode_r,
+                },
                 "per_mode": {m: {"precision": (tp_n[m] / pred_n[m] if pred_n[m] else None),
                                  "recall": (tp_n[m] / label_n[m] if label_n[m] else None),
                                  "tp": tp_n[m], "pred": pred_n[m], "label": label_n[m]}

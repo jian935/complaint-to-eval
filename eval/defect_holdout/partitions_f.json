@@ -1,0 +1,42 @@
+{
+  "rule": "exclude earlier sets; sort by md5('v6:'+id); first N per corpus",
+  "holdout": {
+    "aider": [
+      "aider-5937",
+      "aider-5878",
+      "aider-5822",
+      "aider-5921",
+      "aider-5877",
+      "aider-5965",
+      "aider-5916",
+      "aider-5894",
+      "aider-5791",
+      "aider-5776",
+      "aider-5826",
+      "aider-5780",
+      "aider-5955",
+      "aider-5855",
+      "aider-5778",
+      "aider-5810"
+    ],
+    "dify": [
+      "dify-45585",
+      "dify-45495",
+      "dify-45616",
+      "dify-45656",
+      "dify-45575",
+      "dify-45438",
+      "dify-45671",
+      "dify-45566",
+      "dify-45577",
+      "dify-45568",
+      "dify-45712",
+      "dify-45672",
+      "dify-45324",
+      "dify-45531",
+      "dify-45551",
+      "dify-45405"
+    ]
+  },
+  "capped": {}
+}

@@ -38,6 +38,7 @@ DEFECT_VERSION = "0.1.0-draft"
 DEFECT_MODES: dict[str, str] = {
     "crash_or_error": "Uncaught exception, traceback, crash, segfault",
     "data_integrity": "Lost, dropped, truncated, corrupted, or miscounted data",
+    "logic_or_validation": "Wrong value/flow: coercion, bad validation, duplicate run, wrong exit status",
     "config_or_env": "Env var / config ignored, not applied, or install broken",
     "ui_or_ux": "Layout, focus, alignment, hover, clipping in the interface",
     "i18n_or_locale": "Missing translations, wrong locale, fallback to English",
@@ -72,9 +73,31 @@ RULES: tuple[DefectRule, ...] = (
             "truncat", "corrupt", "silently wraps", "silently truncat",
             "loses its", "lost data", "data loss", "disappear",
             "wrong count", "wrong page count", "drops the",
-            "rejects a valid", "excludes the selected", "trailing quote",
-            "keeps a trailing", "unexecuted",
+            "excludes the selected", "trailing quote",
+            "keeps a trailing",
             "丢失", "截断", "错乱", "数据丢失", "数据损坏",
+        ),
+    ),
+    DefectRule(
+        "logic_or_validation",
+        strong=(
+            # Wrong value or wrong control flow — as opposed to data that was
+            # actually lost (data_integrity) or a setting that was ignored
+            # (config_or_env). These three were conflated until round 6, which
+            # polluted both of the other two modes.
+            "exits 0 when", "exits with status 0", "exits 0 instead", "wrong exit",
+            "double-encod", "double encod", "encoded twice", "encodes twice",
+            "runs twice", "run twice", "fires twice", "executed twice",
+            "duplicate execution",
+            "compared as text", "treated as text", "coerced",
+            "cannot remove", "cannot delete", "cannot clear",
+            "accepts true", "accepts false", "should be rejected",
+            "leaves an empty", "leaves behind an empty",
+            "wrong value", "wrong result", "incorrect value", "incorrect result",
+            "reported as success", "silently returns an empty", "silently returns empty",
+            "never sends", "discards", "silently unexecuted", "rejects a valid",
+            "leaks into", "off-by-one",
+            "重复执行", "执行两次", "退出码", "取值错误", "判断错误", "类型转换",
         ),
     ),
     DefectRule(
@@ -370,9 +393,9 @@ def analyze_defects(
             "accepted_cases": 0,
             "classified_records": len(classified),
             "unclassified_records": len(records) - len(classified),
-            "note": "Defect candidates from deterministic rules, in-sample on the "
-                    "corpus the signals were read from. Not validated; no "
-                    "precision/recall is claimed. Human review required.",
+            "note": "Defect candidates from deterministic rules. Accuracy was measured "
+                    "on 5 disjoint MODEL-labelled hold-out splits (no human labels); "
+                    "quote the range, not one point. Human review required.",
         },
         "counts": dict(counts),
         "redactions": dict(redactions),

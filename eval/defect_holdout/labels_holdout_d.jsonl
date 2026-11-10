@@ -3,7 +3,7 @@
 {"record_id":"aider-5850","modes":["crash_or_error"],"annotator":"model","note":"Uncaught UnicodeEncodeError (auto crash report)"}
 {"record_id":"aider-5869","modes":[],"annotator":"model","note":"Feature request (directory listing access); the fenced block quotes the assistant's own refusal, not a defect"}
 {"record_id":"aider-5924","modes":["crash_or_error"],"annotator":"model","note":"Uncaught OSError (auto crash report)"}
-{"record_id":"aider-5871","modes":["config_or_env"],"annotator":"model","note":"Boundary case: __main__.py drops main()'s return value, so failures exit 0. Same silent-wrong-exit class as aider-5872; no dedicated mode, closest fit recorded."}
+{"record_id":"aider-5871","modes":["logic_or_validation"],"annotator":"model","note":"__main__ drops main()'s return value so failures exit 0; wrong exit status (round 6: was config_or_env)"}
 {"record_id":"aider-5825","modes":["docs"],"annotator":"model","note":"Asserts a documentation gap in the --auto-test loop docs (also a vendor pitch; the docs claim is the defect)"}
 {"record_id":"aider-5904","modes":[],"annotator":"model","note":"Off-topic question (asks for prompt advice), not a defect report"}
 {"record_id":"aider-5830","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
@@ -24,17 +24,17 @@
 {"record_id":"aider-5972","modes":["security"],"annotator":"model","note":"'..' in a suggested path escapes the repo under --yes-always (path traversal)"}
 {"record_id":"dify-45658","modes":["ui_or_ux"],"annotator":"model","note":"Page shows a stale name after save"}
 {"record_id":"dify-45403","modes":["crash_or_error"],"annotator":"model","note":"Agent node fails with 'str' object has no attribute 'get'"}
-{"record_id":"dify-45705","modes":["data_integrity"],"annotator":"model","note":"Authorization URL built with a double '?' — malformed constructed output; no dedicated malformed-output mode"}
+{"record_id":"dify-45705","modes":["logic_or_validation"],"annotator":"model","note":"authorization URL built with a double '?'; malformed construction (round 6: was data_integrity)"}
 {"record_id":"dify-45715","modes":["ui_or_ux"],"annotator":"model","note":"VideoPlayer keeps stale playback state when the source changes"}
-{"record_id":"dify-45442","modes":["data_integrity"],"annotator":"model","note":"Redo skips the empty-graph snapshot, so a deleted node reappears"}
+{"record_id":"dify-45442","modes":["logic_or_validation"],"annotator":"model","note":"redo skips the empty-graph snapshot; wrong control flow (round 6: was data_integrity)"}
 {"record_id":"dify-45718","modes":["ui_or_ux"],"annotator":"model","note":"Clipboard fallback drops keyboard focus"}
 {"record_id":"dify-45532","modes":["data_integrity"],"annotator":"model","note":"Splitter corrupts non-ASCII separators via unicode_escape decoding"}
-{"record_id":"dify-45611","modes":["data_integrity"],"annotator":"model","note":"normalize_api_base_url appends /v1 to the query string instead of the path"}
-{"record_id":"dify-45625","modes":["data_integrity"],"annotator":"model","note":"Required Number parameter accepts true/false (type validation produces wrong values)"}
+{"record_id":"dify-45611","modes":["logic_or_validation"],"annotator":"model","note":"/v1 appended after the query string instead of the path; malformed construction (round 6: was data_integrity)"}
+{"record_id":"dify-45625","modes":["logic_or_validation"],"annotator":"model","note":"required Number parameter accepts true/false; missing validation (round 6: was data_integrity)"}
 {"record_id":"dify-45558","modes":["config_or_env"],"annotator":"model","note":"Variable default value ignored when the API caller omits it"}
 {"record_id":"dify-45358","modes":["config_or_env"],"annotator":"model","note":"Docker service env overrides ignored; plugin daemon misses connection defaults"}
 {"record_id":"dify-45638","modes":["crash_or_error"],"annotator":"model","note":"Non-numeric metadata value makes retrieval fail with 500 for the whole knowledge base"}
 {"record_id":"dify-45583","modes":[],"annotator":"model","note":"Prompt-injection / vendor-template spam carrying a Dosu advertisement; no defect asserted"}
-{"record_id":"dify-45443","modes":["data_integrity"],"annotator":"model","note":"setInputs cannot remove keys: shallow merge keeps deleted fields"}
+{"record_id":"dify-45443","modes":["logic_or_validation"],"annotator":"model","note":"setInputs cannot remove keys; shallow merge keeps deleted fields (round 6: was data_integrity)"}
 {"record_id":"dify-45362","modes":["docs"],"annotator":"model","note":"Backend architecture guide contains stale statements; asks to clarify conventions"}
-{"record_id":"dify-45441","modes":["data_integrity"],"annotator":"model","note":"Result panel double-encodes structured outputs as a JSON string"}
+{"record_id":"dify-45441","modes":["logic_or_validation"],"annotator":"model","note":"Result panel double-encodes outputs as a JSON string (round 6: was data_integrity)"}

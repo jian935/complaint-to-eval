@@ -32,6 +32,7 @@ SETS: dict[str, tuple[Path, Path]] = {
     "c": (BASE / "labels_holdout_c.jsonl", BASE / "partitions_c.json"),
     "d": (BASE / "labels_holdout_d.jsonl", BASE / "partitions_d.json"),
     "e": (BASE / "labels_holdout_e.jsonl", BASE / "partitions_e.json"),
+    "f": (BASE / "labels_holdout_f.jsonl", BASE / "partitions_f.json"),
 }
 
 

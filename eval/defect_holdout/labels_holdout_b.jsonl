@@ -9,7 +9,7 @@
 {"record_id":"aider-5873","modes":["crash_or_error","config_or_env"],"annotator":"model","note":"invalid color reset to None (config) then every reply crashes"}
 {"record_id":"aider-5888","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
 {"record_id":"aider-5927","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ValueError (auto crash report)"}
-{"record_id":"aider-5879","modes":["data_integrity"],"annotator":"model","note":"failed file write reported as success and counted as edit (silent false state)"}
+{"record_id":"aider-5879","modes":["logic_or_validation"],"annotator":"model","note":"failed write reported as success; silent false state, not lost data (round 6: was data_integrity)"}
 {"record_id":"aider-5836","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
 {"record_id":"aider-5800","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}
 {"record_id":"aider-5774","modes":["crash_or_error"],"annotator":"model","note":"Uncaught ImportError (auto crash report)"}

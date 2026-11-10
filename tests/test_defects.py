@@ -64,6 +64,25 @@ class DefectTaxonomyTests(unittest.TestCase):
         self.assertNotIn("crash_or_error", modes_of("No uncaught exception was observed"))
         self.assertIn("crash_or_error", modes_of("An uncaught exception occurred"))
 
+    def test_logic_or_validation_fires(self):
+        # Wrong value / wrong control flow, added in round 6 so that these stop
+        # being forced into data_integrity or config_or_env.
+        self.assertIn("logic_or_validation",
+                      modes_of("the command exits 0 when main() returns 1"))
+        self.assertIn("logic_or_validation",
+                      modes_of("the result panel double-encodes the payload"))
+        self.assertIn("logic_or_validation",
+                      modes_of("the trigger runs twice when clocks fall back"))
+        self.assertIn("logic_or_validation",
+                      modes_of("integer variables are compared as text"))
+
+    def test_logic_mode_does_not_steal_documented_exit_codes(self):
+        # A tool documenting "exits 0 on pass, 1 on fail" is describing behaviour,
+        # not reporting a wrong status. This collision is why the signal is
+        # "exits 0 when" rather than a bare "exits 0".
+        self.assertNotIn("logic_or_validation",
+                         modes_of("Kane exits 0 on pass, 1 on fail, 2 on setup error"))
+
     def test_word_boundary_does_not_match_inside_word(self):
         # 'hang' must NOT fire inside 'changes' — the bug this guards against.
         self.assertNotIn("performance", modes_of("the program changes files quietly"))
