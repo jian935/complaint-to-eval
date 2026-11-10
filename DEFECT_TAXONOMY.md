@@ -1,12 +1,12 @@
 # Defect-report taxonomy (`defect-0.1.0-draft`)
 
-**Status: DRAFT. Model-evaluated on six disjoint hold-out splits; one split has a
-human reference.** Most precision/recall figures are measured against **model
+**Status: DRAFT. Model-evaluated on six disjoint hold-out splits; one split has
+four human readers.** Most precision/recall figures are measured against **model
 labels** — see [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
-Split G was additionally annotated blind by a human (n = 39); the binary
-"is it a defect" call replicated exactly (κ = 1.000) but **mode-level micro
-precision fell from 0.714 to 0.31**. See
-[`eval/defect_holdout/human_agreement.md`](eval/defect_holdout/human_agreement.md).
+Split G was also annotated blind by four independent readers: they agree strongly
+on whether a row is a defect (Fleiss κ = 0.922) but not on its mode, and against
+them **mode-level micro precision is 0.23–0.38** rather than 0.71–0.77. See
+[`eval/defect_holdout/multi_annotator.md`](eval/defect_holdout/multi_annotator.md).
 `accepted_cases` is still 0 — a labelled split is not an accepted case set.
 
 **Read this first: in practice the engine is a crash detector, and its precision is
@@ -89,6 +89,32 @@ until they are measured: on the hold-out, `ui` precision was 0.00/0.67 and
 `data_integrity` recall 0.00–0.14. Coverage and correctness are different numbers
 and this project reports both.
 
+## Open question: one mode or many
+
+Four readers labelled the same 40 rows. Their single biggest disagreement was not
+*which* mode is right — it was **how many modes to write down**.
+
+- Two readers wrote **1.7 modes per defect** (symptom *and* cause).
+- Two readers, and this project, wrote **1.0**.
+- Every single-mode label fell inside the two-mode union: **20/20, 20/21, 19/20**.
+
+So "the annotators disagree" is mostly "some annotators record the pair
+`data_integrity` + `logic_or_validation`, others record whichever they consider
+primary". The scorer compares mode *sets*, so this choice silently moves every
+mode-level number.
+
+Two rules have to be written before the next measurement:
+
+1. **Granularity** — one mode per report (the primary fault), or every mode the
+   report supports? If the former, the guide must say how to pick the primary one.
+2. **Symptom vs cause** — a value truncated by a type coercion is both
+   `data_integrity` (what the user saw) and `logic_or_validation` (why it
+   happened). Both are currently accepted, so two careful readers can differ
+   without either being wrong.
+
+Until those rules exist, quote mode-level precision with the reference reader
+named, and put the ≥3-of-4 consensus figure beside it.
+
 ## Honest limits
 
 - **Only `crash_or_error` is validated.** Across clean splits it holds 0.95–1.00
@@ -113,10 +139,12 @@ and this project reports both.
   split: the real phrasings ("stringified to Python repr", "accepts a trailing
   newline", "overwrites action_name") were not anticipated. The mode is
   conceptually right; the signals are not there.
-- **One human pass is not validation.** Split G has 39 human-labelled rows, and on
-  those the mode labels disagreed in 8 of 19 defect cases — so the taxonomy's
-  boundaries, not just its signals, are unsettled. Every output is a candidate.
-  `accepted_cases` is always 0.
+- **Human passes are not validation either.** Split G has four blind readers. They
+  agree strongly on *whether* a row is a defect (Fleiss κ = 0.922) and disagree on
+  the mode — but most of that disagreement is granularity (single-mode picks land
+  inside the two-mode union 20/20, 20/21, 19/20), not judgement. The remaining
+  ambiguity is real and unfixed: see "Open question" above. Every output is a
+  candidate. `accepted_cases` is always 0.
 
 ## Progress log
 
@@ -141,8 +169,13 @@ and this project reports both.
     the **mode** labels disagreed on 8 of 19 defect rows. Against the human,
     mode-level micro precision is **0.31 / 0.32**, not 0.71–0.77;
     `logic_or_validation` caught 1 of 11.
-11. ⏳ Not done: a second human on the same rows (to get reader-to-reader κ); the
-    co-occurrence redesign; a sentence-level segmenter.
+11. ✅ Round 9 (four independent readers on set G): Fleiss κ = **0.922** on the
+    binary call; κ against the engine **0.202–0.305**; as a fifth rater the engine
+    drags group agreement from 0.911 to **0.633**. Mode-level precision against
+    each reader is **0.23–0.38** (0.31 / 0.32 against a 3-of-4 consensus). Two
+    project labels are wrong (r05, r38) and are published, not patched.
+12. ⏳ Not done: the granularity / symptom-vs-cause rule; the co-occurrence
+    redesign; a sentence-level segmenter.
 
 Treat `cte defects` as a working prototype: reliable on crash reports, weak on
 everything that requires reading comprehension, and honestly measured.

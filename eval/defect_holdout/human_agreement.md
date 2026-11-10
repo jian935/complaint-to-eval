@@ -8,6 +8,10 @@ text and empty answer columns, with no predicted mode and no existing label.
 - Annotator: one person, tagged `annotator: human`, independent
 - 40 rows returned, 39 scored, 1 marked "unclear" (excluded from kappa)
 - Raw output: [`human_agreement.json`](human_agreement.json)
+- **Scope note:** three further readers later labelled the same split — see
+  [`multi_annotator.md`](multi_annotator.md). The binary result here replicated
+  (four-reader Fleiss κ = 0.922); some single-reader *mode* attributions below did
+  not, and are marked as corrected.
 
 ## Headline
 
@@ -87,19 +91,26 @@ model-labelled and should be read as an upper bound.
 | r38 | dify-45422 | `regression`, `ui_or_ux` | `data_integrity` | `data_integrity` |
 | r40 | dify-45184 | `data_integrity`, `logic_or_validation` | `data_integrity` | `data_integrity` |
 
-Patterns worth naming:
+Patterns worth naming — **now corrected against the four-reader study in
+[`multi_annotator.md`](multi_annotator.md), which supersedes the single-reader
+attribution in this section:**
 
-- **The 400/TypeError trap.** r34 and r35 were labelled `crash_or_error` by the
-  existing reader because the report quotes an HTTP 400 or a `TypeError`. The
-  human reads the same text as "the validation path rejects valid input" and
-  labels logic. This is the same failure seen before: the engine treats a quoted
-  error string as a crash. It is a taxonomy question, not a keyword question.
-- **data vs logic is genuinely ambiguous.** Six of eight disagreements sit on
-  this boundary. A value being silently truncated is both "the data is wrong"
-  and "the code coerced it wrong". Two readers can both be right.
-- **r38 is a real miss by both the labels and the engine.** "Download entry
-  disappears after converting to Pipeline" is a regression, and nothing in the
-  current labels says so.
+- **The 400/TypeError trap is real but not one-sided.** r34 and r35 were labelled
+  `crash_or_error` by this project because the report quotes an HTTP 400 or a
+  `TypeError`. With four readers, r34 splits **3 logic to 2 crash** (one reader
+  wrote both), and r35 splits **3 logic to 3 data** — so "the human reads it as
+  logic" was too strong, but the engine treating a quoted error string as a crash
+  is still the wrong instinct.
+- **data vs logic is partly genuine ambiguity and partly granularity.** Six of
+  eight disagreements sit on this boundary. The four-reader study shows the
+  readers who write two modes always write *both* `data_integrity` and
+  `logic_or_validation`; the readers who write one pick whichever they consider
+  primary. So the boundary is vague, but most of the "disagreement" is a reader
+  choosing to record one side of a pair that both sides agree exists.
+- **r38 is a real miss by the labels, not just the engine.** "Download entry
+  disappears after converting to Pipeline" is a regression. All four readers say
+  `regression` and/or `ui_or_ux`; **this project alone says `data_integrity`**.
+  Recorded as a known label error rather than silently patched.
 - **r37 shows the engine over-firing.** Four modes on one row, three of them
   wrong. `performance` and `ui_or_ux` fired on a report about embedding count
   mismatch.
@@ -114,8 +125,11 @@ defensible, which is exactly why it is excluded from kappa rather than coerced.
 
 ## Limits
 
-1. **One annotator, one pass.** κ measures agreement between two readers, not
-   truth. A third reader would move both the 1.000 and the 0.231.
+1. **This file is one annotator, one pass.** κ here measures agreement between two
+   readers, not truth. Three further readers are analysed in
+   [`multi_annotator.md`](multi_annotator.md): Fleiss κ = 0.922 across four, so the
+   binary call holds — but the mode-level figures below remain single-reader, and
+   the four-reader mode spread is 0.23–0.40.
 2. **n = 39.** A single disagreement is 2.6 percentage points; kappa on 39 rows
    is coarse.
 3. **G is a balanced set, not a sample.** It over-represents non-defects by

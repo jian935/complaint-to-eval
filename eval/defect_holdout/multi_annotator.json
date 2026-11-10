@@ -1,0 +1,1515 @@
+{
+  "annotators": [
+    "甲_严格证据",
+    "乙_宽松意图",
+    "丙_根因多标签",
+    "丁_速读标题"
+  ],
+  "verdict_distribution": {
+    "甲_严格证据": {
+      "不是": 19,
+      "不确定": 1,
+      "是": 20
+    },
+    "乙_宽松意图": {
+      "不是": 17,
+      "是": 23
+    },
+    "丙_根因多标签": {
+      "不是": 19,
+      "是": 21
+    },
+    "丁_速读标题": {
+      "不是": 19,
+      "是": 21
+    }
+  },
+  "pairwise_kappa": {
+    "甲_严格证据|乙_宽松意图": 0.8454425363276091,
+    "甲_严格证据|丙_根因多标签": 0.9486166007905138,
+    "甲_严格证据|丁_速读标题": 0.9486166007905138,
+    "甲_严格证据|本项目标签": 1.0,
+    "甲_严格证据|引擎": 0.23127463863337733,
+    "乙_宽松意图|甲_严格证据": 0.8454425363276091,
+    "乙_宽松意图|丙_根因多标签": 0.8992443324937027,
+    "乙_宽松意图|丁_速读标题": 0.8992443324937027,
+    "乙_宽松意图|本项目标签": 0.8500000000000001,
+    "乙_宽松意图|引擎": 0.305210918114144,
+    "丙_根因多标签|甲_严格证据": 0.9486166007905138,
+    "丙_根因多标签|乙_宽松意图": 0.8992443324937027,
+    "丙_根因多标签|丁_速读标题": 1.0,
+    "丙_根因多标签|本项目标签": 0.95,
+    "丙_根因多标签|引擎": 0.20199501246882795,
+    "丁_速读标题|甲_严格证据": 0.9486166007905138,
+    "丁_速读标题|乙_宽松意图": 0.8992443324937027,
+    "丁_速读标题|丙_根因多标签": 1.0,
+    "丁_速读标题|本项目标签": 0.95,
+    "丁_速读标题|引擎": 0.20199501246882795,
+    "本项目标签|甲_严格证据": 1.0,
+    "本项目标签|乙_宽松意图": 0.8500000000000001,
+    "本项目标签|丙_根因多标签": 0.95,
+    "本项目标签|丁_速读标题": 0.95,
+    "本项目标签|引擎": 0.25,
+    "引擎|甲_严格证据": 0.23127463863337733,
+    "引擎|乙_宽松意图": 0.305210918114144,
+    "引擎|丙_根因多标签": 0.20199501246882795,
+    "引擎|丁_速读标题": 0.20199501246882795,
+    "引擎|本项目标签": 0.25
+  },
+  "fleiss": {
+    "two_categories": 0.9224523612261807,
+    "two_categories_rows": 39,
+    "three_categories": 0.9007598077221274,
+    "with_project_labels": NaN,
+    "with_engine": NaN
+  },
+  "mode_level": {
+    "甲_严格证据": {
+      "tp": 6,
+      "fp": 20,
+      "fn": 14,
+      "precision": 0.23076923076923078,
+      "recall": 0.3,
+      "per_mode": {
+        "crash_or_error": {
+          "tp": 0,
+          "fp": 4,
+          "fn": 1
+        },
+        "data_integrity": {
+          "tp": 1,
+          "fp": 6,
+          "fn": 0
+        },
+        "logic_or_validation": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 9
+        },
+        "config_or_env": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 1
+        },
+        "ui_or_ux": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 2
+        },
+        "i18n_or_locale": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "security": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "performance": {
+          "tp": 1,
+          "fp": 5,
+          "fn": 0
+        },
+        "regression": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "docs": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      }
+    },
+    "乙_宽松意图": {
+      "tp": 10,
+      "fp": 16,
+      "fn": 30,
+      "precision": 0.38461538461538464,
+      "recall": 0.25,
+      "per_mode": {
+        "crash_or_error": {
+          "tp": 0,
+          "fp": 4,
+          "fn": 2
+        },
+        "data_integrity": {
+          "tp": 3,
+          "fp": 4,
+          "fn": 5
+        },
+        "logic_or_validation": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 14
+        },
+        "config_or_env": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 3
+        },
+        "ui_or_ux": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        "i18n_or_locale": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "security": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 1
+        },
+        "performance": {
+          "tp": 2,
+          "fp": 4,
+          "fn": 0
+        },
+        "regression": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "docs": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      }
+    },
+    "丙_根因多标签": {
+      "tp": 9,
+      "fp": 17,
+      "fn": 28,
+      "precision": 0.34615384615384615,
+      "recall": 0.24324324324324326,
+      "per_mode": {
+        "crash_or_error": {
+          "tp": 0,
+          "fp": 4,
+          "fn": 1
+        },
+        "data_integrity": {
+          "tp": 3,
+          "fp": 4,
+          "fn": 5
+        },
+        "logic_or_validation": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 14
+        },
+        "config_or_env": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 3
+        },
+        "ui_or_ux": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        "i18n_or_locale": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "security": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "performance": {
+          "tp": 1,
+          "fp": 5,
+          "fn": 0
+        },
+        "regression": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "docs": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      }
+    },
+    "丁_速读标题": {
+      "tp": 8,
+      "fp": 18,
+      "fn": 13,
+      "precision": 0.3076923076923077,
+      "recall": 0.38095238095238093,
+      "per_mode": {
+        "crash_or_error": {
+          "tp": 0,
+          "fp": 4,
+          "fn": 3
+        },
+        "data_integrity": {
+          "tp": 3,
+          "fp": 4,
+          "fn": 2
+        },
+        "logic_or_validation": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 4
+        },
+        "config_or_env": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 1
+        },
+        "ui_or_ux": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 3
+        },
+        "i18n_or_locale": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "security": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "performance": {
+          "tp": 1,
+          "fp": 5,
+          "fn": 0
+        },
+        "regression": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "docs": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      }
+    },
+    "本项目标签": {
+      "tp": 8,
+      "fp": 18,
+      "fn": 12,
+      "precision": 0.3076923076923077,
+      "recall": 0.4,
+      "per_mode": {
+        "crash_or_error": {
+          "tp": 0,
+          "fp": 4,
+          "fn": 2
+        },
+        "data_integrity": {
+          "tp": 3,
+          "fp": 4,
+          "fn": 1
+        },
+        "logic_or_validation": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 6
+        },
+        "config_or_env": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 1
+        },
+        "ui_or_ux": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 2
+        },
+        "i18n_or_locale": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "security": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "performance": {
+          "tp": 1,
+          "fp": 5,
+          "fn": 0
+        },
+        "regression": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "docs": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      }
+    }
+  },
+  "mode_pairwise": {
+    "甲_严格证据|乙_宽松意图": {
+      "both_yes": 20,
+      "exact_rate": 0.2,
+      "mean_jaccard": 0.6
+    },
+    "甲_严格证据|丙_根因多标签": {
+      "both_yes": 20,
+      "exact_rate": 0.25,
+      "mean_jaccard": 0.625
+    },
+    "甲_严格证据|丁_速读标题": {
+      "both_yes": 20,
+      "exact_rate": 0.7,
+      "mean_jaccard": 0.7
+    },
+    "甲_严格证据|本项目标签": {
+      "both_yes": 20,
+      "exact_rate": 0.8,
+      "mean_jaccard": 0.8
+    },
+    "乙_宽松意图|丙_根因多标签": {
+      "both_yes": 21,
+      "exact_rate": 0.8571428571428571,
+      "mean_jaccard": 0.9285714285714286
+    },
+    "乙_宽松意图|丁_速读标题": {
+      "both_yes": 21,
+      "exact_rate": 0.19047619047619047,
+      "mean_jaccard": 0.5714285714285714
+    },
+    "乙_宽松意图|本项目标签": {
+      "both_yes": 20,
+      "exact_rate": 0.2,
+      "mean_jaccard": 0.575
+    },
+    "丙_根因多标签|丁_速读标题": {
+      "both_yes": 21,
+      "exact_rate": 0.19047619047619047,
+      "mean_jaccard": 0.5476190476190477
+    },
+    "丙_根因多标签|本项目标签": {
+      "both_yes": 20,
+      "exact_rate": 0.2,
+      "mean_jaccard": 0.55
+    },
+    "丁_速读标题|本项目标签": {
+      "both_yes": 20,
+      "exact_rate": 0.85,
+      "mean_jaccard": 0.85
+    }
+  },
+  "no_consensus": [
+    {
+      "row": "r05",
+      "record_id": "aider-5676",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [
+          "config_or_env",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "config_or_env",
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "crash_or_error"
+        ]
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r11",
+      "record_id": "dify-45584",
+      "verdicts": {
+        "甲_严格证据": "不确定",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r13",
+      "record_id": "dify-45560",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [
+          "security"
+        ],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "performance"
+      ]
+    },
+    {
+      "row": "r14",
+      "record_id": "dify-45559",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [
+          "performance"
+        ],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "performance"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "row": "r01",
+      "record_id": "aider-5719",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r02",
+      "record_id": "aider-5713",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r03",
+      "record_id": "aider-5712",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "config_or_env"
+      ]
+    },
+    {
+      "row": "r04",
+      "record_id": "aider-5677",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r05",
+      "record_id": "aider-5676",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [
+          "config_or_env",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "config_or_env",
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "crash_or_error"
+        ]
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r06",
+      "record_id": "aider-5673",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r07",
+      "record_id": "aider-5647",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r08",
+      "record_id": "aider-5646",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r09",
+      "record_id": "aider-5639",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r10",
+      "record_id": "aider-5634",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "config_or_env"
+      ]
+    },
+    {
+      "row": "r11",
+      "record_id": "dify-45584",
+      "verdicts": {
+        "甲_严格证据": "不确定",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r12",
+      "record_id": "dify-45573",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "performance"
+      ]
+    },
+    {
+      "row": "r13",
+      "record_id": "dify-45560",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [
+          "security"
+        ],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "performance"
+      ]
+    },
+    {
+      "row": "r14",
+      "record_id": "dify-45559",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [
+          "performance"
+        ],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "performance"
+      ]
+    },
+    {
+      "row": "r15",
+      "record_id": "dify-45539",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r16",
+      "record_id": "dify-45448",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "performance"
+      ]
+    },
+    {
+      "row": "r17",
+      "record_id": "dify-45355",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": [
+        "data_integrity"
+      ]
+    },
+    {
+      "row": "r18",
+      "record_id": "dify-45352",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r19",
+      "record_id": "dify-45349",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r20",
+      "record_id": "dify-45213",
+      "verdicts": {
+        "甲_严格证据": "不是",
+        "乙_宽松意图": "不是",
+        "丙_根因多标签": "不是",
+        "丁_速读标题": "不是"
+      },
+      "modes": {
+        "甲_严格证据": [],
+        "乙_宽松意图": [],
+        "丙_根因多标签": [],
+        "丁_速读标题": []
+      },
+      "mine": [],
+      "engine": []
+    },
+    {
+      "row": "r21",
+      "record_id": "aider-5761",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "logic_or_validation"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r22",
+      "record_id": "aider-5748",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "security"
+        ],
+        "乙_宽松意图": [
+          "security",
+          "config_or_env"
+        ],
+        "丙_根因多标签": [
+          "security",
+          "config_or_env"
+        ],
+        "丁_速读标题": [
+          "security"
+        ]
+      },
+      "mine": [
+        "security"
+      ],
+      "engine": [
+        "security"
+      ]
+    },
+    {
+      "row": "r23",
+      "record_id": "aider-5706",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "data_integrity",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "data_integrity"
+        ]
+      },
+      "mine": [
+        "data_integrity"
+      ],
+      "engine": [
+        "crash_or_error"
+      ]
+    },
+    {
+      "row": "r24",
+      "record_id": "aider-5681",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "logic_or_validation"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r25",
+      "record_id": "aider-5662",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "logic_or_validation"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r26",
+      "record_id": "aider-5654",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "ui_or_ux"
+        ],
+        "乙_宽松意图": [
+          "ui_or_ux",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "ui_or_ux"
+        ],
+        "丁_速读标题": [
+          "ui_or_ux"
+        ]
+      },
+      "mine": [
+        "ui_or_ux"
+      ],
+      "engine": [
+        "data_integrity"
+      ]
+    },
+    {
+      "row": "r27",
+      "record_id": "aider-5624",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "performance"
+        ],
+        "乙_宽松意图": [
+          "performance"
+        ],
+        "丙_根因多标签": [
+          "performance"
+        ],
+        "丁_速读标题": [
+          "performance"
+        ]
+      },
+      "mine": [
+        "performance"
+      ],
+      "engine": [
+        "performance",
+        "security"
+      ]
+    },
+    {
+      "row": "r28",
+      "record_id": "aider-5622",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "config_or_env"
+        ],
+        "乙_宽松意图": [
+          "config_or_env",
+          "security"
+        ],
+        "丙_根因多标签": [
+          "config_or_env",
+          "security"
+        ],
+        "丁_速读标题": [
+          "config_or_env"
+        ]
+      },
+      "mine": [
+        "config_or_env"
+      ],
+      "engine": [
+        "config_or_env",
+        "security"
+      ]
+    },
+    {
+      "row": "r29",
+      "record_id": "dify-45701",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "config_or_env"
+        ],
+        "乙_宽松意图": [
+          "config_or_env",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "config_or_env"
+        ],
+        "丁_速读标题": [
+          "config_or_env"
+        ]
+      },
+      "mine": [
+        "config_or_env"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r30",
+      "record_id": "dify-45684",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "logic_or_validation"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": [
+        "logic_or_validation"
+      ]
+    },
+    {
+      "row": "r31",
+      "record_id": "dify-45682",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "ui_or_ux"
+        ],
+        "乙_宽松意图": [
+          "ui_or_ux",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "ui_or_ux"
+        ],
+        "丁_速读标题": [
+          "ui_or_ux"
+        ]
+      },
+      "mine": [
+        "ui_or_ux"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r32",
+      "record_id": "dify-45667",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "ui_or_ux"
+        ],
+        "乙_宽松意图": [
+          "ui_or_ux"
+        ],
+        "丙_根因多标签": [
+          "ui_or_ux",
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "ui_or_ux"
+        ]
+      },
+      "mine": [
+        "ui_or_ux"
+      ],
+      "engine": [
+        "data_integrity",
+        "ui_or_ux"
+      ]
+    },
+    {
+      "row": "r33",
+      "record_id": "dify-45609",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "logic_or_validation"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r34",
+      "record_id": "dify-45580",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation",
+          "crash_or_error"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "crash_or_error"
+        ]
+      },
+      "mine": [
+        "crash_or_error"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r35",
+      "record_id": "dify-45547",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "data_integrity"
+        ]
+      },
+      "mine": [
+        "data_integrity"
+      ],
+      "engine": [
+        "crash_or_error",
+        "data_integrity"
+      ]
+    },
+    {
+      "row": "r36",
+      "record_id": "dify-45516",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "data_integrity",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "data_integrity"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": [
+        "crash_or_error"
+      ]
+    },
+    {
+      "row": "r37",
+      "record_id": "dify-45508",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "logic_or_validation"
+        ],
+        "乙_宽松意图": [
+          "data_integrity",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "logic_or_validation",
+          "data_integrity"
+        ],
+        "丁_速读标题": [
+          "data_integrity"
+        ]
+      },
+      "mine": [
+        "logic_or_validation"
+      ],
+      "engine": [
+        "crash_or_error",
+        "data_integrity",
+        "performance",
+        "ui_or_ux"
+      ]
+    },
+    {
+      "row": "r38",
+      "record_id": "dify-45422",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "regression"
+        ],
+        "乙_宽松意图": [
+          "ui_or_ux",
+          "regression"
+        ],
+        "丙_根因多标签": [
+          "regression",
+          "ui_or_ux"
+        ],
+        "丁_速读标题": [
+          "ui_or_ux"
+        ]
+      },
+      "mine": [
+        "data_integrity"
+      ],
+      "engine": [
+        "data_integrity"
+      ]
+    },
+    {
+      "row": "r39",
+      "record_id": "dify-45391",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "crash_or_error"
+        ],
+        "乙_宽松意图": [
+          "crash_or_error",
+          "ui_or_ux"
+        ],
+        "丙_根因多标签": [
+          "crash_or_error",
+          "ui_or_ux"
+        ],
+        "丁_速读标题": [
+          "crash_or_error"
+        ]
+      },
+      "mine": [
+        "crash_or_error"
+      ],
+      "engine": []
+    },
+    {
+      "row": "r40",
+      "record_id": "dify-45184",
+      "verdicts": {
+        "甲_严格证据": "是",
+        "乙_宽松意图": "是",
+        "丙_根因多标签": "是",
+        "丁_速读标题": "是"
+      },
+      "modes": {
+        "甲_严格证据": [
+          "data_integrity"
+        ],
+        "乙_宽松意图": [
+          "data_integrity",
+          "logic_or_validation"
+        ],
+        "丙_根因多标签": [
+          "data_integrity",
+          "logic_or_validation"
+        ],
+        "丁_速读标题": [
+          "data_integrity"
+        ]
+      },
+      "mine": [
+        "data_integrity"
+      ],
+      "engine": [
+        "data_integrity"
+      ]
+    }
+  ]
+}

@@ -33,7 +33,7 @@ full rather than buried:
 | Claim | Status |
 | --- | --- |
 | "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest random split. |
-| "The mode labels are right" | ⚠️ **Unsettled.** Against model labels, mode-level precision 0.71–0.77. Against a **blind human** on one split: **0.31**, with 8 of 19 defect rows given a different mode. |
+| "The mode labels are right" | ⚠️ **Unsettled.** Against model labels 0.71–0.77; against **four blind human readers** on one split, **0.23–0.38**. Readers agree strongly on *whether* something is broken (Fleiss κ = 0.922), not on *which* mode. |
 | "It beats flagging everything" | ⚠️ **Only on precision, and only barely.** On a balanced 50/50 split: 0.632 precision / 0.600 recall, against **0.500 / 1.000** for "flag everything". |
 | "Precision 0.94 means it is accurate" | ❌ That figure comes from a feed that is **90% defect reports**. Reweighted to a 25%-defect queue it is **0.36**. |
 | "It produces a human-labelled eval set" | ❌ No. One split has human labels; `accepted_cases` is still `0`. |

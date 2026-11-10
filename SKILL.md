@@ -110,9 +110,10 @@ This project feeds promptfoo / Langfuse; it does not replace them.
 2. The only precision/recall figures that exist are in
    `eval/defect_holdout/README.md`, measured against **model** labels on six
    disjoint splits. Cite the range (mode-level precision 0.71-0.77) and say
-   "model-labelled", never "human accuracy". **One split (G) also has 39 blind
-   human labels**: there the binary call replicated (κ = 1.000) but mode-level
-   precision was 0.31, so treat 0.71-0.77 as an upper bound. Do not compute a new
+   "model-labelled", never "human accuracy". **Split G also has four blind human
+   readers**: they agree strongly on whether something is a defect (Fleiss
+   κ = 0.922) but not on the mode, and against them mode-level precision is
+   **0.23-0.38** — so treat 0.71-0.77 as an upper bound. Do not compute a new
    accuracy number from a user's corpus — there is nothing to compare it to.
 3. Be blunt about coverage: the engine is validated only for crashes. On the
    newest clean split it caught 13 of 15 crash reports and 2 of 12 other defects.

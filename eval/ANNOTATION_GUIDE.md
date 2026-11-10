@@ -1,12 +1,13 @@
 # Annotation guide
 
-**Current status: one human-labelled split (G, n = 39), 0 accepted cases.**
+**Current status: one split (G) labelled by four humans, 0 accepted cases.**
 Every other measurement is compared against **model-generated** labels
-(`annotator: model`), and every result file says so. On the human split the binary
-"is it a defect" call replicated exactly (κ = 1.000) but the mode labels disagreed
-in 8 of 19 defect rows — see
-[`defect_holdout/human_agreement.md`](defect_holdout/human_agreement.md). This guide
-has two parts because the repo carries two taxonomies:
+(`annotator: model`), and every result file says so. On split G the four readers
+agreed strongly on *whether* a row is a defect (Fleiss κ = 0.922) but not on its
+mode; single-mode labels fell inside the two-mode union 20/20, 20/21 and 19/20 —
+i.e. most mode "disagreement" is granularity, not judgement. See
+[`defect_holdout/multi_annotator.md`](defect_holdout/multi_annotator.md). This
+guide has two parts because the repo carries two taxonomies:
 
 - **Part A — defect reports** (`cte defects`, 10 modes): the current focus, and the
   only path with published numbers.
@@ -30,6 +31,13 @@ label is data, not a gap**; precision is meaningless without it.
 
 Judge the **report**, not the wording. If the report says "it silently drops my
 edits" the mode is `data_integrity` even though the word "data" never appears.
+
+**Granularity is not decided yet — say what you did.** Four readers on one split
+disagreed more about how many modes to write than about which: two wrote 1.7 per
+defect, two wrote 1.0, and every single-mode pick fell inside the two-mode union
+(20/20, 20/21, 19/20). Until a convention is fixed, record **every mode the report
+supports** and say in the free-text field which one you consider primary. Mixing
+conventions silently moves every mode-level number.
 
 ## A2. The ten modes
 

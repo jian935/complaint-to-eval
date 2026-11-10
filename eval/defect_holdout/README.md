@@ -4,10 +4,10 @@
 Every number here means "how well the deterministic rules agree with one careful
 reader", not human accuracy. `accepted_cases` is still 0.
 
-39 of the 40 G rows were also annotated **blind by a human** — see
-[`human_agreement.md`](human_agreement.md). It is the only human reference in the
-project, and it moves the mode-level number a lot: the binary call replicated
-exactly, the mode labels did not.
+The 40 G rows were also annotated **blind by four independent readers** — see
+[`multi_annotator.md`](multi_annotator.md). The binary call replicates strongly
+(Fleiss κ = 0.922); the mode labels do not, and mode-level precision against them
+is 0.23–0.38.
 
 Six **pairwise disjoint** splits exist. Each round is an error-analysis loop: read
 the misses/false positives of set *N*, change something on principle, then measure
@@ -17,9 +17,9 @@ overwritten, so anyone can check whether a result came from tuning.
 ## The headline, in four lines
 
 - **Mode-level** (right issue *and* right bucket): precision ≈ 0.71–0.77,
-  recall ≈ 0.56–0.80 — against **model labels**. Against the 39 human labels on
-  set G the same engine scores **0.31 / 0.32**. Read the 0.71–0.77 range as an
-  upper bound, not a point estimate.
+  recall ≈ 0.56–0.80 — against **model labels**. Against the four human readers
+  on set G the same engine scores **0.23–0.38**, and 0.31 / 0.32 against a 3-of-4
+  consensus. Read the 0.71–0.77 range as an upper bound, not a point estimate.
 - **In practice this is a crash detector.** On set F it found 13 of 15 crashes and
   **2 of 12 non-crash defects**.
 - **Precision depends almost entirely on how many non-defects the queue contains.**
@@ -28,23 +28,34 @@ overwritten, so anyone can check whether a result came from tuning.
   50/50 split (set G), record-level precision is **0.632**, and the trivial
   "flag everything" rule scores **0.500 / 1.000** against it.
 
-### Human check on set G (n = 39)
+### Human check on set G (4 readers)
 
-A human annotated set G blind: the workbook carried issue text and empty answer
-columns, no predicted mode and no existing label.
+Four annotators labelled set G blind: the workbook carried issue text and empty
+answer columns, no predicted mode and no existing label.
 
-| | Human vs existing labels | Human vs engine |
-| --- | --- | --- |
-| Is it a defect at all | κ = **1.000** | κ = **0.231** |
+| Question | Result |
+| --- | --- |
+| Do readers agree on "is this a defect"? | **Fleiss κ = 0.922** |
+| Does the engine agree with any reader? | κ = **0.202–0.305** |
+| Does the engine belong to the group? | No — as a 5th rater it drops Fleiss **0.911 → 0.633** |
+| Mode-level precision, engine vs each reader | **0.23 – 0.38** (vs this project's own labels: 0.31) |
+| Mode-level, against 3-of-4 consensus | **0.31 / 0.32** |
 
-The binary judgement replicated on all 39 scored rows, including every
-non-defect. The **mode** labels disagreed on 8 of 19 defect rows — mostly on the
-data-vs-logic boundary — and mode-level micro precision fell from 0.714 to
-**0.31**. `logic_or_validation` recall is 0.09: the human found 11 instances, the
-engine found 1.
+The binary judgement is reliable. The mode labels are **not yet comparable across
+readers**: those who write two modes nearly always write `data_integrity` *and*
+`logic_or_validation`, and the single-mode labels fall inside the two-mode union
+**20/20, 20/21 and 19/20**. The annotation procedure never fixed whether a report
+gets one mode or all of them — that missing rule, not the taxonomy, is the source
+of most apparent disagreement.
 
-All eight disagreements, one excluded "unclear" row and the limits:
-[`human_agreement.md`](human_agreement.md).
+`logic_or_validation` is the clearest engine gap: all four readers call it on 5
+rows, the engine emits it on **1**.
+
+Two project labels are known to be wrong (r05 is a false negative, r38 has a wrong
+mode) and are published rather than silently patched — changing a label after the
+fact changes what the numbers above mean. Writeups:
+[`human_agreement.md`](human_agreement.md) (single reader, superseded in scope) and
+[`multi_annotator.md`](multi_annotator.md) (four readers, current).
 
 ### Prior sensitivity (record level, from set G, n_clean = 20)
 
