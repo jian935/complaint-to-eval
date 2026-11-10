@@ -14,13 +14,13 @@ this project deliberately stops short of.
 
 ![complaint-to-eval running the demo in a terminal](assets/demo.gif)
 
-_Generated from a real `cte demo` run by `scripts/make_demo_gif.py`; the numbers in
-the GIF are parsed from that run's output, not hand-typed._
+_Generated from a real `cte defects` run on the committed fixture by
+`scripts/make_demo_gif.py`. Every line in the GIF is parsed from that run's
+output — nothing is hand-typed, so you can reproduce it exactly._
 
 ```text
-$ python -m complaint_to_eval demo
-records=12 candidates=11 accepted=0
-provenance=synthetic (FABRICATED; demo artefact only, never a metric)
+$ python -m complaint_to_eval defects --input tests/fixtures/defect_input.jsonl --synthetic --out out/defects
+records=5 classified=4 unclassified=1 candidates=4 provenance=synthetic
 ```
 
 [中文说明](README.zh-CN.md)

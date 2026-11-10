@@ -12,13 +12,12 @@
 
 ![complaint-to-eval 在终端跑 demo](assets/demo.gif)
 
-_由 `scripts/make_demo_gif.py` 直接抓真实 `cte demo` 输出渲染；gif 里的数字来自
-那次真实运行，不是手敲的。_
+_由 `scripts/make_demo_gif.py` 在仓库自带的 fixture 上直接跑真实 `cte defects`
+并抓输出渲染。gif 里每一行都来自那次运行，没有一行是手敲的，所以你可以完全复现。_
 
 ```text
-$ python -m complaint_to_eval demo
-records=12 candidates=11 accepted=0
-provenance=synthetic (FABRICATED; demo artefact only, never a metric)
+$ python -m complaint_to_eval defects --input tests/fixtures/defect_input.jsonl --synthetic --out out/defects
+records=5 classified=4 unclassified=1 candidates=4 provenance=synthetic
 ```
 
 ## 用之前先看这段
