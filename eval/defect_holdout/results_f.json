@@ -1,0 +1,192 @@
+{
+  "scored": 32,
+  "annotator": "model",
+  "micro": {
+    "precision": 0.7142857142857143,
+    "recall": 0.5555555555555556,
+    "precision_ci": [
+      0.500432261771624,
+      0.8618632425437179
+    ],
+    "recall_ci": [
+      0.37312719479576884,
+      0.7241440232992717
+    ],
+    "candidates": 21,
+    "label_positive": 27,
+    "tp": 15
+  },
+  "record_level": {
+    "detection_precision": 0.9444444444444444,
+    "detection_recall": 0.6296296296296297,
+    "precision_ci": [
+      0.7424220019799247,
+      0.9901250641690756
+    ],
+    "recall_ci": [
+      0.442289046234463,
+      0.7846771293206314
+    ],
+    "flagged": 18,
+    "defect_records": 27,
+    "clean_records": 5,
+    "clean_wrongly_flagged": [
+      "dify-45575"
+    ]
+  },
+  "baselines": {
+    "always_flag_record_precision": 0.84375,
+    "always_flag_record_recall": 1.0,
+    "majority_mode": "crash_or_error",
+    "majority_mode_precision": 0.46875,
+    "majority_mode_recall": 0.5555555555555556
+  },
+  "per_mode": {
+    "crash_or_error": {
+      "precision": 1.0,
+      "recall": 0.8666666666666667,
+      "tp": 13,
+      "pred": 13,
+      "label": 15
+    },
+    "data_integrity": {
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "tp": 1,
+      "pred": 3,
+      "label": 1
+    },
+    "logic_or_validation": {
+      "precision": null,
+      "recall": 0.0,
+      "tp": 0,
+      "pred": 0,
+      "label": 5
+    },
+    "config_or_env": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "tp": 0,
+      "pred": 1,
+      "label": 1
+    },
+    "ui_or_ux": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "tp": 0,
+      "pred": 2,
+      "label": 4
+    },
+    "i18n_or_locale": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    },
+    "security": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "tp": 1,
+      "pred": 2,
+      "label": 1
+    },
+    "performance": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    },
+    "regression": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    },
+    "docs": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    }
+  },
+  "misses": [
+    [
+      "aider-5878",
+      "logic_or_validation"
+    ],
+    [
+      "aider-5855",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45495",
+      "crash_or_error"
+    ],
+    [
+      "dify-45616",
+      "crash_or_error"
+    ],
+    [
+      "dify-45656",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45438",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45712",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45672",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45324",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45531",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45551",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45405",
+      "config_or_env"
+    ]
+  ],
+  "false_positives": [
+    [
+      "dify-45656",
+      "data_integrity"
+    ],
+    [
+      "dify-45575",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45575",
+      "config_or_env"
+    ],
+    [
+      "dify-45566",
+      "data_integrity"
+    ],
+    [
+      "dify-45568",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45531",
+      "security"
+    ]
+  ]
+}

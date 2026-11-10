@@ -111,6 +111,12 @@ python scripts/eval_defects_holdout.py --holdout .local/corpus/holdoutF.jsonl \
     --labels eval/defect_holdout/labels_holdout_f.jsonl --out out/eval_defects_f.json
 ```
 
+`out/` is gitignored, so the headline run is also committed verbatim as
+[`results_f.json`](results_f.json) — that file is **generated output, never
+hand-edited**. It contains record ids and mode labels only, no issue text. Earlier
+rounds' raw outputs are not committed; their numbers survive in the table above and
+in the commit messages, which is the only place they can be checked against.
+
 ## Per-mode detail on set F (clean)
 
 | Mode | Precision | Recall | TP | pred | label |
