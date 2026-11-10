@@ -124,6 +124,13 @@ class V2ArtefactTests(unittest.TestCase):
         # reader quietly re-use them as gold and break the blind design.
         self.assertFalse((BASE / "labels_holdout_h.jsonl").exists())
 
+    def test_workbook_generator_keeps_the_blind_and_standalone_rules(self):
+        # The second reader is sent ONE file. If these lines disappear from the
+        # generator, a regenerated workbook silently loses its instructions.
+        src = SCRIPT.with_name("make_labeling_workbook.py").read_text(encoding="utf-8")
+        for phrase in ("单独发这一个", "另有人填过", "不要硬猜", "十问顺序"):
+            self.assertIn(phrase, src)
+
 
 @unittest.skipUnless(importlib.util.find_spec("openpyxl"),
                      "openpyxl is not installed (CI runs dependency-free)")
