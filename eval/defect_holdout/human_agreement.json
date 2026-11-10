@@ -1,0 +1,571 @@
+{
+  "labelled_rows": 40,
+  "scored_rows": 39,
+  "unclear_rows": [
+    "r05"
+  ],
+  "record_level": {
+    "human_vs_reader_agreement": 1.0,
+    "human_vs_reader_kappa": 1.0,
+    "human_vs_engine_agreement": 0.6153846153846154,
+    "human_vs_engine_kappa": 0.23127463863337733,
+    "engine_precision": 0.631578947368421,
+    "engine_recall": 0.6,
+    "engine_precision_ci": [
+      0.41039157498156714,
+      0.8085072762372616
+    ],
+    "tp": 12
+  },
+  "mode_level": {
+    "crash_or_error": {
+      "tp": 0,
+      "fp": 4,
+      "fn": 1
+    },
+    "data_integrity": {
+      "tp": 2,
+      "fp": 5,
+      "fn": 1
+    },
+    "logic_or_validation": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 10
+    },
+    "config_or_env": {
+      "tp": 1,
+      "fp": 2,
+      "fn": 1
+    },
+    "ui_or_ux": {
+      "tp": 1,
+      "fp": 1,
+      "fn": 3
+    },
+    "i18n_or_locale": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    },
+    "security": {
+      "tp": 2,
+      "fp": 1,
+      "fn": 0
+    },
+    "performance": {
+      "tp": 1,
+      "fp": 5,
+      "fn": 0
+    },
+    "regression": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "docs": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  "micro": {
+    "tp": 8,
+    "fp": 18,
+    "fn": 17,
+    "precision": 0.3076923076923077,
+    "recall": 0.32
+  },
+  "rows": [
+    {
+      "row": "r01",
+      "record_id": "aider-5719",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "整条是请求在文档里列出/链接第三方托管 MCP 服务并主动提供细节，属推广性质的功能请求，未主张现有功能异常。"
+    },
+    {
+      "row": "r02",
+      "record_id": "aider-5713",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "请求把某第三方 OpenAI 兼容供应商写进文档并愿提 PR，属文档增补的功能请求，且明说现有 openai-compat 路径可用。"
+    },
+    {
+      "row": "r03",
+      "record_id": "aider-5712",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "config_or_env"
+      ],
+      "human_reason": "通篇是希望新增 hook 系统的功能提案（附配置示例与验收标准），未主张现有行为出错。"
+    },
+    {
+      "row": "r04",
+      "record_id": "aider-5677",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "诉求是新增带硬上限的自动续跑能力，Problem 段只说缺少该能力，不是现有功能坏了。"
+    },
+    {
+      "row": "r05",
+      "record_id": "aider-5676",
+      "human_verdict": "不确定",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "问题段称免费/BYOK 用户会撞上失效的模型 ID 与 404/402 报错、引导仍钉住过期的 free 模型（像故障），但全文主线是提 fallback 方案并愿开 PR；卡在算缺陷报告还是功能请求。"
+    },
+    {
+      "row": "r06",
+      "record_id": "aider-5673",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "标题即 [Question]，正文只是问项目是否四个月没更新，没有主张任何功能损坏。"
+    },
+    {
+      "row": "r07",
+      "record_id": "aider-5647",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "标为 [Discussion]，讨论维护状态、作者失联与社区接盘可能并提问，无缺陷主张。"
+    },
+    {
+      "row": "r08",
+      "record_id": "aider-5646",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "正文只有一句无关的视频标题，没有任何可判断的描述，不构成缺陷报告。"
+    },
+    {
+      "row": "r09",
+      "record_id": "aider-5639",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "请求在文档里增加一个 OpenAI 兼容端点示例（附带付费推广信息），属文档/功能请求。"
+    },
+    {
+      "row": "r10",
+      "record_id": "aider-5634",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "config_or_env"
+      ],
+      "human_reason": "是自愿贡献基准测试数据与合作推广的来信，明确说不请求集成、不是报错。"
+    },
+    {
+      "row": "r11",
+      "record_id": "dify-45584",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "标为 Chore/Refactor 的重构范围清单（正文是机器人回答的摘录），无功能故障主张。"
+    },
+    {
+      "row": "r12",
+      "record_id": "dify-45573",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "performance"
+      ],
+      "human_reason": "希望 Build chat 能独立选模型，属功能请求；现有行为被当作设计限制描述而非故障。"
+    },
+    {
+      "row": "r13",
+      "record_id": "dify-45560",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "performance"
+      ],
+      "human_reason": "请求增加先审后发的输出审核模式，把当前流式抢先展示当作既有取舍，非故障主张。"
+    },
+    {
+      "row": "r14",
+      "record_id": "dify-45559",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "performance"
+      ],
+      "human_reason": "希望给 MCP 调用的各阶段加独立 span 以便看耗时，属可观测性功能请求。"
+    },
+    {
+      "row": "r15",
+      "record_id": "dify-45539",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "正文仅一句 support personal access token，属功能请求且没有任何故障描述。"
+    },
+    {
+      "row": "r16",
+      "record_id": "dify-45448",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "performance"
+      ],
+      "human_reason": "请求把工作流协同的会话/房间/事件指标暴露到 OpenTelemetry，属功能请求。"
+    },
+    {
+      "row": "r17",
+      "record_id": "dify-45355",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [
+        "data_integrity"
+      ],
+      "human_reason": "标为 chore(deps) 的依赖升级任务，breaks existing callers 说的是升级后可能破坏，非当前故障。"
+    },
+    {
+      "row": "r18",
+      "record_id": "dify-45352",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "标为 Refactor/Chore 的导出格式统一（一律用 version 2），属重构提案。"
+    },
+    {
+      "row": "r19",
+      "record_id": "dify-45349",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "1.19.0 发布准备清单类 chore，无任何功能异常主张。"
+    },
+    {
+      "row": "r20",
+      "record_id": "dify-45213",
+      "human_verdict": "不是",
+      "human_modes": [],
+      "reader_modes": [],
+      "engine_modes": [],
+      "human_reason": "是给官方 difyctl Skill 增加发布后巡检的讨论提案，文中明确声明不是在报运行时 bug。"
+    },
+    {
+      "row": "r21",
+      "record_id": "aider-5761",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [],
+      "human_reason": "测试命令以非零退出且无输出时函数返回空串，调用方按返回值真假判通过，失败的练习被记成已解决。"
+    },
+    {
+      "row": "r22",
+      "record_id": "aider-5748",
+      "human_verdict": "是",
+      "human_modes": [
+        "security"
+      ],
+      "reader_modes": [
+        "security"
+      ],
+      "engine_modes": [
+        "security"
+      ],
+      "human_reason": "架构模式的编辑确认门 --auto-accept-architect 默认为 True，改动不经确认即落盘，属默认绕过确认的安全缺陷。"
+    },
+    {
+      "row": "r23",
+      "record_id": "aider-5706",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "data_integrity"
+      ],
+      "engine_modes": [
+        "crash_or_error"
+      ],
+      "human_reason": "文件提及检测把回复里顺带出现的已有文件名当成加文件请求，整条本来有效的多文件编辑被静默丢弃。"
+    },
+    {
+      "row": "r24",
+      "record_id": "aider-5681",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [],
+      "human_reason": "基准只按测试命令退出码判对错，而模型可写 conftest.py 等运行配置把失败强制改成退出 0，分数被刷高。"
+    },
+    {
+      "row": "r25",
+      "record_id": "aider-5662",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [],
+      "human_reason": "find_filename 用未 strip 的行判断围栏续行，缩进的 ``` 让循环提前 break 返回 None，合法编辑块报找不到文件名。"
+    },
+    {
+      "row": "r26",
+      "record_id": "aider-5654",
+      "human_verdict": "是",
+      "human_modes": [
+        "ui_or_ux"
+      ],
+      "reader_modes": [
+        "ui_or_ux"
+      ],
+      "engine_modes": [
+        "data_integrity"
+      ],
+      "human_reason": "live_window 大于已渲染行数时 num_lines 变负数被当成切片起点，流式输出开头几行从 live 区域消失。"
+    },
+    {
+      "row": "r27",
+      "record_id": "aider-5624",
+      "human_verdict": "是",
+      "human_modes": [
+        "performance"
+      ],
+      "reader_modes": [
+        "performance"
+      ],
+      "engine_modes": [
+        "performance",
+        "security"
+      ],
+      "human_reason": "run_cmd_subprocess 逐字符 read(1) 并逐字符 flush，2MB 输出耗时 47s 而基线 0.79s，约慢 60 倍。"
+    },
+    {
+      "row": "r28",
+      "record_id": "aider-5622",
+      "human_verdict": "是",
+      "human_modes": [
+        "config_or_env",
+        "security"
+      ],
+      "reader_modes": [
+        "config_or_env"
+      ],
+      "engine_modes": [
+        "config_or_env",
+        "security"
+      ],
+      "human_reason": ".env 以 override=True 加载，仓库自带 .env 会静默覆盖用户 shell 导出的变量，可把请求和密钥重定向到他人端点。"
+    },
+    {
+      "row": "r29",
+      "record_id": "dify-45701",
+      "human_verdict": "是",
+      "human_modes": [
+        "config_or_env"
+      ],
+      "reader_modes": [
+        "config_or_env"
+      ],
+      "engine_modes": [],
+      "human_reason": "服务端已放开到 20MiB，但默认值上传器拿不到 fileUploadConfig，仍按内置 10MiB 限制拒绝 12MiB 图片。"
+    },
+    {
+      "row": "r30",
+      "record_id": "dify-45684",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [
+        "logic_or_validation"
+      ],
+      "human_reason": "表单数组属性按 urlencode 直接编码成 Python 列表字符串 ids=[1, 2]，而不是重复字段 ids=1&ids=2。"
+    },
+    {
+      "row": "r31",
+      "record_id": "dify-45682",
+      "human_verdict": "是",
+      "human_modes": [
+        "ui_or_ux"
+      ],
+      "reader_modes": [
+        "ui_or_ux"
+      ],
+      "engine_modes": [],
+      "human_reason": "closeUnclosedThinkTags 给未闭合的思考块补结束标记，流式中的思考被当成已完成，显示 Thought (0.0s) 并收起。"
+    },
+    {
+      "row": "r32",
+      "record_id": "dify-45667",
+      "human_verdict": "是",
+      "human_modes": [
+        "ui_or_ux"
+      ],
+      "reader_modes": [
+        "ui_or_ux"
+      ],
+      "engine_modes": [
+        "data_integrity",
+        "ui_or_ux"
+      ],
+      "human_reason": "对话框传入固定 max-w-* 覆盖了基础的视口宽度上限，窄屏下弹窗超出视口被裁掉。"
+    },
+    {
+      "row": "r33",
+      "record_id": "dify-45609",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [],
+      "human_reason": "cron 表达式只在算字段数时 strip，startswith('@') 与 croniter 仍用原串，前后空格导致校验报错、定时触发静默失效。"
+    },
+    {
+      "row": "r34",
+      "record_id": "dify-45580",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "crash_or_error"
+      ],
+      "engine_modes": [],
+      "human_reason": "请求未带 doc_form 时被默认成 text_model 再与知识库实际形式比对，父子/问答库的增改一律返回 400。"
+    },
+    {
+      "row": "r35",
+      "record_id": "dify-45547",
+      "human_verdict": "是",
+      "human_modes": [
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "data_integrity"
+      ],
+      "engine_modes": [
+        "crash_or_error",
+        "data_integrity"
+      ],
+      "human_reason": "按 str(value) 里有无小数点决定 int 还是 float，1e-07 走 int() 被截断成 0。"
+    },
+    {
+      "row": "r36",
+      "record_id": "dify-45516",
+      "human_verdict": "是",
+      "human_modes": [
+        "data_integrity",
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [
+        "crash_or_error"
+      ],
+      "human_reason": "未校验供应商返回的 index 范围，负索引在 Python 里回绕，静默返回错误文档。"
+    },
+    {
+      "row": "r37",
+      "record_id": "dify-45508",
+      "human_verdict": "是",
+      "human_modes": [
+        "data_integrity",
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "logic_or_validation"
+      ],
+      "engine_modes": [
+        "crash_or_error",
+        "data_integrity",
+        "performance",
+        "ui_or_ux"
+      ],
+      "human_reason": "写入前不校验 embeddings 与 documents 条数一致，少一条就整体错位，静默写入错配向量。"
+    },
+    {
+      "row": "r38",
+      "record_id": "dify-45422",
+      "human_verdict": "是",
+      "human_modes": [
+        "regression",
+        "ui_or_ux"
+      ],
+      "reader_modes": [
+        "data_integrity"
+      ],
+      "engine_modes": [
+        "data_integrity"
+      ],
+      "human_reason": "知识库转为 Pipeline 后文档来源变 local_file，下载解析器与列表只认 upload_file，下载入口消失、请求返回 404。"
+    },
+    {
+      "row": "r39",
+      "record_id": "dify-45391",
+      "human_verdict": "是",
+      "human_modes": [
+        "crash_or_error"
+      ],
+      "reader_modes": [
+        "crash_or_error"
+      ],
+      "engine_modes": [],
+      "human_reason": "非安全上下文（纯 HTTP 局域网）下浏览器不提供 crypto.randomUUID，多个流程调用即抛 TypeError、操作无反应。"
+    },
+    {
+      "row": "r40",
+      "record_id": "dify-45184",
+      "human_verdict": "是",
+      "human_modes": [
+        "data_integrity",
+        "logic_or_validation"
+      ],
+      "reader_modes": [
+        "data_integrity"
+      ],
+      "engine_modes": [
+        "data_integrity"
+      ],
+      "human_reason": "超链接清理的正则误匹配图片语法，禁图时仍把 ![diagram](x) 破坏成 !diagram。"
+    }
+  ]
+}

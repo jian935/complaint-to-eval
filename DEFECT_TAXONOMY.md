@@ -1,9 +1,13 @@
 # Defect-report taxonomy (`defect-0.1.0-draft`)
 
-**Status: DRAFT. Model-evaluated on six disjoint hold-out splits, NOT human-validated.**
-All precision/recall figures are measured against **model labels** — see
-[`eval/defect_holdout/README.md`](eval/defect_holdout/README.md). No human labels
-exist; `accepted_cases` is always 0.
+**Status: DRAFT. Model-evaluated on six disjoint hold-out splits; one split has a
+human reference.** Most precision/recall figures are measured against **model
+labels** — see [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
+Split G was additionally annotated blind by a human (n = 39); the binary
+"is it a defect" call replicated exactly (κ = 1.000) but **mode-level micro
+precision fell from 0.714 to 0.31**. See
+[`eval/defect_holdout/human_agreement.md`](eval/defect_holdout/human_agreement.md).
+`accepted_cases` is still 0 — a labelled split is not an accepted case set.
 
 **Read this first: in practice the engine is a crash detector, and its precision is
 a function of how broken the queue is.** On the newest random split it found 13 of
@@ -109,7 +113,10 @@ and this project reports both.
   split: the real phrasings ("stringified to Python repr", "accepts a trailing
   newline", "overwrites action_name") were not anticipated. The mode is
   conceptually right; the signals are not there.
-- **No human labels.** Every output is a candidate. `accepted_cases` is always 0.
+- **One human pass is not validation.** Split G has 39 human-labelled rows, and on
+  those the mode labels disagreed in 8 of 19 defect cases — so the taxonomy's
+  boundaries, not just its signals, are unsettled. Every output is a candidate.
+  `accepted_cases` is always 0.
 
 ## Progress log
 
@@ -129,8 +136,13 @@ and this project reports both.
    **0.632 P / 0.600 R** against 0.500 / 1.000 for "flag everything"; 7 of 20 clean
    records wrongly flagged; `crash_or_error` precision 0.00 because those reports
    never use crash vocabulary.
-10. ⏳ Not done: human labels on one split; the co-occurrence redesign; a
-    sentence-level segmenter.
+10. ✅ Round 8 (human check on set G, n = 39, blind): the binary "is it a defect"
+    call replicated on **39 of 39** rows (κ = 1.000 vs the existing labels), while
+    the **mode** labels disagreed on 8 of 19 defect rows. Against the human,
+    mode-level micro precision is **0.31 / 0.32**, not 0.71–0.77;
+    `logic_or_validation` caught 1 of 11.
+11. ⏳ Not done: a second human on the same rows (to get reader-to-reader κ); the
+    co-occurrence redesign; a sentence-level segmenter.
 
 Treat `cte defects` as a working prototype: reliable on crash reports, weak on
 everything that requires reading comprehension, and honestly measured.

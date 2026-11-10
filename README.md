@@ -33,10 +33,10 @@ full rather than buried:
 | Claim | Status |
 | --- | --- |
 | "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest random split. |
-| "The mode labels are right" | ⚠️ Mode-level precision 0.71–0.77 over four clean splits, unchanged across four rounds of signal work. |
+| "The mode labels are right" | ⚠️ **Unsettled.** Against model labels, mode-level precision 0.71–0.77. Against a **blind human** on one split: **0.31**, with 8 of 19 defect rows given a different mode. |
 | "It beats flagging everything" | ⚠️ **Only on precision, and only barely.** On a balanced 50/50 split: 0.632 precision / 0.600 recall, against **0.500 / 1.000** for "flag everything". |
 | "Precision 0.94 means it is accurate" | ❌ That figure comes from a feed that is **90% defect reports**. Reweighted to a 25%-defect queue it is **0.36**. |
-| "It produces a human-labelled eval set" | ❌ No. `accepted_cases` is `0`. Every output is a candidate. |
+| "It produces a human-labelled eval set" | ❌ No. One split has human labels; `accepted_cases` is still `0`. |
 
 Full method, seven rounds of numbers, misses, false positives and the prior-sensitivity
 table: [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
@@ -186,13 +186,15 @@ crash; redaction happens first; one candidate per (record, mode).
 ## Honesty contract
 
 1. Everything generated is an unreviewed **candidate**. `accepted_cases` is always
-   `0`; no human-labelled set exists.
+   `0`. One split carries human labels — that is a labelled split, not an accepted
+   case set. See [`eval/defect_holdout/human_agreement.md`](eval/defect_holdout/human_agreement.md).
 2. `complaint_to_eval/demo.jsonl` is **fabricated**. It was written to contain the
    exact phrases in the taxonomy, so a high hit count is a property of how the file
    was authored, not evidence of quality. Every report repeats this.
 3. Precision/recall figures exist **only** in `eval/defect_holdout/README.md`, only
-   for `cte defects`, and only against **model-generated labels** (`annotator:
-   model`) — never described as human accuracy. Quote the range, not one point, quote
+   for `cte defects`, and against **model-generated labels** (`annotator: model`) —
+   never described as human accuracy — with **one exception**: split G has 39 human
+   labels, scored separately in `human_agreement.md`. Quote the range, not one point, quote
    the trivial baselines alongside it, and **always state the class mix**: a
    precision measured on a 90%-defect feed is not a claim about a real queue.
 4. Seven disjoint hold-out splits exist (A–G; G is the balanced 50/50 one). Once a

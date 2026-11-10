@@ -1,8 +1,12 @@
 # Annotation guide
 
-**Current status: 0 human labels, 0 accepted cases.** Everything measured so far is
-compared against **model-generated** labels (`annotator: model`), and every result
-file says so. This guide has two parts because the repo carries two taxonomies:
+**Current status: one human-labelled split (G, n = 39), 0 accepted cases.**
+Every other measurement is compared against **model-generated** labels
+(`annotator: model`), and every result file says so. On the human split the binary
+"is it a defect" call replicated exactly (κ = 1.000) but the mode labels disagreed
+in 8 of 19 defect rows — see
+[`defect_holdout/human_agreement.md`](defect_holdout/human_agreement.md). This guide
+has two parts because the repo carries two taxonomies:
 
 - **Part A — defect reports** (`cte defects`, 10 modes): the current focus, and the
   only path with published numbers.
