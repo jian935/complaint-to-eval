@@ -138,6 +138,26 @@ def main() -> int:
     print(f"clean records wrongly flagged: {len(clean_flags)} of {len(clean)}"
           + (f"  {clean_flags}" if clean_flags else ""))
     print()
+    # --- Prior sensitivity ------------------------------------------------------
+    # Precision depends on how many negatives the queue actually contains. Both
+    # source repos are defect trackers, so their natural prior (~88% defects) is
+    # far more positive than a real triage queue. Reweight the two measured rates
+    # (recall on positives, flag-rate on negatives) to other priors. Both rates
+    # come from THIS set, so a set with few negatives gives a noisy curve.
+    rec_pos = len(hit) / len(has_defect) if has_defect else 0.0
+    fp_rate = len(clean_flags) / len(clean) if clean else float("nan")
+    print("PRIOR SENSITIVITY (record level; precision if that share of the queue is defective):")
+    if clean:
+        print(f"  measured on this set: recall on defects {rec_pos:.3f}, "
+              f"flag-rate on clean {fp_rate:.3f} (n_clean={len(clean)})")
+        for prior in (0.90, 0.75, 0.50, 0.25, 0.10):
+            p = rec_pos * prior
+            q = fp_rate * (1 - prior)
+            prec = p / (p + q) if (p + q) else 0.0
+            print(f"    prior {prior:.2f} -> precision {prec:.3f}")
+    else:
+        print("  n/a: this set has no clean records, so precision cannot be reweighted")
+    print()
     print("BASELINES (a trivial rule must not beat the engine):")
     print(f"  always-flag every record        -> record P {base_det_p:.3f} / R {base_det_r:.3f}")
     print(f"  always-predict '{majority}'  -> mode   P {base_mode_p:.3f} / R {base_mode_r:.3f}")
@@ -193,6 +213,18 @@ def main() -> int:
                     "majority_mode": majority,
                     "majority_mode_precision": base_mode_p,
                     "majority_mode_recall": base_mode_r,
+                },
+                "prior_sensitivity": {
+                    "recall_on_defects": rec_pos,
+                    "flag_rate_on_clean": None if clean == 0 else fp_rate,
+                    "n_clean": len(clean),
+                    "precision_by_prior": {} if not clean else {
+                        f"{prior:.2f}": (
+                            (rec_pos * prior) / (rec_pos * prior + fp_rate * (1 - prior))
+                            if (rec_pos * prior + fp_rate * (1 - prior)) else 0.0
+                        )
+                        for prior in (0.90, 0.75, 0.50, 0.25, 0.10)
+                    },
                 },
                 "per_mode": {m: {"precision": (tp_n[m] / pred_n[m] if pred_n[m] else None),
                                  "recall": (tp_n[m] / label_n[m] if label_n[m] else None),

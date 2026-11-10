@@ -5,12 +5,14 @@ All precision/recall figures are measured against **model labels** — see
 [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md). No human labels
 exist; `accepted_cases` is always 0.
 
-**Read this first: in practice the engine is a crash detector.** On the newest
-clean split it found 13 of 15 crash reports and 2 of 12 non-crash defects.
-Mode-level precision sits at 0.71–0.77 and has not moved across four rounds of
-signal changes. Everything except `crash_or_error` is unproven. This document
-explains why the taxonomy exists, how it was derived, what it does on real data,
-and exactly where it is weak.
+**Read this first: in practice the engine is a crash detector, and its precision is
+a function of how broken the queue is.** On the newest random split it found 13 of
+15 crash reports and 2 of 12 non-crash defects. On a deliberately balanced 50/50
+split (set G) record-level precision was **0.632**, against **0.500 / 1.000** for the
+trivial "flag everything" rule. Mode-level precision has sat at 0.71–0.77 across four
+rounds of signal changes. Everything except `crash_or_error` is unproven. This
+document explains why the taxonomy exists, how it was derived, what it does on real
+data, and exactly where it is weak.
 
 ## Why a second taxonomy
 
@@ -88,9 +90,16 @@ and this project reports both.
 - **Only `crash_or_error` is validated.** Across clean splits it holds 0.95–1.00
   precision and 0.87–1.00 recall. On the newest split it caught **13 of 15
   crashes and 2 of 12 non-crash defects** — that ratio is the honest headline.
-- **`crash` is nearly free on aider.** 79% of that corpus is one auto-crash
-  template, so any aider-heavy split looks good for structural reasons. dify is
-  the informative corpus and the one where the taxonomy is weakest.
+- **Precision depends on the class prior, and the default corpora are 88% defects.**
+  Measured on a balanced 50/50 split it is 0.632; reweighted to a 25%-defect queue it
+  is 0.36. Never quote a precision figure without the mix it came from. Table in
+  [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
+- **`crash` detection is vocabulary-bound.** It needs `Uncaught`/`Traceback`. A report
+  that describes the same failure in prose ("returns 400", "is not a function") is not
+  recognised; on the balanced split crash precision was 0.00.
+- **Over-flags non-defects.** 7 of 20 clean records on the balanced split (35%):
+  feature proposals and vendor pitches that mention technical words.
+- **Two repos is not a domain sample.** Both are AI-tool projects.
 - **Phrase iteration has plateaued.** Rounds 2→6 added signals, removed signals,
   stripped code and added a whole mode; precision stayed in 0.71–0.77. The next
   gain needs a different design (topic+fault co-occurrence), not more phrases.
@@ -100,9 +109,6 @@ and this project reports both.
   split: the real phrasings ("stringified to Python repr", "accepts a trailing
   newline", "overwrites action_name") were not anticipated. The mode is
   conceptually right; the signals are not there.
-- **Over-flags non-defects.** Across four splits, **7 of 17 clean records** were
-  flagged — feature proposals and vendor pitches that mention technical words.
-- **Two repos is not a domain sample.** Both are AI-tool projects.
 - **No human labels.** Every output is a candidate. `accepted_cases` is always 0.
 
 ## Progress log
@@ -119,8 +125,12 @@ and this project reports both.
 8. ✅ Round 6 (add `logic_or_validation`, migrate 18 boundary labels, fresh set F):
    **0.714 / 0.556**. Record-level detection 0.944 / 0.630; trivial "flag
    everything" scores 0.844 / 1.000, so recall is *not* beaten.
-9. ⏳ Not done: human labels on one split; the co-occurrence redesign; a
-   sentence-level segmenter.
+9. ✅ Round 7 (set G, hand-built 20/20 to fix the class prior): record-level
+   **0.632 P / 0.600 R** against 0.500 / 1.000 for "flag everything"; 7 of 20 clean
+   records wrongly flagged; `crash_or_error` precision 0.00 because those reports
+   never use crash vocabulary.
+10. ⏳ Not done: human labels on one split; the co-occurrence redesign; a
+    sentence-level segmenter.
 
 Treat `cte defects` as a working prototype: reliable on crash reports, weak on
 everything that requires reading comprehension, and honestly measured.

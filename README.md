@@ -2,10 +2,15 @@
 
 **Your users already wrote your eval set. You just never turned it into one.**
 
-Turn raw complaints into **unreviewed regression-test candidates** for AI tools:
-an evidence-backed defect taxonomy, a quote from the report behind every finding,
-and a diff between two versions. Deterministic, standard library only, no API key,
-no model calls.
+Turn raw complaints into **candidate triage labels** for AI tools: an
+evidence-backed defect taxonomy, a quote from the report behind every finding, and
+a diff between two versions. Deterministic, standard library only, no API key, no
+model calls.
+
+**It produces the raw material for a regression suite, not the suite.** A candidate
+is a classified report plus the sentence that triggered it — *not* a runnable test
+case. Turning that into something you can execute against a build is the human step
+this project deliberately stops short of.
 
 ![complaint-to-eval running the demo in a terminal](assets/demo.gif)
 
@@ -27,13 +32,37 @@ full rather than buried:
 
 | Claim | Status |
 | --- | --- |
-| "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest clean split. |
+| "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest random split. |
 | "The mode labels are right" | ⚠️ Mode-level precision 0.71–0.77 over four clean splits, unchanged across four rounds of signal work. |
-| "It beats flagging everything" | ⚠️ **Only on precision.** Always-flag scores recall 1.000; this does not. |
+| "It beats flagging everything" | ⚠️ **Only on precision, and only barely.** On a balanced 50/50 split: 0.632 precision / 0.600 recall, against **0.500 / 1.000** for "flag everything". |
+| "Precision 0.94 means it is accurate" | ❌ That figure comes from a feed that is **90% defect reports**. Reweighted to a 25%-defect queue it is **0.36**. |
 | "It produces a human-labelled eval set" | ❌ No. `accepted_cases` is `0`. Every output is a candidate. |
 
-Full method, six rounds of numbers, misses and false positives:
-[`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
+Full method, seven rounds of numbers, misses, false positives and the prior-sensitivity
+table: [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
+
+## What a candidate actually is
+
+Nothing is executed, so nothing is verified. A real output row:
+
+```json
+{
+  "id": "dcte-0001",
+  "failure_mode": "ui_or_ux",
+  "input": "Detail sidebar collapse drops keyboard focus.",
+  "assertion": {"type": "must_not_reproduce_defect", "value": "ui_or_ux"},
+  "evidence_record_id": "dify-45934",
+  "status": "candidate",
+  "human_review_required": true,
+  "review": null
+}
+```
+
+`input` is **the sentence from the report**, not a reproduction script. Every one of
+the 123 candidates produced on the aider corpus has this shape: there is no input
+you can feed to a build and get a pass/fail back. The value here is the triage —
+mode, evidence, offsets — and the review queue it creates. If you need executable
+cases, someone has to write them, and that someone is a human reading these rows.
 
 ## Why this exists
 
@@ -163,11 +192,12 @@ crash; redaction happens first; one candidate per (record, mode).
    was authored, not evidence of quality. Every report repeats this.
 3. Precision/recall figures exist **only** in `eval/defect_holdout/README.md`, only
    for `cte defects`, and only against **model-generated labels** (`annotator:
-   model`) — never described as human accuracy. Quote the range, not one point, and
-   quote the trivial baselines alongside it.
-4. Six disjoint hold-out splits exist (A–F). Once a split's misses have been read,
-   that split is contaminated forever; every claim is measured on a split that no
-   change had seen. Numbers are never overwritten.
+   model`) — never described as human accuracy. Quote the range, not one point, quote
+   the trivial baselines alongside it, and **always state the class mix**: a
+   precision measured on a 90%-defect feed is not a claim about a real queue.
+4. Seven disjoint hold-out splits exist (A–G; G is the balanced 50/50 one). Once a
+   split's misses have been read, that split is contaminated forever; every claim is
+   measured on a split that no change had seen. Numbers are never overwritten.
 5. `cte diff` compares matched phrases on candidates. It reports
    `resolved_candidates`, explicitly **not** a fix rate.
 6. When human labels disagree with the rules, fix the labels, not the engine.

@@ -9,13 +9,31 @@ the misses/false positives of set *N*, change something on principle, then measu
 on a **fresh** set *N+1* that no change has ever seen. Numbers are never
 overwritten, so anyone can check whether a result came from tuning.
 
-## The headline, in two lines
+## The headline, in three lines
 
 - **Mode-level** (right issue *and* right bucket): precision ≈ 0.71–0.77,
-  recall ≈ 0.56–0.80 across clean splits.
-- **In practice this is a crash detector.** On the newest clean split it found
-  13 of 15 crashes and **2 of 12 non-crash defects**. Everything except
-  `crash_or_error` is unproven.
+  recall ≈ 0.56–0.80 across the balanced-across-issues splits.
+- **In practice this is a crash detector.** On set F it found 13 of 15 crashes and
+  **2 of 12 non-crash defects**.
+- **Precision depends almost entirely on how many non-defects the queue contains.**
+  Both source repos are defect trackers, so their natural prior is ~88% defects —
+  far more positive than a real triage feed. Measured on a deliberately balanced
+  50/50 split (set G), record-level precision is **0.632**, and the trivial
+  "flag everything" rule scores **0.500 / 1.000** against it.
+
+### Prior sensitivity (record level, from set G, n_clean = 20)
+
+| Share of the queue that is defective | Expected precision |
+| ---: | ---: |
+| 90% | 0.939 |
+| 75% | 0.837 |
+| 50% | 0.632 |
+| 25% | 0.364 |
+| 10% | 0.160 |
+
+Read the bottom rows. A quote of "precision 0.94" is only true for a feed that is
+90% broken reports. **At a 25% prior — plausible for an unfiltered issue feed —
+precision is 0.36**, i.e. roughly two of every three flags would be wrong.
 
 ## Round table (mode-level)
 
@@ -34,6 +52,42 @@ Rounds 3–6 sit in a narrow band: **phrase-level changes no longer move precisi
 After round 6 the labels of C/D/E were rewritten (the boundary cases moved to the
 new mode), so re-scoring them gives 0.824 / 0.829 / 0.743 — but those labels were
 edited with those sets in view. **F is the only clean post-change number.**
+
+## Round 7 — set G, measuring precision under a realistic prior
+
+Sets A–F are all randomly drawn from two defect trackers, so ~88% of their records
+are defect reports. That makes precision look good for a structural reason: with
+four negatives in a split, one false positive barely moves the number.
+
+Set G fixes the composition instead of the sampling. It is **20 non-defect reports
++ 20 defect reports**, hand-picked from the unused pool (`scripts/draw_holdout_g.py`
+lists every id and why it is in there). The negatives are what a triage queue
+actually contains: feature requests, chores/refactors, questions, vendor pitches and
+spam. Selection is deliberate, not random, and that bias is real: these are *typical*
+non-defects, not a uniform sample of them.
+
+| Metric | Set F (~88% defects) | **Set G (50/50)** |
+| --- | ---: | ---: |
+| record-level precision | 0.944 | **0.632** [0.410, 0.809] |
+| record-level recall | 0.630 | 0.600 [0.387, 0.781] |
+| mode-level precision | 0.714 | **0.308** |
+| mode-level recall | 0.556 | 0.400 |
+| clean records wrongly flagged | 1 of 5 | **7 of 20 (35%)** |
+| trivial "flag everything" baseline | 0.844 / 1.000 | **0.500 / 1.000** |
+
+Three things fall out of this, none of them flattering:
+
+1. **The engine is barely better than a trivial rule at a realistic prior.** On G it
+   buys precision 0.632 vs 0.500, while giving up 0.400 of recall versus 1.000. That
+   is not a defensible trade for a triage tool.
+2. **It over-flags non-defects: 7 of 20 (35%).** The offenders are feature requests
+   that talk about performance ("make X faster") and chores that mention data
+   ("dependency upgrade upsets package exports"). Topic vocabulary, again.
+3. **`crash_or_error` scored precision 0.00 on G** (4 predictions, 0 correct, and it
+   missed both real crashes). Its 0.95–1.00 precision on aider/dify-heavy splits
+   comes from those corpora using `Uncaught`/`Traceback` wording. A report that
+   describes a failure without that vocabulary ("returns 400", "is not a function")
+   is not recognised at all.
 
 ## Baselines (the check that makes the numbers mean something)
 
@@ -61,11 +115,15 @@ Mode-level scoring punishes "right issue, wrong bucket" twice (a false positive
 | C | 39 | 0.903 | 0.800 | 3 of 4 |
 | D | 40 | 1.000 | 0.919 | 0 of 3 |
 | E | 40 | 0.906 | 0.829 | 3 of 5 |
-| **F** | 32 | **0.944** | **0.630** | 1 of 5 |
+| F | 32 | 0.944 | 0.630 | 1 of 5 |
+| **G (50/50)** | 40 | **0.632** | 0.600 | **7 of 20** |
 
-The last column matters: across the sets, **7 of 17 clean records were flagged**.
-Feature proposals and vendor pitches that mention technical words get labelled as
-defects. That is the tool's most visible failure mode.
+The last two columns matter. Random splits carry only 3–5 clean records, so their
+clean-record column is noise; G is the first set with enough negatives to estimate
+the false-positive rate properly (0.35), and that is what drags precision down.
+The pattern behind those flags is always the same: a feature proposal or vendor
+pitch that happens to mention a technical word gets labelled a defect. That is the
+tool's most visible failure mode.
 
 ## Round 6 — adding `logic_or_validation`
 
@@ -91,30 +149,34 @@ co-occurrence model is the only design that can express what the reader is doing
   `scripts/draw_holdout.py` for later sets): exclude every id used earlier, sort
   the rest by `md5("<salt>:<record_id>")`, take up to N per corpus. Pools that are
   too small are **capped and reported, never padded** — set C's dify arm is 15,
-  and set F is 32 records because aider's derive pool ran out.
+  and set F is 32 records because aider's derive pool ran out. **Set G is the one
+  exception**: hand-built at 20/20 to measure a different class prior
+  (`scripts/draw_holdout_g.py` lists every id and its reason).
 - **Labels** (`labels_holdout*.jsonl`): multi-label per record (`modes: []` =
   feature request / promo / off-topic). Written by reading the issue text only;
   **engine predictions were not consulted** (easy to guarantee — v0.1 produced
   ~0 candidates on this corpus).
 - **Score** (`scripts/eval_defects_holdout.py`): per-mode precision/recall, micro
   average, record-level detection, Wilson intervals, the full miss and
-  false-positive lists, and the two trivial baselines.
-- **Corpus** (`.local/corpus/`, gitignored, never published): aider 136 issues
-  (Apache-2.0), dify 136 issues (Apache-2.0 with additional conditions). dify was
-  expanded from 47 before set D, otherwise every later split would have been
-  aider-only and inflated by crash reports.
+  false-positive lists, two trivial baselines, and the prior-sensitivity reweight.
+- **Corpus** (`.local/corpus/`, gitignored, never published): aider 252 issues
+  (Apache-2.0), dify 176 issues (Apache-2.0 with additional conditions). Both were
+  expanded as later splits exhausted the earlier pools; without that, every split
+  after D would have been aider-only and inflated by crash reports.
 
 Reproduce (needs the local corpus snapshot; labels and splits are committed):
 
 ```bash
 python scripts/eval_defects_holdout.py --holdout .local/corpus/holdoutF.jsonl \
     --labels eval/defect_holdout/labels_holdout_f.jsonl --out out/eval_defects_f.json
+python scripts/eval_defects_holdout.py --holdout .local/corpus/holdoutG.jsonl \
+    --labels eval/defect_holdout/labels_holdout_g.jsonl --out out/eval_defects_g.json
 ```
 
-`out/` is gitignored, so the headline run is also committed verbatim as
-[`results_f.json`](results_f.json) — that file is **generated output, never
-hand-edited**. It contains record ids and mode labels only, no issue text. Earlier
-rounds' raw outputs are not committed; their numbers survive in the table above and
+`out/` is gitignored, so the two headline runs are committed verbatim as
+[`results_f.json`](results_f.json) and [`results_g.json`](results_g.json) — generated
+output, never hand-edited, containing record ids and mode labels only. Earlier
+rounds' raw outputs are not committed; their numbers survive in the tables above and
 in the commit messages, which is the only place they can be checked against.
 
 ## Per-mode detail on set F (clean)
@@ -136,12 +198,25 @@ That is the other honest limit: **most modes are simply too rare here to measure
 1. **Model labels, one reader, one pass.** No inter-annotator agreement exists, so
    "precision" means agreement with this reader. A second reader would move these
    numbers by an unknown amount.
-2. **n = 32–40 per set, two repos.** Wilson intervals span ±0.12–0.18.
-3. **Domain.** aider and dify issue trackers — software defect reports, not user
+2. **Precision is a function of the prior.** Never quote one precision figure without
+   saying which class mix it came from. The 0.944 on F is a 90%-defect feed; the useful
+   number for deployment planning is the 25% row of the prior-sensitivity table (0.36).
+3. **The negative sample is only now adequate.** Four random splits contributed 3–5
+   clean records each; G contributes 20. Every earlier precision figure rested on
+   almost no negatives and should be read as "on this particular draw", not as an
+   estimate.
+4. **Crash detection is vocabulary-bound.** It works on reports that say `Uncaught` or
+   `Traceback` and fails on ones that describe the same failure in prose ("returns
+   400", "is not a function"). On G it scored 0.00 precision.
+5. **n = 32–40 per set, two repos.** Wilson intervals span ±0.12–0.18.
+6. **Domain.** aider and dify issue trackers — software defect reports, not user
    complaints in general. That is exactly why the project pivoted from the
    LLM-behaviour taxonomy.
-4. **Rare modes unmeasurable.** Nine modes have ≤10 labels per split.
-5. **`accepted_cases` is 0.** Nothing here is a human-accepted eval set, and no fix
+7. **Rare modes unmeasurable.** Nine modes have ≤10 labels per split.
+8. **G's negatives are hand-picked.** They are typical non-defects, not a uniform
+   sample, so 0.35 is an estimate of the false-positive rate on *plausible* noise,
+   which may be harsher than a real queue.
+9. **`accepted_cases` is 0.** Nothing here is a human-accepted eval set, and no fix
    rate, resolution time or business impact is claimed anywhere.
 
 ## Backlog (design-level, not more phrases)

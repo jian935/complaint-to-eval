@@ -1,0 +1,40 @@
+{"record_id":"aider-5719","modes":[],"annotator":"model","note":"Vendor pitch asking to be listed in the docs; no defect asserted"}
+{"record_id":"aider-5713","modes":[],"annotator":"model","note":"Docs request to add a provider example; explicitly says no code change needed"}
+{"record_id":"aider-5712","modes":[],"annotator":"model","note":"Feature request (hook system), no defect asserted"}
+{"record_id":"aider-5677","modes":[],"annotator":"model","note":"Feature proposal; the template's Issue field says 'None'"}
+{"record_id":"aider-5676","modes":[],"annotator":"model","note":"Feature proposal (model resilience on 404/402), no defect asserted"}
+{"record_id":"aider-5673","modes":[],"annotator":"model","note":"Question about project maintenance activity"}
+{"record_id":"aider-5647","modes":[],"annotator":"model","note":"Discussion post about maintenance status, not a defect report"}
+{"record_id":"aider-5646","modes":[],"annotator":"model","note":"Spam (video search text), no defect"}
+{"record_id":"aider-5639","modes":[],"annotator":"model","note":"Docs contribution adding a provider example"}
+{"record_id":"aider-5634","modes":[],"annotator":"model","note":"Vendor offer to run leaderboard benchmarks; no defect asserted"}
+{"record_id":"dify-45584","modes":[],"annotator":"model","note":"Chore/refactor request to use a SQLAlchemy engine"}
+{"record_id":"dify-45573","modes":[],"annotator":"model","note":"Feature request: run Agent Build chat on its own model"}
+{"record_id":"dify-45560","modes":[],"annotator":"model","note":"Feature request: opt-in output moderation mode"}
+{"record_id":"dify-45559","modes":[],"annotator":"model","note":"Feature request: add OpenTelemetry spans for MCP tool calls"}
+{"record_id":"dify-45539","modes":[],"annotator":"model","note":"Feature request: support personal access tokens"}
+{"record_id":"dify-45448","modes":[],"annotator":"model","note":"Feature request: expose OpenTelemetry metrics"}
+{"record_id":"dify-45355","modes":[],"annotator":"model","note":"Chore: dependency upgrade"}
+{"record_id":"dify-45352","modes":[],"annotator":"model","note":"Refactor/chore: export packages as version 2"}
+{"record_id":"dify-45349","modes":[],"annotator":"model","note":"Chore: prepare a release"}
+{"record_id":"dify-45213","modes":[],"annotator":"model","note":"Feature request: bounded post-release maintenance triage in a CLI skill"}
+{"record_id":"aider-5761","modes":["logic_or_validation"],"annotator":"model","note":"Benchmark marks an exercise solved when the test command exits non-zero with no output; false success"}
+{"record_id":"aider-5748","modes":["security"],"annotator":"model","note":"--auto-accept-architect defaults to True, so architect edits apply without the confirmation gate"}
+{"record_id":"aider-5706","modes":["data_integrity"],"annotator":"model","note":"A valid multi-file edit is silently discarded, i.e. accepted work is lost"}
+{"record_id":"aider-5681","modes":["logic_or_validation"],"annotator":"model","note":"Benchmark scores on an exit code the model's own files control; wrong success signal"}
+{"record_id":"aider-5662","modes":["logic_or_validation"],"annotator":"model","note":"find_filename misses valid filenames when fence markers are indented"}
+{"record_id":"aider-5654","modes":["ui_or_ux"],"annotator":"model","note":"Live display drops leading rendered lines when output is shorter than the window"}
+{"record_id":"aider-5624","modes":["performance"],"annotator":"model","note":"/run and /test read command output one character at a time, ~60x slower"}
+{"record_id":"aider-5622","modes":["config_or_env"],"annotator":"model","note":".env files load with override=True and silently replace exported variables"}
+{"record_id":"dify-45701","modes":["config_or_env"],"annotator":"model","note":"Workflow file defaults ignore the configured upload size limits"}
+{"record_id":"dify-45684","modes":["logic_or_validation"],"annotator":"model","note":"Form array values encoded as a Python list string instead of a JSON array"}
+{"record_id":"dify-45682","modes":["ui_or_ux"],"annotator":"model","note":"Think block collapses and shows 0.0s while reasoning is still streaming"}
+{"record_id":"dify-45667","modes":["ui_or_ux"],"annotator":"model","note":"Dialogs overflow the viewport on narrow screens"}
+{"record_id":"dify-45609","modes":["logic_or_validation"],"annotator":"model","note":"Cron parser rejects predefined expressions that have surrounding whitespace"}
+{"record_id":"dify-45580","modes":["crash_or_error"],"annotator":"model","note":"Service API document create/update returns 400 for some knowledge bases"}
+{"record_id":"dify-45547","modes":["data_integrity"],"annotator":"model","note":"Small exponent-form number values truncated to zero"}
+{"record_id":"dify-45516","modes":["logic_or_validation"],"annotator":"model","note":"Rerank indexes documents by vendor index; a negative index silently returns the wrong document"}
+{"record_id":"dify-45508","modes":["logic_or_validation"],"annotator":"model","note":"Vector write does not check that embedding and document counts match, so a short embedding batch misaligns every later vector"}
+{"record_id":"dify-45422","modes":["data_integrity"],"annotator":"model","note":"Converted legacy knowledge bases lose source-file downloads"}
+{"record_id":"dify-45391","modes":["crash_or_error"],"annotator":"model","note":"crypto.randomUUID is not a function over plain HTTP, so the agent knowledge page breaks"}
+{"record_id":"dify-45184","modes":["data_integrity"],"annotator":"model","note":"Hyperlink removal corrupts images even when image removal is disabled"}

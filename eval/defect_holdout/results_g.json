@@ -1,0 +1,258 @@
+{
+  "scored": 40,
+  "annotator": "model",
+  "micro": {
+    "precision": 0.3076923076923077,
+    "recall": 0.4,
+    "precision_ci": [
+      0.16501120939792674,
+      0.49988611514231246
+    ],
+    "recall_ci": [
+      0.21880396741419272,
+      0.613422057684794
+    ],
+    "candidates": 26,
+    "label_positive": 20,
+    "tp": 8
+  },
+  "record_level": {
+    "detection_precision": 0.631578947368421,
+    "detection_recall": 0.6,
+    "precision_ci": [
+      0.4103915749815672,
+      0.8085072762372616
+    ],
+    "recall_ci": [
+      0.3865779423152061,
+      0.7811960325858074
+    ],
+    "flagged": 19,
+    "defect_records": 20,
+    "clean_records": 20,
+    "clean_wrongly_flagged": [
+      "aider-5634",
+      "aider-5712",
+      "dify-45355",
+      "dify-45448",
+      "dify-45559",
+      "dify-45560",
+      "dify-45573"
+    ]
+  },
+  "baselines": {
+    "always_flag_record_precision": 0.5,
+    "always_flag_record_recall": 1.0,
+    "majority_mode": "logic_or_validation",
+    "majority_mode_precision": 0.175,
+    "majority_mode_recall": 0.35
+  },
+  "prior_sensitivity": {
+    "recall_on_defects": 0.6,
+    "flag_rate_on_clean": 0.35,
+    "n_clean": 20,
+    "precision_by_prior": {
+      "0.90": 0.9391304347826086,
+      "0.75": 0.8372093023255813,
+      "0.50": 0.631578947368421,
+      "0.25": 0.36363636363636365,
+      "0.10": 0.16
+    }
+  },
+  "per_mode": {
+    "crash_or_error": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "tp": 0,
+      "pred": 4,
+      "label": 2
+    },
+    "data_integrity": {
+      "precision": 0.42857142857142855,
+      "recall": 0.75,
+      "tp": 3,
+      "pred": 7,
+      "label": 4
+    },
+    "logic_or_validation": {
+      "precision": 1.0,
+      "recall": 0.14285714285714285,
+      "tp": 1,
+      "pred": 1,
+      "label": 7
+    },
+    "config_or_env": {
+      "precision": 0.3333333333333333,
+      "recall": 0.5,
+      "tp": 1,
+      "pred": 3,
+      "label": 2
+    },
+    "ui_or_ux": {
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "tp": 1,
+      "pred": 2,
+      "label": 3
+    },
+    "i18n_or_locale": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    },
+    "security": {
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "tp": 1,
+      "pred": 3,
+      "label": 1
+    },
+    "performance": {
+      "precision": 0.16666666666666666,
+      "recall": 1.0,
+      "tp": 1,
+      "pred": 6,
+      "label": 1
+    },
+    "regression": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    },
+    "docs": {
+      "precision": null,
+      "recall": null,
+      "tp": 0,
+      "pred": 0,
+      "label": 0
+    }
+  },
+  "misses": [
+    [
+      "aider-5761",
+      "logic_or_validation"
+    ],
+    [
+      "aider-5706",
+      "data_integrity"
+    ],
+    [
+      "aider-5681",
+      "logic_or_validation"
+    ],
+    [
+      "aider-5662",
+      "logic_or_validation"
+    ],
+    [
+      "aider-5654",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45701",
+      "config_or_env"
+    ],
+    [
+      "dify-45682",
+      "ui_or_ux"
+    ],
+    [
+      "dify-45609",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45580",
+      "crash_or_error"
+    ],
+    [
+      "dify-45516",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45508",
+      "logic_or_validation"
+    ],
+    [
+      "dify-45391",
+      "crash_or_error"
+    ]
+  ],
+  "false_positives": [
+    [
+      "aider-5712",
+      "config_or_env"
+    ],
+    [
+      "aider-5634",
+      "config_or_env"
+    ],
+    [
+      "dify-45573",
+      "performance"
+    ],
+    [
+      "dify-45560",
+      "performance"
+    ],
+    [
+      "dify-45559",
+      "performance"
+    ],
+    [
+      "dify-45448",
+      "performance"
+    ],
+    [
+      "dify-45355",
+      "data_integrity"
+    ],
+    [
+      "aider-5706",
+      "crash_or_error"
+    ],
+    [
+      "aider-5654",
+      "data_integrity"
+    ],
+    [
+      "aider-5624",
+      "security"
+    ],
+    [
+      "aider-5622",
+      "security"
+    ],
+    [
+      "dify-45667",
+      "data_integrity"
+    ],
+    [
+      "dify-45547",
+      "crash_or_error"
+    ],
+    [
+      "dify-45516",
+      "crash_or_error"
+    ],
+    [
+      "dify-45508",
+      "data_integrity"
+    ],
+    [
+      "dify-45508",
+      "crash_or_error"
+    ],
+    [
+      "dify-45508",
+      "performance"
+    ],
+    [
+      "dify-45508",
+      "ui_or_ux"
+    ]
+  ]
+}
