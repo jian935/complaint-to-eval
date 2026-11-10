@@ -1,8 +1,8 @@
 """Structure locks for the defect hold-out artefacts (CI-safe, no raw corpus).
 
 Seven model-labelled disjoint splits exist (a–g); set h is the separate
-v2 round (one workbook of unconfirmed provenance) and has no model label file
-by design. These tests
+v2 round (one confirmed human reader) and has no model label file by design.
+These tests
 guarantee:
   * every label file is well-formed and uses known modes;
   * every annotator in those files is ``model`` — none of them was labelled by a

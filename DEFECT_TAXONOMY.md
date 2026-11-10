@@ -1,9 +1,9 @@
 # Defect-report taxonomy (`defect-0.1.0-draft`)
 
 **Status: DRAFT. Model-evaluated on seven disjoint hold-out splits (A–G); G has
-four independent human readers.** Split H has one filled workbook under v2 whose
-annotator provenance is **unconfirmed**, plus a second workbook **rejected as
-non-independent** — see
+four independent human readers.** Split H has **one confirmed human reader**
+under v2 (one workbook, not a gold standard), plus a second workbook **rejected
+as non-independent** — see
 [`eval/defect_holdout/contamination_h.md`](eval/defect_holdout/contamination_h.md).
 Most precision/recall figures are measured against **model labels** — see
 [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
@@ -12,8 +12,8 @@ on whether a row is a defect (Fleiss κ = 0.922) but not on its mode, and agains
 them **mode-level micro precision is 0.23–0.38** rather than 0.71–0.77. See
 [`eval/defect_holdout/multi_annotator.md`](eval/defect_holdout/multi_annotator.md).
 Split H has one workbook under the v2 one-primary-mode rule (0.545 / 0.429);
-it is **not** comparable to G, its annotator provenance is **unconfirmed**, and
-a second returned workbook was rejected as non-independent — so v2 has **no**
+it is **not** comparable to G, it is one reader only, and a second returned
+workbook was rejected as non-independent — so v2 has **no**
 reader-to-reader result. See
 [`eval/defect_holdout/contamination_h.md`](eval/defect_holdout/contamination_h.md).
 `accepted_cases` is still 0 — a labelled split is not an accepted case set.

@@ -1,8 +1,8 @@
 # Annotation guide
 
 **Current status: split G has four independent human readers (v1). Split H has
-one filled workbook under v2 whose annotator provenance is UNCONFIRMED, and a
-second workbook rejected as non-independent — see
+one confirmed human reader under v2, plus a second workbook rejected as
+non-independent — see
 [`defect_holdout/contamination_h.md`](defect_holdout/contamination_h.md).
 0 accepted cases.** Every other measurement is compared against
 **model-generated** labels (`annotator: model`), and every result file says so. On

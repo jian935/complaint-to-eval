@@ -34,10 +34,10 @@ full rather than buried:
 | --- | --- |
 | "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest random split. |
 | "The mode labels are right" | ⚠️ **Unsettled.** Against model labels 0.71–0.77; against **four blind human readers** on one split, **0.23–0.38**. Readers agree strongly on *whether* something is broken (Fleiss κ = 0.922), not on *which* mode. |
-| "Rewriting the annotation rule fixed the disagreement" | ❌ **Not tested yet.** One workbook on a fresh split under the rewritten one-label rule scores the engine at 0.545 / 0.429 — and that workbook's annotator provenance is **unconfirmed**. A second returned workbook reproduced every label with paraphrased reasons and was rejected as non-independent. |
+| "Rewriting the annotation rule fixed the disagreement" | ❌ **Not tested yet.** One **human-confirmed** workbook on a fresh split under the rewritten one-label rule scores the engine at 0.545 / 0.429. A second returned workbook reproduced every label with paraphrased reasons and was rejected as non-independent, so there is still no reader-to-reader agreement under v2. |
 | "It beats flagging everything" | ⚠️ **Only on precision, and only barely.** On a balanced 50/50 split: 0.632 precision / 0.600 recall, against **0.500 / 1.000** for "flag everything". |
 | "Precision 0.94 means it is accurate" | ❌ That figure comes from a feed that is **90% defect reports**. Reweighted to a 25%-defect queue it is **0.36**. |
-| "It produces a human-labelled eval set" | ❌ No. Split G has four independent human readers; split H has one workbook whose annotator is unconfirmed and a rejected second workbook. `accepted_cases` is still `0`. |
+| "It produces a human-labelled eval set" | ❌ No. Split G has four independent human readers; split H has **one confirmed human reader** (one workbook, not a gold standard) and a rejected second workbook. `accepted_cases` is still `0`. |
 
 Full method, seven rounds of numbers, misses, false positives and the prior-sensitivity
 table: [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).

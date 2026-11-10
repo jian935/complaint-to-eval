@@ -50,23 +50,30 @@ for. It is recorded here as a warning, not as a finding. The tool
 It can only *falsify* independence; it cannot certify that anyone is human,
 blind, or unaided. Only provenance can.
 
-## A second, more serious problem
+## The first workbook is human — that does not rescue the round
 
-The first workbook's provenance was **never confirmed** either. Its result file
+On 2026-11-10 the requester confirmed that the **first** H workbook was filled
+by a person. Its result file
 [`human_agreement_v2.json`](human_agreement_v2.json) now carries
-`annotator_status: "unconfirmed"` and a warning. If that first workbook was
-produced by a model or with model assistance, then:
+`annotator_status: "confirmed"`, so 0.545 / 0.429 *is* a genuine
+engine-versus-person comparison, and the "human reader" wording in
+[`human_agreement_v2.md`](human_agreement_v2.md) is correct.
 
-- 0.545 / 0.429 is **not** a human-vs-machine comparison;
-- every "human reader" phrase in [`human_agreement_v2.md`](human_agreement_v2.md)
-  and in the READMEs is wrong;
-- the "engine is an outlier, not an annotator" conclusion from split G still
-  stands (four independent human readers there), but the H round adds no
-  independent evidence for or against v2.
+Three limits remain, unchanged by that confirmation:
 
-Nothing has been silently relabelled. The numbers are left in place with their
-status downgraded, because deleting a published result after the fact is worse
-than marking it conditional. Provenance is being confirmed with the requester.
+- It is **one reader**. One person's labels are not a gold standard, and the
+  figure must not be called "human accuracy" or quoted without its baselines.
+- The rejected second workbook adds **no** second opinion. Its provenance is
+  still unknown, but that is irrelevant: it failed on independence, not on who
+  or what filled it.
+- The "engine is an outlier, not an annotator" result comes from split G's
+  **four** independent human readers (Fleiss κ = 0.922 binary). H does not
+  replicate it and does not contradict it.
+
+Nothing was silently relabelled in either direction. When provenance was
+unknown the result was marked conditional; now that it is confirmed the status
+was upgraded and the numbers were left exactly as they were — the same
+`0.545 / 0.429`, recomputed from the same rows.
 
 ## Disposition
 

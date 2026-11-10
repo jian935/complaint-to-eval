@@ -39,11 +39,11 @@ class V2ArtefactTests(unittest.TestCase):
         cls.data = result()
 
     def test_result_is_human_and_not_accepted(self):
-        # 'annotator' is the CLAIM that came with the workbook, not a verified
-        # fact. The status field and the contamination writeup are the guard.
+        # Provenance was confirmed by the requester on 2026-11-10. Keep the
+        # status field so a future downgrade cannot happen silently either.
         self.assertEqual("human", self.data["annotator"])
-        self.assertEqual("unconfirmed", self.data["annotator_status"])
-        self.assertIn("provenance", self.data["provenance_warning"])
+        self.assertEqual("confirmed", self.data["annotator_status"])
+        self.assertIn("person", self.data["provenance_note"])
         self.assertIn("v2", self.data["rule"])
         self.assertNotIn("accepted_cases", self.data)
         self.assertEqual([], self.data["problems"].get("H_r1", ["missing"]))
@@ -148,10 +148,14 @@ class V2ArtefactTests(unittest.TestCase):
         # no reader-reader kappa may be published anywhere in the result file
         self.assertNotIn("reader_reader", self.data)
         md = (BASE / "contamination_h.md").read_text(encoding="utf-8")
-        for phrase in ("STILL untested", "must never be published", "paraphrase"):
+        for phrase in ("STILL untested", "must never be published", "paraphrase",
+                       "confirmed", "one reader"):
             self.assertIn(phrase, md)
-        # the warning must also be visible from the H writeup
-        self.assertIn("unconfirmed", WRITEUP.read_text(encoding="utf-8"))
+        # the confirmation AND the rejection must both be visible in the writeup
+        text = WRITEUP.read_text(encoding="utf-8")
+        self.assertIn("confirmed", text)
+        self.assertIn("rejected", text)
+        self.assertIn("untested", text)
 
 
 @unittest.skipUnless(importlib.util.find_spec("openpyxl"),

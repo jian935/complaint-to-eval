@@ -1,13 +1,12 @@
 # Labelling spec v2: one primary mode, plus opt-in causes
 
-**Status: applied to one filled H workbook (40 rows); its annotator provenance
-is unconfirmed, and a second returned workbook was rejected as non-independent
+**Status: applied to one H workbook (40 rows) confirmed as human-filled, plus a
+second returned workbook rejected as non-independent
 (see [`defect_holdout/contamination_h.md`](defect_holdout/contamination_h.md)).**
 Sets A–G were labelled
 under v1, which never fixed granularity; their numbers are not comparable with
 H's. The rule has fixed *how a workbook is filled*, not whether two independent
-people now agree — no reader-to-reader agreement under v2 exists yet, and the
-one workbook's provenance is unconfirmed. See
+people now agree — no reader-to-reader agreement under v2 exists yet. See
 [`defect_holdout/human_agreement_v2.md`](defect_holdout/human_agreement_v2.md).
 
 ## Why this exists

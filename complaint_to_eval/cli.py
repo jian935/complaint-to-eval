@@ -169,8 +169,8 @@ def _cmd_defects(args: argparse.Namespace) -> int:
     if synthetic is None:
         print("WARNING: provenance unspecified; declare --synthetic or --real")
     print("NOTE: deterministic candidates; hold-out A–G is MODEL-labelled; "
-          "G has four human readers; H has one workbook with UNCONFIRMED "
-          "provenance; accepted_cases stays 0")
+          "G has four human readers; H has one confirmed human reader; "
+          "accepted_cases stays 0")
     print(f"wrote {out_dir / 'defects.json'}")
     print(f"wrote {out_dir / 'defects.md'}")
     return 0
@@ -186,8 +186,9 @@ def _cmd_defect_taxonomy(_args: argparse.Namespace) -> int:
     for mode, meaning in DEFECT_MODES.items():
         print(f"{mode}: {meaning}")
     print("Measured over seven model-labelled splits (A–G); G also has four "
-          "human readers. H has one unconfirmed workbook and one rejected as "
-          "non-independent. No accepted case set. Quote the range, not one point.")
+          "human readers. H has one confirmed human reader and one workbook "
+          "rejected as non-independent. No accepted case set. "
+          "Quote the range, not one point.")
     return 0
 
 

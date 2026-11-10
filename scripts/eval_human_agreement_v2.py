@@ -260,14 +260,14 @@ def main() -> int:
 
     payload: dict = {
         "annotator": "human",
-        "annotator_status": "unconfirmed",
-        "provenance_warning": (
-            "The returned workbook was labelled as a human round, but the "
-            "annotator's provenance was never confirmed. A second returned "
-            "workbook reproduced every label with paraphrased reasons "
-            "(see contamination_h.json). Until the first reader is confirmed "
-            "as a person working unaided, every 'human' figure in this file "
-            "is conditional. Do not quote it as a human-vs-machine result."
+        "annotator_status": "confirmed",
+        "provenance_note": (
+            "The requester confirmed on 2026-11-10 that this workbook was "
+            "filled by a person. It is ONE independent reader, not a gold "
+            "standard and not 'human accuracy'. A later second returned "
+            "workbook was rejected as non-independent (contamination_h.json) "
+            "and adds no reader-to-reader evidence, so no inter-annotator "
+            "agreement exists under v2."
         ),
         "rule": "v2 (one primary mode by symptom order; logic_or_validation is fallback)",
         "engine_note": "engine is scored against the reader, never treated as gold",
