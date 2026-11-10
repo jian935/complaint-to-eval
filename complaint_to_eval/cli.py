@@ -168,8 +168,8 @@ def _cmd_defects(args: argparse.Namespace) -> int:
           f"provenance={report['dataset']['provenance']}")
     if synthetic is None:
         print("WARNING: provenance unspecified; declare --synthetic or --real")
-    print("NOTE: deterministic candidates; hold-out is MODEL-labelled "
-          "(no human labels), accepted_cases stays 0")
+    print("NOTE: deterministic candidates; hold-out A–G is MODEL-labelled, "
+          "G and H also have human readers (not accepted cases); accepted_cases stays 0")
     print(f"wrote {out_dir / 'defects.json'}")
     print(f"wrote {out_dir / 'defects.md'}")
     return 0
@@ -184,7 +184,8 @@ def _cmd_defect_taxonomy(_args: argparse.Namespace) -> int:
     print(f"defect-taxonomy={DEFECT_VERSION} modes={len(DEFECT_MODES)} (DRAFT, model-labelled hold-out)")
     for mode, meaning in DEFECT_MODES.items():
         print(f"{mode}: {meaning}")
-    print("Measured over 5 disjoint model-labelled splits; no human labels. "
+    print("Measured over seven disjoint model-labelled splits (A–G); G and H "
+          "also have human readers, but no accepted case set. "
           "Quote the range, not one point.")
     return 0
 

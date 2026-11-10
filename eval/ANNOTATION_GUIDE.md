@@ -1,12 +1,16 @@
 # Annotation guide
 
-**Current status: one split (G) labelled by four humans, 0 accepted cases.**
-Every other measurement is compared against **model-generated** labels
-(`annotator: model`), and every result file says so. On split G the four readers
-agreed strongly on *whether* a row is a defect (Fleiss κ = 0.922) but not on its
-mode; single-mode labels fell inside the two-mode union 20/20, 20/21 and 19/20 —
-i.e. most mode "disagreement" is granularity, not judgement. See
-[`defect_holdout/multi_annotator.md`](defect_holdout/multi_annotator.md). This
+**Current status: two splits have human labels — G (four readers, v1) and H (one
+reader, v2) — and 0 accepted cases.** Every other measurement is compared against
+**model-generated** labels (`annotator: model`), and every result file says so. On
+split G the four readers agreed strongly on *whether* a row is a defect
+(Fleiss κ = 0.922) but not on its mode; single-mode labels fell inside the
+two-mode union 20/20, 20/21 and 19/20 — i.e. most mode "disagreement" is
+granularity, not judgement. See
+[`defect_holdout/multi_annotator.md`](defect_holdout/multi_annotator.md).
+That finding produced [`GRANULARITY_RULE.md`](GRANULARITY_RULE.md) (v2), which
+set H used; results in
+[`defect_holdout/human_agreement_v2.md`](defect_holdout/human_agreement_v2.md). This
 guide has two parts because the repo carries two taxonomies:
 
 - **Part A — defect reports** (`cte defects`, 10 modes): the current focus, and the
@@ -32,12 +36,16 @@ label is data, not a gap**; precision is meaningless without it.
 Judge the **report**, not the wording. If the report says "it silently drops my
 edits" the mode is `data_integrity` even though the word "data" never appears.
 
-**Granularity is not decided yet — say what you did.** Four readers on one split
-disagreed more about how many modes to write than about which: two wrote 1.7 per
-defect, two wrote 1.0, and every single-mode pick fell inside the two-mode union
-(20/20, 20/21, 19/20). Until a convention is fixed, record **every mode the report
-supports** and say in the free-text field which one you consider primary. Mixing
-conventions silently moves every mode-level number.
+**Granularity is now fixed by v2 — but A–G remain v1 legacy.** Four readers on
+one split disagreed more about how many modes to write than about which: two wrote
+1.7 per defect, two wrote 1.0, and every single-mode pick fell inside the
+two-mode union (20/20, 20/21, 19/20). Set H therefore uses
+[`GRANULARITY_RULE.md`](GRANULARITY_RULE.md): **exactly one primary mode by
+symptom order, up to two cause modes in a separate column**. Sets A–G were
+labelled before that rule: they record every supported mode as a set. Never
+compare an A–G mode set with H's primary column, and never quote a v1 and a v2
+mode-level precision in the same sentence as a trend — the measuring instrument
+changed, and so did the class prior.
 
 ## A2. The ten modes
 

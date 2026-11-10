@@ -1,7 +1,9 @@
 # Defect hold-out evaluation
 
-**Labels are MODEL-generated (`annotator: model`), except for split G.**
-Every number here means "how well the deterministic rules agree with one careful
+**Labels are MODEL-generated (`annotator: model`) for splits A–G.** Split H is
+different: it has one independent human reader under the rewritten v2 rule and no
+model labels at all — see [`human_agreement_v2.md`](human_agreement_v2.md). Every
+number here means "how well the deterministic rules agree with one careful
 reader", not human accuracy. `accepted_cases` is still 0.
 
 The 40 G rows were also annotated **blind by four independent readers** — see
@@ -9,7 +11,7 @@ The 40 G rows were also annotated **blind by four independent readers** — see
 (Fleiss κ = 0.922); the mode labels do not, and mode-level precision against them
 is 0.23–0.38.
 
-Six **pairwise disjoint** splits exist. Each round is an error-analysis loop: read
+Eight **pairwise disjoint** splits exist (A–H). Each round is an error-analysis loop: read
 the misses/false positives of set *N*, change something on principle, then measure
 on a **fresh** set *N+1* that no change has ever seen. Numbers are never
 overwritten, so anyone can check whether a result came from tuning.
@@ -56,6 +58,34 @@ mode) and are published rather than silently patched — changing a label after 
 fact changes what the numbers above mean. Writeups:
 [`human_agreement.md`](human_agreement.md) (single reader, superseded in scope) and
 [`multi_annotator.md`](multi_annotator.md) (four readers, current).
+
+### One reader on set H, under the v2 rule
+
+The v2 rule (`eval/GRANULARITY_RULE.md`) fixes what the first four readers were
+never told: **exactly one primary mode, decided by an ordered symptom checklist,
+with causes in a separate optional column**. H is a fresh 40-row stratified split
+with zero overlap with A–G, so nobody has seen it before. One person filled it
+blind; 28 rows were judged defects, 12 not, 0 unclear.
+
+| Metric, primary mode only | Value |
+| --- | ---: |
+| Engine vs reader, record level | κ 0.327; P **0.889** [0.672, 0.969] / R **0.571** [0.391, 0.735] |
+| Mode-level micro, primary only | **0.545** [0.347, 0.731] / **0.429** [0.265, 0.609] |
+| Mode-level micro, gold = primary + secondary | 0.636 / **0.264** |
+| Defect rows where the engine says nothing | **12 of 28** |
+| Clean records wrongly flagged | 2 of 12 |
+
+`data_integrity` is the worst class: the reader used it as primary **10 times**,
+the engine got **1** (P 0.20, R 0.10). `crash_or_error` scored P 1.00 but six of
+its seven hits are one generated crash template. Under the one-primary rule the
+reader used `logic_or_validation` as primary **0 times**, as a secondary cause 15
+times — the v1 "everything is logic" pattern was partly a template problem.
+
+**Do not compare 0.545 with G's 0.31.** H is 70% defective (G was 50/50), it was
+stratified rather than hand-picked, and the scoring instrument changed. Most
+importantly, **v2 exists to fix agreement between people and one reader cannot
+measure that** — no reader-reader κ under v2 exists yet. Full writeup, baselines
+and the disagreement table: [`human_agreement_v2.md`](human_agreement_v2.md).
 
 ### Prior sensitivity (record level, from set G, n_clean = 20)
 
@@ -187,7 +217,10 @@ co-occurrence model is the only design that can express what the reader is doing
   too small are **capped and reported, never padded** — set C's dify arm is 15,
   and set F is 32 records because aider's derive pool ran out. **Set G is the one
   exception**: hand-built at 20/20 to measure a different class prior
-  (`scripts/draw_holdout_g.py` lists every id and its reason).
+  (`scripts/draw_holdout_g.py` lists every id and its reason). **Set H is
+  stratified** (`scripts/draw_holdout_stratified.py`: aider crash-template 6 /
+  aider other 14 / dify 20) because a purely random draw returned 15–16 near
+  identical crash reports out of 20 and had no discriminating power.
 - **Labels** (`labels_holdout*.jsonl`): multi-label per record (`modes: []` =
   feature request / promo / off-topic). Written by reading the issue text only;
   **engine predictions were not consulted** (easy to guarantee — v0.1 produced
@@ -195,10 +228,11 @@ co-occurrence model is the only design that can express what the reader is doing
 - **Score** (`scripts/eval_defects_holdout.py`): per-mode precision/recall, micro
   average, record-level detection, Wilson intervals, the full miss and
   false-positive lists, two trivial baselines, and the prior-sensitivity reweight.
-- **Corpus** (`.local/corpus/`, gitignored, never published): aider 252 issues
-  (Apache-2.0), dify 176 issues (Apache-2.0 with additional conditions). Both were
+- **Corpus** (`.local/corpus/`, gitignored, never published): aider 478 issues
+  (Apache-2.0), dify 266 issues (Apache-2.0 with additional conditions). Both were
   expanded as later splits exhausted the earlier pools; without that, every split
-  after D would have been aider-only and inflated by crash reports.
+  after D would have been aider-only and inflated by crash reports. A–G consumed
+  271 ids, leaving enough unused records to draw H after the 12-page expansion.
 
 Reproduce (needs the local corpus snapshot; labels and splits are committed):
 
@@ -231,9 +265,11 @@ That is the other honest limit: **most modes are simply too rare here to measure
 
 ## Limits (read before quoting)
 
-1. **Model labels, one reader, one pass.** No inter-annotator agreement exists, so
-   "precision" means agreement with this reader. A second reader would move these
-   numbers by an unknown amount.
+1. **The A–G labels are model-written, one reader, one pass.** Four independent
+   human readers *did* label G afterwards (Fleiss κ = 0.922 binary, mode-level
+   agreement low), and one human reader labelled H under the v2 rule. Neither is
+   an accepted eval set. **No reader-to-reader κ exists under v2 yet**, so the H
+   mode-level figure still means agreement with one person.
 2. **Precision is a function of the prior.** Never quote one precision figure without
    saying which class mix it came from. The 0.944 on F is a 90%-defect feed; the useful
    number for deployment planning is the 25% row of the prior-sensitivity table (0.36).
@@ -262,8 +298,13 @@ That is the other honest limit: **most modes are simply too rare here to measure
   prose; every miss has been a fault expressed in vocabulary the list lacks.
 - **Sentence-level, not clause-level**: markdown issue templates split clauses at
   every newline, which cuts a claim in half before it can be matched.
-- ~~**A human label pass** on one split~~ — done, set G, n = 39. Result: the binary
-  call replicated (κ = 1.000) but mode-level precision fell to 0.31. See
-  [`human_agreement.md`](human_agreement.md).
-- **A second human on the same rows**, to get reader-to-reader κ rather than
-  human-vs-model.
+- ~~**A human label pass** on one split~~ — done, set G, n = 39 (later four
+  readers). Result: the binary call replicated (κ = 1.000) but mode-level
+  precision fell to 0.31. See [`human_agreement.md`](human_agreement.md) and
+  [`multi_annotator.md`](multi_annotator.md).
+- ~~**A second human on the same rows**, to get reader-to-reader κ rather than
+  human-vs-model~~ — done on G with four readers.
+- **A second reader on set H under the v2 rule.** This is the open one: the v2
+  procedure was written to fix between-reader disagreement, and it has never been
+  measured between readers. `scripts/eval_human_agreement_v2.py` accepts multiple
+  workbooks and adds Fleiss κ for both layers.

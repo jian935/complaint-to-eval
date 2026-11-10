@@ -19,11 +19,12 @@ Discipline carried over unchanged (see ANNOTATION_GUIDE.md):
 * Evidence offsets refer to REDACTED text and stay exact through blanking.
 
 Status: DRAFT ``defect-0.1.0-draft``. Signals were read off aider/dify issues and
-measured over five disjoint model-labelled splits (see
+measured over the A–G disjoint model-labelled splits (see
 eval/defect_holdout/README.md). Current estimate on the three uncontaminated
 splits: precision 0.71-0.77, recall 0.63-0.77. Only ``crash_or_error`` is
-well validated (0.95-1.00 precision); the other eight modes are aspirational.
-Labels are MODEL-generated, never human.
+well validated (0.95-1.00 precision); the other nine modes are aspirational.
+The A–G labels are MODEL-generated; H is a separate human-labelled check under
+a rewritten one-primary-mode rule and is not part of this range.
 """
 
 from __future__ import annotations
@@ -394,8 +395,9 @@ def analyze_defects(
             "classified_records": len(classified),
             "unclassified_records": len(records) - len(classified),
             "note": "Defect candidates from deterministic rules. Accuracy was measured "
-                    "on 5 disjoint MODEL-labelled hold-out splits (no human labels); "
-                    "quote the range, not one point. Human review required.",
+                    "on seven disjoint MODEL-labelled hold-out splits (A–G); "
+                    "G and H also have human readers, but none is an accepted "
+                    "case set. Quote the range, not one point. Human review required.",
         },
         "counts": dict(counts),
         "redactions": dict(redactions),

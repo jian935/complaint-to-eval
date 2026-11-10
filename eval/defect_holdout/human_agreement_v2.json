@@ -1,0 +1,1270 @@
+{
+  "annotator": "human",
+  "rule": "v2 (one primary mode by symptom order; logic_or_validation is fallback)",
+  "engine_note": "engine is scored against the reader, never treated as gold",
+  "rows_in_split": 40,
+  "problems": {
+    "H_r1": []
+  },
+  "readers": {
+    "H_r1": {
+      "primary_only": {
+        "gold_definition": "primary only",
+        "scored_rows": 40,
+        "record_level": {
+          "agreement": 0.65,
+          "kappa": 0.326923076923077,
+          "precision": 0.8888888888888888,
+          "precision_ci": [
+            0.6719975513339578,
+            0.9689811315464172
+          ],
+          "recall": 0.5714285714285714,
+          "recall_ci": [
+            0.390704789856154,
+            0.7349170381926877
+          ],
+          "tp": 16,
+          "engine_flagged": 18,
+          "human_positive": 28,
+          "clean_records": 12,
+          "clean_wrongly_flagged": [
+            "r09",
+            "r10"
+          ],
+          "baseline_always_flag": {
+            "precision": 0.7,
+            "recall": 1.0
+          }
+        },
+        "mode_level": {
+          "crash_or_error": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.6363636363636364
+          },
+          "data_integrity": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 9,
+            "precision": 0.2,
+            "recall": 0.1
+          },
+          "config_or_env": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": null
+          },
+          "ui_or_ux": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 3,
+            "precision": 0.6666666666666666,
+            "recall": 0.4
+          },
+          "security": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0
+          },
+          "performance": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333333333333333,
+            "recall": 1.0
+          }
+        },
+        "micro": {
+          "tp": 12,
+          "fp": 10,
+          "fn": 16,
+          "precision": 0.5454545454545454,
+          "recall": 0.42857142857142855,
+          "precision_ci": [
+            0.3465947328904156,
+            0.7307998556799515
+          ],
+          "recall_ci": [
+            0.2650829618073122,
+            0.6092952101438459
+          ]
+        },
+        "partial_credit": {
+          "records_with_any_hit": 12,
+          "defect_records": 28,
+          "rate": 0.42857142857142855,
+          "engine_silent_on_defect": 12
+        },
+        "baseline_top_mode": {
+          "mode": "crash_or_error",
+          "precision": 0.275,
+          "recall": 0.39285714285714285,
+          "_note": "predicts this mode on every record, never another"
+        },
+        "rows": [
+          {
+            "row": "r01",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 LookupError：tree_sitter 的 rust 语言库找不到，属依赖未装全。"
+          },
+          {
+            "row": "r02",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 FileNotFoundError：litellm 的 tokenizer json 缺失，装包不完整。"
+          },
+          {
+            "row": "r03",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 ImportError：scipy 的 _spropack 动态库加载失败，环境里的二进制有问题。"
+          },
+          {
+            "row": "r04",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 ValueError：litellm 新出现的异常没登记进 aider 的异常清单。"
+          },
+          {
+            "row": "r05",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 ImportError：同一条 scipy _propack 加载失败，属环境问题。"
+          },
+          {
+            "row": "r06",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 FileNotFoundError：~/.aider 目录建不出来，属路径/环境缺失。"
+          },
+          {
+            "row": "r07",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "AgentPub 来谈互推合作，属推广，没有主张功能异常。"
+          },
+          {
+            "row": "r08",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标题即 [Feature]，请求把 job 进度回写到 issue，是功能请求。"
+          },
+          {
+            "row": "r09",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [
+              "data_integrity"
+            ],
+            "reason": "询问非 Aider agent 的成绩能否上榜，属提问加推广，无缺陷主张。"
+          },
+          {
+            "row": "r10",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [
+              "config_or_env"
+            ],
+            "reason": "请求新增 prompt 提交/生成阶段的生命周期命令，属功能请求。"
+          },
+          {
+            "row": "r11",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "问多个 provider 能否同时用、找不到相关说明，是提问而非报故障。"
+          },
+          {
+            "row": "r12",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "performance"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "performance"
+            ],
+            "reason": "会话被 APITimeoutError 反复刷屏，是请求超时直接失败，附带超时本身。"
+          },
+          {
+            "row": "r13",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [
+              "data_integrity",
+              "security"
+            ],
+            "reason": "思考块把终端颜色和格式弄坏、界面不恢复；--thinking-tokens 0 被忽略。"
+          },
+          {
+            "row": "r14",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "推广第三方 prompt 压缩库并请求集成，属推广/功能请求。"
+          },
+          {
+            "row": "r15",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "请求给公开 API 加类型注解，是功能请求。"
+          },
+          {
+            "row": "r16",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "只有一句「想把这两个脚本专业地合并」，属求助，没有故障描述。"
+          },
+          {
+            "row": "r17",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "打印出来的费用把缓存 token 重复计费，cost 数值本身是错的。"
+          },
+          {
+            "row": "r18",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标为 [Question]，讨论稀缺模型该放 architect 还是 editor，属提问讨论。"
+          },
+          {
+            "row": "r19",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标为 [Feature]，请求按标签触发 bot 任务，是功能请求。"
+          },
+          {
+            "row": "r20",
+            "verdict": "是",
+            "primary": "security",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "security"
+            ],
+            "engine": [
+              "security"
+            ],
+            "reason": "默认带上 --no-verify 绕过 pre-commit 钩子，属越过不该越过的边界。"
+          },
+          {
+            "row": "r21",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [
+              "data_integrity",
+              "ui_or_ux"
+            ],
+            "reason": "卡片删除后焦点落到 document body，属焦点丢失。"
+          },
+          {
+            "row": "r22",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "开启视觉重排后图片候选被丢弃，检索结果里少了图片。"
+          },
+          {
+            "row": "r23",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "DOCX 提取静默丢图：part 名里不含 image 的图片被跳过。"
+          },
+          {
+            "row": "r24",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "关键词里的 % / _ 被当成 LIKE 通配符，搜索结果集合不对。"
+          },
+          {
+            "row": "r25",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [],
+            "reason": "Agent 的 Classic Knowledge 配置区被禁用，界面上无法配置。"
+          },
+          {
+            "row": "r26",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标为 [Chore/Refactor]，作者自己写明不是行为缺陷，只是没进严格检查。"
+          },
+          {
+            "row": "r27",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "行内图片没被删掉、wiki 图片之间的正文被一起删掉，内容丢失。"
+          },
+          {
+            "row": "r28",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [],
+            "reason": "并发初始化返回 503，文档入库在首次写入时就失败。"
+          },
+          {
+            "row": "r29",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [],
+            "reason": "可选文件留空时前端抛 TypeError，测试运行卡在 Running。"
+          },
+          {
+            "row": "r30",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [
+              "ui_or_ux"
+            ],
+            "reason": "重试返回 200 但索引没恢复，关键词检索查到 0 条。"
+          },
+          {
+            "row": "r31",
+            "verdict": "是",
+            "primary": "performance",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "performance"
+            ],
+            "engine": [
+              "performance"
+            ],
+            "reason": "chunk_overlap 等于 chunk_size 时死循环且内存无界增长，进程卡死。"
+          },
+          {
+            "row": "r32",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [
+              "data_integrity",
+              "ui_or_ux"
+            ],
+            "reason": "coachmark 无对话框语义、键盘不可达，目标一短暂消失就整块卸载、无过渡。"
+          },
+          {
+            "row": "r33",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "凭证查询恒返回空列表，用枚举名当值去查导致查不到。"
+          },
+          {
+            "row": "r34",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "TZ 非 UTC 时返回的时间戳整体偏移 8 小时，数值本身错了。"
+          },
+          {
+            "row": "r35",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "工具节点抛 ValueError 直接失败，多选参数存成逗号串没被归一化。"
+          },
+          {
+            "row": "r36",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [
+              "data_integrity"
+            ],
+            "reason": "邮件正文被二次解码，YWJj 被改成 abc，入库内容不对。"
+          },
+          {
+            "row": "r37",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity"
+            ],
+            "engine": [],
+            "reason": "图片没作为多模态内容送进模型，送去的内容缺了图片本身。"
+          },
+          {
+            "row": "r38",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "请求给 lts 分支跑测试和类型检查，属 CI 功能请求，未指认具体功能损坏。"
+          },
+          {
+            "row": "r39",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [
+              "docs"
+            ],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [],
+            "reason": "skill 发布后在 workflow/agent 里找不到任何入口按钮，功能不可达。"
+          },
+          {
+            "row": "r40",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "crash_or_error"
+            ],
+            "engine": [
+              "config_or_env",
+              "performance"
+            ],
+            "reason": "web 到 api 偶发 ECONNRESET 并返回 500；gunicorn keep-alive 比 undici 短。"
+          }
+        ]
+      },
+      "with_secondary": {
+        "gold_definition": "primary+secondary",
+        "scored_rows": 40,
+        "record_level": {
+          "agreement": 0.65,
+          "kappa": 0.326923076923077,
+          "precision": 0.8888888888888888,
+          "precision_ci": [
+            0.6719975513339578,
+            0.9689811315464172
+          ],
+          "recall": 0.5714285714285714,
+          "recall_ci": [
+            0.390704789856154,
+            0.7349170381926877
+          ],
+          "tp": 16,
+          "engine_flagged": 18,
+          "human_positive": 28,
+          "clean_records": 12,
+          "clean_wrongly_flagged": [
+            "r09",
+            "r10"
+          ],
+          "baseline_always_flag": {
+            "precision": 0.7,
+            "recall": 1.0
+          }
+        },
+        "mode_level": {
+          "crash_or_error": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.6363636363636364
+          },
+          "data_integrity": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 9,
+            "precision": 0.2,
+            "recall": 0.1
+          },
+          "logic_or_validation": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 15,
+            "precision": null,
+            "recall": 0.0
+          },
+          "config_or_env": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 7,
+            "precision": 0.5,
+            "recall": 0.125
+          },
+          "ui_or_ux": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 3,
+            "precision": 0.6666666666666666,
+            "recall": 0.4
+          },
+          "security": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0
+          },
+          "performance": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.6666666666666666,
+            "recall": 1.0
+          },
+          "docs": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "micro": {
+          "tp": 14,
+          "fp": 8,
+          "fn": 39,
+          "precision": 0.6363636363636364,
+          "recall": 0.2641509433962264,
+          "precision_ci": [
+            0.4295134934371804,
+            0.8026702722739211
+          ],
+          "recall_ci": [
+            0.16437206511316813,
+            0.3958092105722453
+          ]
+        },
+        "partial_credit": {
+          "records_with_any_hit": 14,
+          "defect_records": 28,
+          "rate": 0.5,
+          "engine_silent_on_defect": 12
+        },
+        "baseline_top_mode": {
+          "mode": "crash_or_error",
+          "precision": 0.275,
+          "recall": 0.39285714285714285,
+          "_note": "predicts this mode on every record, never another"
+        },
+        "rows": [
+          {
+            "row": "r01",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 LookupError：tree_sitter 的 rust 语言库找不到，属依赖未装全。"
+          },
+          {
+            "row": "r02",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 FileNotFoundError：litellm 的 tokenizer json 缺失，装包不完整。"
+          },
+          {
+            "row": "r03",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 ImportError：scipy 的 _spropack 动态库加载失败，环境里的二进制有问题。"
+          },
+          {
+            "row": "r04",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error",
+              "logic_or_validation"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 ValueError：litellm 新出现的异常没登记进 aider 的异常清单。"
+          },
+          {
+            "row": "r05",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 ImportError：同一条 scipy _propack 加载失败，属环境问题。"
+          },
+          {
+            "row": "r06",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "crash_or_error"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "未捕获 FileNotFoundError：~/.aider 目录建不出来，属路径/环境缺失。"
+          },
+          {
+            "row": "r07",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "AgentPub 来谈互推合作，属推广，没有主张功能异常。"
+          },
+          {
+            "row": "r08",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标题即 [Feature]，请求把 job 进度回写到 issue，是功能请求。"
+          },
+          {
+            "row": "r09",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [
+              "data_integrity"
+            ],
+            "reason": "询问非 Aider agent 的成绩能否上榜，属提问加推广，无缺陷主张。"
+          },
+          {
+            "row": "r10",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [
+              "config_or_env"
+            ],
+            "reason": "请求新增 prompt 提交/生成阶段的生命周期命令，属功能请求。"
+          },
+          {
+            "row": "r11",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "问多个 provider 能否同时用、找不到相关说明，是提问而非报故障。"
+          },
+          {
+            "row": "r12",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "performance"
+            ],
+            "gold": [
+              "crash_or_error",
+              "performance"
+            ],
+            "engine": [
+              "performance"
+            ],
+            "reason": "会话被 APITimeoutError 反复刷屏，是请求超时直接失败，附带超时本身。"
+          },
+          {
+            "row": "r13",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "ui_or_ux"
+            ],
+            "engine": [
+              "data_integrity",
+              "security"
+            ],
+            "reason": "思考块把终端颜色和格式弄坏、界面不恢复；--thinking-tokens 0 被忽略。"
+          },
+          {
+            "row": "r14",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "推广第三方 prompt 压缩库并请求集成，属推广/功能请求。"
+          },
+          {
+            "row": "r15",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "请求给公开 API 加类型注解，是功能请求。"
+          },
+          {
+            "row": "r16",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "只有一句「想把这两个脚本专业地合并」，属求助，没有故障描述。"
+          },
+          {
+            "row": "r17",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "打印出来的费用把缓存 token 重复计费，cost 数值本身是错的。"
+          },
+          {
+            "row": "r18",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标为 [Question]，讨论稀缺模型该放 architect 还是 editor，属提问讨论。"
+          },
+          {
+            "row": "r19",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标为 [Feature]，请求按标签触发 bot 任务，是功能请求。"
+          },
+          {
+            "row": "r20",
+            "verdict": "是",
+            "primary": "security",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "security"
+            ],
+            "engine": [
+              "security"
+            ],
+            "reason": "默认带上 --no-verify 绕过 pre-commit 钩子，属越过不该越过的边界。"
+          },
+          {
+            "row": "r21",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [
+              "data_integrity",
+              "ui_or_ux"
+            ],
+            "reason": "卡片删除后焦点落到 document body，属焦点丢失。"
+          },
+          {
+            "row": "r22",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "开启视觉重排后图片候选被丢弃，检索结果里少了图片。"
+          },
+          {
+            "row": "r23",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "DOCX 提取静默丢图：part 名里不含 image 的图片被跳过。"
+          },
+          {
+            "row": "r24",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "关键词里的 % / _ 被当成 LIKE 通配符，搜索结果集合不对。"
+          },
+          {
+            "row": "r25",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [],
+            "reason": "Agent 的 Classic Knowledge 配置区被禁用，界面上无法配置。"
+          },
+          {
+            "row": "r26",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "标为 [Chore/Refactor]，作者自己写明不是行为缺陷，只是没进严格检查。"
+          },
+          {
+            "row": "r27",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "行内图片没被删掉、wiki 图片之间的正文被一起删掉，内容丢失。"
+          },
+          {
+            "row": "r28",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "并发初始化返回 503，文档入库在首次写入时就失败。"
+          },
+          {
+            "row": "r29",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "可选文件留空时前端抛 TypeError，测试运行卡在 Running。"
+          },
+          {
+            "row": "r30",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [
+              "ui_or_ux"
+            ],
+            "reason": "重试返回 200 但索引没恢复，关键词检索查到 0 条。"
+          },
+          {
+            "row": "r31",
+            "verdict": "是",
+            "primary": "performance",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "logic_or_validation",
+              "performance"
+            ],
+            "engine": [
+              "performance"
+            ],
+            "reason": "chunk_overlap 等于 chunk_size 时死循环且内存无界增长，进程卡死。"
+          },
+          {
+            "row": "r32",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [],
+            "gold": [
+              "ui_or_ux"
+            ],
+            "engine": [
+              "data_integrity",
+              "ui_or_ux"
+            ],
+            "reason": "coachmark 无对话框语义、键盘不可达，目标一短暂消失就整块卸载、无过渡。"
+          },
+          {
+            "row": "r33",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "凭证查询恒返回空列表，用枚举名当值去查导致查不到。"
+          },
+          {
+            "row": "r34",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "TZ 非 UTC 时返回的时间戳整体偏移 8 小时，数值本身错了。"
+          },
+          {
+            "row": "r35",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "crash_or_error",
+              "logic_or_validation"
+            ],
+            "engine": [
+              "crash_or_error"
+            ],
+            "reason": "工具节点抛 ValueError 直接失败，多选参数存成逗号串没被归一化。"
+          },
+          {
+            "row": "r36",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [
+              "data_integrity"
+            ],
+            "reason": "邮件正文被二次解码，YWJj 被改成 abc，入库内容不对。"
+          },
+          {
+            "row": "r37",
+            "verdict": "是",
+            "primary": "data_integrity",
+            "secondary": [
+              "logic_or_validation"
+            ],
+            "gold": [
+              "data_integrity",
+              "logic_or_validation"
+            ],
+            "engine": [],
+            "reason": "图片没作为多模态内容送进模型，送去的内容缺了图片本身。"
+          },
+          {
+            "row": "r38",
+            "verdict": "不是",
+            "primary": "",
+            "secondary": [],
+            "gold": [],
+            "engine": [],
+            "reason": "请求给 lts 分支跑测试和类型检查，属 CI 功能请求，未指认具体功能损坏。"
+          },
+          {
+            "row": "r39",
+            "verdict": "是",
+            "primary": "ui_or_ux",
+            "secondary": [
+              "docs"
+            ],
+            "gold": [
+              "docs",
+              "ui_or_ux"
+            ],
+            "engine": [],
+            "reason": "skill 发布后在 workflow/agent 里找不到任何入口按钮，功能不可达。"
+          },
+          {
+            "row": "r40",
+            "verdict": "是",
+            "primary": "crash_or_error",
+            "secondary": [
+              "config_or_env"
+            ],
+            "gold": [
+              "config_or_env",
+              "crash_or_error"
+            ],
+            "engine": [
+              "config_or_env",
+              "performance"
+            ],
+            "reason": "web 到 api 偶发 ECONNRESET 并返回 500；gunicorn keep-alive 比 undici 短。"
+          }
+        ]
+      }
+    }
+  }
+}

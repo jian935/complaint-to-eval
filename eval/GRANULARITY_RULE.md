@@ -1,7 +1,10 @@
 # Labelling spec v2: one primary mode, plus opt-in causes
 
-**Status: proposed, not yet applied to any label set.** Sets A–G were labelled
-under v1, which never fixed granularity. This document fixes it.
+**Status: applied to set H (one human reader, 40 rows).** Sets A–G were labelled
+under v1, which never fixed granularity; their numbers are not comparable with
+H's. The rule has fixed *how one person labels*, not whether two people now
+agree — no reader-to-reader agreement under v2 exists yet. See
+[`defect_holdout/human_agreement_v2.md`](defect_holdout/human_agreement_v2.md).
 
 ## Why this exists
 
@@ -35,7 +38,10 @@ coerced it wrong" (cause), and v1 accepts either.
    root-cause information that 乙 and 丙 were recording, without polluting the
    primary comparison.
 5. **Scoring compares the engine against primary modes only.** Cause modes are
-   reported separately and never enter precision/recall.
+   reported separately and never enter the headline precision/recall. They may be
+   used in an explicitly labelled *sensitivity check* showing how much the number
+   moves under the old everything-you-see convention — that check is not the v2
+   score and must never be quoted without its label.
 
 ## Decision order
 

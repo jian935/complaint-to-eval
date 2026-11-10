@@ -1,12 +1,16 @@
 # Defect-report taxonomy (`defect-0.1.0-draft`)
 
-**Status: DRAFT. Model-evaluated on six disjoint hold-out splits; one split has
-four human readers.** Most precision/recall figures are measured against **model
-labels** — see [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
+**Status: DRAFT. Model-evaluated on seven disjoint hold-out splits (A–G); G has
+four human readers and H has one under a rewritten rule.** Most precision/recall
+figures are measured against **model labels** — see
+[`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
 Split G was also annotated blind by four independent readers: they agree strongly
 on whether a row is a defect (Fleiss κ = 0.922) but not on its mode, and against
 them **mode-level micro precision is 0.23–0.38** rather than 0.71–0.77. See
 [`eval/defect_holdout/multi_annotator.md`](eval/defect_holdout/multi_annotator.md).
+Split H has one reader under the v2 one-primary-mode rule (0.545 / 0.429); it is
+**not** comparable to G and does not establish reader-to-reader agreement — see
+[`eval/defect_holdout/human_agreement_v2.md`](eval/defect_holdout/human_agreement_v2.md).
 `accepted_cases` is still 0 — a labelled split is not an accepted case set.
 
 **Read this first: in practice the engine is a crash detector, and its precision is

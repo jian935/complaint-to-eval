@@ -1,9 +1,11 @@
 """Structure locks for the defect hold-out artefacts (CI-safe, no raw corpus).
 
-Five disjoint splits exist (a/b/c/d/e). These tests guarantee:
+Seven model-labelled disjoint splits exist (a–g); set h is the separate
+v2 human-labelled round and has no model label file by design. These tests
+guarantee:
   * every label file is well-formed and uses known modes;
-  * every annotator is ``model`` — this project has no human labels and must
-    never be able to claim one;
+  * every annotator in those files is ``model`` — none of them was labelled by a
+    human, and the human rounds live in separate artefacts;
   * each label file matches its partition file exactly;
   * no two splits overlap, so a "clean" validation set really is clean.
 
@@ -96,6 +98,20 @@ class HoldoutLabelsTests(unittest.TestCase):
         for left, right in combinations(SETS, 2):
             overlap = label_ids(left) & label_ids(right)
             self.assertEqual(set(), overlap, f"sets {left} and {right} share {sorted(overlap)}")
+
+    def test_h_partition_is_disjoint_from_every_labelled_split(self):
+        # The v2 human round must be blind to all earlier model-labelled splits.
+        parts = json.loads((BASE / "partitions_h.json").read_text(encoding="utf-8"))
+        h_ids = {i for ids in parts["holdout"].values() for i in ids}
+        self.assertEqual(40, len(h_ids))
+        for name in SETS:
+            self.assertEqual(
+                set(), h_ids & label_ids(name),
+                f"set h overlaps {name}: {sorted(h_ids & label_ids(name))}",
+            )
+
+    def test_h_has_no_model_labels(self):
+        self.assertFalse((BASE / "labels_holdout_h.jsonl").exists())
 
 
 if __name__ == "__main__":

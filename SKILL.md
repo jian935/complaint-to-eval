@@ -108,13 +108,16 @@ This project feeds promptfoo / Langfuse; it does not replace them.
 1. Every generated case is an unreviewed **candidate**. Never call it a label,
    a ground truth, or an eval set. `accepted_cases` is always 0.
 2. The only precision/recall figures that exist are in
-   `eval/defect_holdout/README.md`, measured against **model** labels on six
+   `eval/defect_holdout/README.md`, measured against **model** labels on the A–G
    disjoint splits. Cite the range (mode-level precision 0.71-0.77) and say
    "model-labelled", never "human accuracy". **Split G also has four blind human
    readers**: they agree strongly on whether something is a defect (Fleiss
    κ = 0.922) but not on the mode, and against them mode-level precision is
-   **0.23-0.38** — so treat 0.71-0.77 as an upper bound. Do not compute a new
-   accuracy number from a user's corpus — there is nothing to compare it to.
+   **0.23-0.38** — so treat 0.71-0.77 as an upper bound. **Split H has one human
+   reader** under a rewritten one-primary-mode rule (0.545 / 0.429): different
+   split, different prior, one person — do not compare it with the G numbers and
+   do not call it inter-annotator agreement. Do not compute a new accuracy number
+   from a user's corpus — there is nothing to compare it to.
 3. Be blunt about coverage: the engine is validated only for crashes. On the
    newest clean split it caught 13 of 15 crash reports and 2 of 12 other defects.
    If a user's corpus is mostly UI/i18n/data bugs, say the tool is weak there
