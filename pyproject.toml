@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "complaint-to-eval"
-version = "0.1.0"
+version = "0.2.0"
 description = "Turn real user complaints into reviewable agent regression-test candidates. Zero-key, deterministic, standard library only."
 readme = "README.md"
 requires-python = ">=3.10"

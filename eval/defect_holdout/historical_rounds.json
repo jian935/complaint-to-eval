@@ -1,0 +1,26 @@
+{
+  "kind": "historical_round_table_transcription",
+  "authoritative_source": "eval/defect_holdout/README.md, section 'Round table (mode-level)'",
+  "not_recomputed": true,
+  "reason_for_existing": "Sets A-E never had standalone result JSONs. Their numbers were published in the round table only. Re-running the current engine on them would NOT reproduce these values: the taxonomy changed after round 6 and their labels were rewritten with those sets in view. This file mirrors the published numbers verbatim instead of manufacturing new ones.",
+  "warning": "These are micro precision/recall against MODEL labels, measured with the engine as it existed at that round. They are levels in a sequence, not independent replications. Do not average them and do not compare them with set G or H.",
+  "rounds": [
+    {"round": 1, "split": "A", "n": 40, "change": "first measurement, untuned", "micro_precision": 0.815, "micro_recall": 0.667},
+    {"round": 2, "split": "B", "n": 40, "change": "natural-phrase signals from A; start-of-word boundary", "micro_precision": 0.917, "micro_recall": 0.846, "contaminated": true, "note": "optimistic outlier; set B was reused for tuning"},
+    {"round": 3, "split": "C", "n": 39, "change": "clean confirmation of round 2", "micro_precision": 0.711, "micro_recall": 0.771},
+    {"round": 4, "split": "D", "n": 40, "change": "blank quoted code before matching", "micro_precision": 0.774, "micro_recall": 0.649},
+    {"round": 5, "split": "E", "n": 40, "change": "remove bare topic nouns", "micro_precision": 0.710, "micro_recall": 0.629},
+    {"round": 6, "split": "F", "n": 32, "change": "add logic_or_validation, move boundary cases out of data/config", "micro_precision": 0.714, "micro_recall": 0.556}
+  ],
+  "post_round6_rescoring": {
+    "splits": ["C", "D", "E"],
+    "precision": [0.824, 0.829, 0.743],
+    "publishable": false,
+    "reason": "C/D/E labels were rewritten after round 6 with those sets in view. F is the only clean post-change number."
+  },
+  "later_splits": {
+    "G": "results_g.json (balanced 50/50 prior study; also four human readers)",
+    "H": "human_agreement_v2.json (one confirmed human reader, v2 rule)",
+    "I": "cooccurrence_check.json (frozen-vocabulary probe validation, negative result)"
+  }
+}

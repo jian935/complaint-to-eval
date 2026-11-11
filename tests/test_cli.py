@@ -24,9 +24,10 @@ def run_cli(*args: str) -> tuple[int, str]:
 
 class TestCli(unittest.TestCase):
     def test_version(self):
+        from complaint_to_eval import __version__
         code, out = run_cli("--version")
         self.assertEqual(0, code)
-        self.assertIn("cte 0.1.0", out)
+        self.assertIn(f"cte {__version__}", out)
 
     def test_demo_is_explicitly_synthetic(self):
         with tempfile.TemporaryDirectory(dir=str(ROOT)) as tmp:

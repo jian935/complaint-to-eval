@@ -27,7 +27,7 @@ from complaint_to_eval.defects import DEFECT_MODES, analyze_defects  # noqa: E40
 from complaint_to_eval.pipeline import load_records  # noqa: E402
 
 HOLDOUT = ROOT / ".local/corpus/holdout.jsonl"
-LABELS = ROOT / "eval/defect_holdout/labels_holdout.jsonl"
+LABELS = ROOT / "eval/defect_holdout/labels_holdout_a.jsonl"
 
 
 def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:

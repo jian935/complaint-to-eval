@@ -1,5 +1,12 @@
 # Defect-report taxonomy (`defect-0.1.0-draft`)
 
+> **Two taxonomies, not one.** This file describes the **10 defect modes** used
+> by `cte defects` for issue-tracker / bug-report text. The package also ships
+> the older **8 LLM-behaviour modes** in `complaint_to_eval/taxonomy.py`, meant
+> for free-form user feedback; it has different signal rules (no English word
+> boundary) and measured near-zero recall on real issue corpora. Do not merge
+> their signal lists or quote one taxonomy's numbers for the other.
+
 **Status: DRAFT. Model-evaluated on seven disjoint hold-out splits (A–G); G has
 four independent human readers.** Split H has **one confirmed human reader**
 under v2 (one workbook, not a gold standard), plus a second workbook **rejected

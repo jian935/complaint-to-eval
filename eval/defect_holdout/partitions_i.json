@@ -1,0 +1,58 @@
+{
+  "salt": "v10-cooc-probe",
+  "name": "i",
+  "strategy": "stratified by crash template",
+  "holdout": {
+    "aider_crash": [
+      "aider-5260",
+      "aider-5498",
+      "aider-5675",
+      "aider-5650",
+      "aider-5228",
+      "aider-5298"
+    ],
+    "aider_other": [
+      "aider-5501",
+      "aider-5165",
+      "aider-5620",
+      "aider-5315",
+      "aider-5531",
+      "aider-5468",
+      "aider-5399",
+      "aider-5508",
+      "aider-5623",
+      "aider-5496",
+      "aider-5559",
+      "aider-5300",
+      "aider-5324",
+      "aider-5272"
+    ],
+    "dify": [
+      "dify-45035",
+      "dify-45147",
+      "dify-45291",
+      "dify-44856",
+      "dify-45176",
+      "dify-44973",
+      "dify-44746",
+      "dify-44918",
+      "dify-45400",
+      "dify-45351",
+      "dify-45252",
+      "dify-45390",
+      "dify-45006",
+      "dify-45002",
+      "dify-44790",
+      "dify-44894",
+      "dify-45086",
+      "dify-45323",
+      "dify-45423",
+      "dify-45555"
+    ]
+  },
+  "vocabulary_fingerprint": "0af2ac5712a1fe256b42fe4c81684f000269d155e7630c2df3c1f636eb873e23",
+  "drawn_after_vocabulary_freeze": true,
+  "design_set": "H (read while designing the rule; NEVER a validation set)",
+  "validation_role": "I is the only split used to score the co-occurrence probe",
+  "label_policy": "Labels must be MODEL-generated (annotator: model), written to labels_holdout_i.jsonl. Not human accuracy. The rule vocabulary must not be edited after this file exists; a hash mismatch invalidates the split."
+}

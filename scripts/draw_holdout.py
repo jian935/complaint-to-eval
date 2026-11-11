@@ -11,7 +11,7 @@ are capped and reported — never padded, never re-drawn after seeing results.
 
 Usage:
     python scripts/draw_holdout.py --salt v5 --name e \
-        --exclude eval/defect_holdout/partitions.json \
+        --exclude eval/defect_holdout/partitions_a.json \
         --exclude eval/defect_holdout/partitions_b.json \
         --exclude eval/defect_holdout/partitions_c.json \
         --exclude eval/defect_holdout/partitions_d.json

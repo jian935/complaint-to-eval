@@ -1,6 +1,6 @@
 """Second, disjoint hold-out (set B) for re-validating defect signals.
 
-Set A (eval/defect_holdout/partitions.json) was used for error analysis. Set B
+Set A (eval/defect_holdout/partitions_a.json) was used for error analysis. Set B
 must be disjoint from A so that signal changes motivated by A are tested on a
 fresh split. Rule: drop A ids, sort the rest by md5("v2" + record_id), take the
 first N per corpus.
@@ -21,7 +21,7 @@ SOURCES = {
     "aider": (ROOT / ".local/corpus/aider_corpus.jsonl", 24),
     "dify": (ROOT / ".local/corpus/dify_corpus.jsonl", 16),
 }
-SET_A = ROOT / "eval/defect_holdout/partitions.json"
+SET_A = ROOT / "eval/defect_holdout/partitions_a.json"
 
 
 def _key(record_id: str) -> str:

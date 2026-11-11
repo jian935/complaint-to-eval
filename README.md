@@ -27,7 +27,7 @@ records=5 classified=4 unclassified=1 candidates=4 provenance=synthetic
 
 ## Read this before trying it
 
-This repo's most useful result so far is a **negative** one, and it is published in
+This repo's most useful results so far are **negative**, and they are published in
 full rather than buried:
 
 | Claim | Status |
@@ -36,10 +36,11 @@ full rather than buried:
 | "The mode labels are right" | ⚠️ **Unsettled.** Against model labels 0.71–0.77; against **four blind human readers** on one split, **0.23–0.38**. Readers agree strongly on *whether* something is broken (Fleiss κ = 0.922), not on *which* mode. |
 | "Rewriting the annotation rule fixed the disagreement" | ❌ **Not tested — and deliberately left untested.** One **human-confirmed** workbook under v2 scores the engine at 0.545 / 0.429. Two returned second workbooks were rejected as non-independent; a simulated one was used only to check the scoring pipeline ([details](eval/defect_holdout/simulation_pipeline_check.md)). No reader-to-reader κ under v2 is published. |
 | "It beats flagging everything" | ⚠️ **Only on precision, and only barely.** On a balanced 50/50 split: 0.632 precision / 0.600 recall, against **0.500 / 1.000** for "flag everything". |
+| "A different rule design breaks the plateau" | ❌ **Tested and falsified.** A topic+fault co-occurrence probe recovered **0 of 4** `data_integrity` rows on an unseen split while emitting 11 false positives. Its design set scored 0.900 recall — because its vocabulary was copied from those titles. [Negative result](eval/defect_holdout/cooccurrence_check.md). |
 | "Precision 0.94 means it is accurate" | ❌ That figure comes from a feed that is **90% defect reports**. Reweighted to a 25%-defect queue it is **0.36**. |
 | "It produces a human-labelled eval set" | ❌ No. Split G has four independent human readers; split H has **one confirmed human reader** (one workbook, not a gold standard) and a rejected second workbook. `accepted_cases` is still `0`. |
 
-Full method, seven rounds of numbers, misses, false positives and the prior-sensitivity
+Full method, the hold-out rounds, misses, false positives and the prior-sensitivity
 table: [`eval/defect_holdout/README.md`](eval/defect_holdout/README.md).
 
 ## What a candidate actually is
@@ -198,8 +199,9 @@ crash; redaction happens first; one candidate per (record, mode).
    labels, scored separately in `human_agreement.md`. Quote the range, not one point, quote
    the trivial baselines alongside it, and **always state the class mix**: a
    precision measured on a 90%-defect feed is not a claim about a real queue.
-4. Eight disjoint hold-out splits exist (A–H; G is the balanced 50/50 one, H is
-   stratified and has no model labels). Once a split's misses have been read, that
+4. Nine disjoint hold-out splits exist (A–I; G is the balanced 50/50 one, H is
+   stratified and has no model labels, I was drawn after the probe vocabulary
+   was frozen). Once a split's misses have been read, that
    split is contaminated forever; every claim is measured on a split that no
    change had seen. Numbers are never overwritten. A returned labelling workbook
    can also be contaminated by a non-independent second pass — see
@@ -220,9 +222,17 @@ crash; redaction happens first; one candidate per (record, mode).
 | L3 | community badcase submissions and a weekly regression report |
 
 The known blocker before L2 is design, not effort: four rounds of adding, removing
-and stripping signals left precision flat at 0.71–0.77. A phrase list cannot express
-"topic word plus fault word in the same clause", which is what a human reader is
-doing. That redesign is the next step, and it needs human labels to be judged at all.
+and stripping signals left precision flat at 0.71–0.77. The obvious redesign —
+score a *clause* for a topic word plus a fault word instead of matching one
+phrase — was built as an experimental probe and **tested on a fresh, unseen
+split. It failed**: 0 of 4 real `data_integrity` rows recovered, 11 false
+positives, no evidence of improvement over the phrase list. It fits its design
+set at 0.900 recall largely because parts of its vocabulary were copied from
+that set's titles. See the
+[full negative result](eval/defect_holdout/cooccurrence_check.md). Changing the
+*shape* of a word list did not help either; what is missing is a judgement
+about grammatical roles, which a deterministic rule set cannot honestly claim.
+`cte defects` is unchanged — the probe is a separate, clearly labelled command.
 In parallel the annotation procedure was rewritten (v2: one primary mode fixed by
 symptom order). Its effect on agreement between readers is **still unmeasured and
 will stay that way**: two returned second workbooks were rejected as

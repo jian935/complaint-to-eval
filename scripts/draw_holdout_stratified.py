@@ -3,7 +3,7 @@
 Run:
     python scripts/draw_holdout_stratified.py --salt v9 --name h \
         --aider-crash 6 --aider-other 14 --dify 20 \
-        --exclude eval/defect_holdout/partitions.json ... 
+        --exclude eval/defect_holdout/partitions_a.json ... 
 
 Why not random: 79% of the aider corpus is one auto-generated crash template
 (`Uncaught ImportError in _svdp.py line 23`). A plain random draw of 20 aider rows

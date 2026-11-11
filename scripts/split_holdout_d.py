@@ -34,7 +34,7 @@ SOURCES = {
     "dify": (ROOT / ".local/corpus/dify_corpus.jsonl", 16),
 }
 PARTITIONS = [
-    ROOT / "eval/defect_holdout/partitions.json",
+    ROOT / "eval/defect_holdout/partitions_a.json",
     ROOT / "eval/defect_holdout/partitions_b.json",
     ROOT / "eval/defect_holdout/partitions_c.json",
 ]

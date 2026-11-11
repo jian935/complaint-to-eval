@@ -170,9 +170,40 @@ def _cmd_defects(args: argparse.Namespace) -> int:
         print("WARNING: provenance unspecified; declare --synthetic or --real")
     print("NOTE: deterministic candidates; hold-out A–G is MODEL-labelled; "
           "G has four human readers; H has one confirmed human reader; "
+          "I is the frozen probe validation split (negative result); "
           "accepted_cases stays 0")
     print(f"wrote {out_dir / 'defects.json'}")
     print(f"wrote {out_dir / 'defects.md'}")
+    return 0
+
+
+def _cmd_cooccurrence(args: argparse.Namespace) -> int:
+    """EXPERIMENTAL probe, deliberately not wired into ``cte defects``."""
+    from .cooccurrence import (
+        COOCCURRENCE_VERSION, analyze_cooccurrence, vocabulary_fingerprint,
+    )
+    synthetic = True if args.synthetic else (False if args.real else None)
+    records = load_records(args.input)
+    report = analyze_cooccurrence(
+        records,
+        dataset_label=args.label or Path(args.input).name,
+        synthetic=synthetic,
+    )
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    target = out_dir / "cooccurrence.json"
+    target.write_text(json.dumps(report, ensure_ascii=False, indent=2),
+                      encoding="utf-8")
+    h = report["honesty"]
+    print(f"EXPERIMENTAL probe={COOCCURRENCE_VERSION} mode=data_integrity "
+          f"records={report['dataset']['records']} "
+          f"candidates={h['candidate_cases']} accepted={h['accepted_cases']}")
+    print(f"vocabulary_fingerprint={vocabulary_fingerprint()[:16]}...")
+    print("NOTE: single-mode topic+fault co-occurrence probe. On split I it "
+          "recovered 0 of 4 data_integrity rows and added 11 false positives; "
+          "it is published as a NEGATIVE result, not as a better engine.")
+    print("NOTE: not wired into `cte defects`; model labels only, not human accuracy.")
+    print(f"wrote {target}")
     return 0
 
 
@@ -187,7 +218,8 @@ def _cmd_defect_taxonomy(_args: argparse.Namespace) -> int:
         print(f"{mode}: {meaning}")
     print("Measured over seven model-labelled splits (A–G); G also has four "
           "human readers. H has one confirmed human reader and one workbook "
-          "rejected as non-independent. No accepted case set. "
+          "rejected as non-independent. I scored a co-occurrence redesign "
+          "that failed (0/4, 11 false positives). No accepted case set. "
           "Quote the range, not one point.")
     return 0
 
@@ -273,6 +305,18 @@ def build_parser() -> argparse.ArgumentParser:
     dorigin.add_argument("--synthetic", action="store_true", help="data is fabricated")
     dorigin.add_argument("--real", action="store_true", help="licence and consent checked")
     defects.set_defaults(func=_cmd_defects)
+
+    cooccurrence = sub.add_parser(
+        "cooccurrence",
+        help="EXPERIMENTAL topic+fault probe for data_integrity (negative result)",
+    )
+    cooccurrence.add_argument("--input", required=True)
+    cooccurrence.add_argument("--out", default="out/cooccurrence")
+    cooccurrence.add_argument("--label", default="")
+    corigin = cooccurrence.add_mutually_exclusive_group()
+    corigin.add_argument("--synthetic", action="store_true", help="data is fabricated")
+    corigin.add_argument("--real", action="store_true", help="licence and consent checked")
+    cooccurrence.set_defaults(func=_cmd_cooccurrence)
 
     defect_taxonomy = sub.add_parser(
         "defect-taxonomy", help="print the draft defect taxonomy and verify invariants"

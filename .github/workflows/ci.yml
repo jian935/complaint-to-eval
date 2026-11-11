@@ -29,6 +29,8 @@ jobs:
         run: python -m complaint_to_eval defect-taxonomy
       - name: Defects smoke run on the fixture
         run: python -m complaint_to_eval defects --input tests/fixtures/defect_input.jsonl --synthetic --out out/defects-smoke
+      - name: Co-occurrence probe smoke (experimental, published negative result)
+        run: python -m complaint_to_eval cooccurrence --input tests/fixtures/defect_input.jsonl --synthetic --out out/cooccurrence-smoke
       - name: Label template structure
         run: python -m complaint_to_eval validate --labels eval/labels.template.jsonl
       - name: Privacy scan over shipped data files

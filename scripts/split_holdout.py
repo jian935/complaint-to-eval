@@ -46,12 +46,12 @@ def main() -> int:
 
     eval_dir = ROOT / "eval/defect_holdout"
     eval_dir.mkdir(parents=True, exist_ok=True)
-    (eval_dir / "partitions.json").write_text(
+    (eval_dir / "partitions_a.json").write_text(
         json.dumps(partition, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
     print(f"\nwrote {out_local} ({len(holdout)} records)")
-    print(f"wrote {eval_dir / 'partitions.json'}")
+    print(f"wrote {eval_dir / 'partitions_a.json'}")
     print("\n=== LABELLING LINES (id :: text) ===")
     for r in holdout:
         text = " ".join(r["text"].split())[:300]

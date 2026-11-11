@@ -1,8 +1,9 @@
 """Structure locks for the defect hold-out artefacts (CI-safe, no raw corpus).
 
-Seven model-labelled disjoint splits exist (a–g); set h is the separate
-v2 round (one confirmed human reader) and has no model label file by design.
-These tests
+Seven model-labelled round-table splits exist (a–g), plus set i, the
+model-labelled validation split for the (failed) co-occurrence probe. Set h is
+the separate v2 round (one confirmed human reader) and has no model label file
+by design. These tests
 guarantee:
   * every label file is well-formed and uses known modes;
   * every annotator in those files is ``model`` — none of them was labelled by a
@@ -30,13 +31,14 @@ BASE = ROOT / "eval/defect_holdout"
 
 #: set name -> (labels file, partitions file). Order is the drawing order.
 SETS: dict[str, tuple[Path, Path]] = {
-    "a": (BASE / "labels_holdout.jsonl", BASE / "partitions.json"),
+    "a": (BASE / "labels_holdout_a.jsonl", BASE / "partitions_a.json"),
     "b": (BASE / "labels_holdout_b.jsonl", BASE / "partitions_b.json"),
     "c": (BASE / "labels_holdout_c.jsonl", BASE / "partitions_c.json"),
     "d": (BASE / "labels_holdout_d.jsonl", BASE / "partitions_d.json"),
     "e": (BASE / "labels_holdout_e.jsonl", BASE / "partitions_e.json"),
     "f": (BASE / "labels_holdout_f.jsonl", BASE / "partitions_f.json"),
     "g": (BASE / "labels_holdout_g.jsonl", BASE / "partitions_g.json"),
+    "i": (BASE / "labels_holdout_i.jsonl", BASE / "partitions_i.json"),
 }
 
 
@@ -113,6 +115,41 @@ class HoldoutLabelsTests(unittest.TestCase):
 
     def test_h_has_no_model_labels(self):
         self.assertFalse((BASE / "labels_holdout_h.jsonl").exists())
+
+    def test_a_files_use_the_uniform_naming(self):
+        # A used to be the odd one out (partitions.json / labels_holdout.jsonl).
+        # Keep the _a suffix so every split is discoverable by one glob.
+        self.assertTrue((BASE / "partitions_a.json").exists())
+        self.assertTrue((BASE / "labels_holdout_a.jsonl").exists())
+        self.assertFalse((BASE / "partitions.json").exists())
+        self.assertFalse((BASE / "labels_holdout.jsonl").exists())
+
+
+class HistoricalRoundsTests(unittest.TestCase):
+    def test_transcribed_numbers_match_the_published_round_table(self):
+        """A–E were never recomputed; the JSON must mirror the README exactly."""
+        data = json.loads((BASE / "historical_rounds.json").read_text(encoding="utf-8"))
+        self.assertTrue(data["not_recomputed"])
+        rows = [ln for ln in (BASE / "README.md").read_text(encoding="utf-8")
+                .splitlines() if ln.startswith("|")]
+        for r in data["rounds"]:
+            p, rc = f"{r['micro_precision']:.3f}", f"{r['micro_recall']:.3f}"
+            # Some cells are bolded in the table, so match the cell content
+            # rather than a byte-exact row.
+            self.assertTrue(
+                any(p in ln and rc in ln for ln in rows),
+                f"round {r['round']} ({p}/{rc}) not in the published table",
+            )
+        self.assertTrue(data["rounds"][1]["contaminated"])
+        self.assertFalse(data["post_round6_rescoring"]["publishable"])
+
+    def test_round_6_agrees_with_the_standalone_result_file(self):
+        data = json.loads((BASE / "historical_rounds.json").read_text(encoding="utf-8"))
+        f = json.loads((BASE / "results_f.json").read_text(encoding="utf-8"))
+        r6 = data["rounds"][-1]
+        self.assertEqual("F", r6["split"])
+        self.assertAlmostEqual(r6["micro_precision"], f["micro"]["precision"], places=3)
+        self.assertAlmostEqual(r6["micro_recall"], f["micro"]["recall"], places=3)
 
 
 if __name__ == "__main__":

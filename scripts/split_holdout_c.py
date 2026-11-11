@@ -24,7 +24,7 @@ SOURCES = {
     "aider": (ROOT / ".local/corpus/aider_corpus.jsonl", 24),
     "dify": (ROOT / ".local/corpus/dify_corpus.jsonl", 16),
 }
-SET_A = ROOT / "eval/defect_holdout/partitions.json"
+SET_A = ROOT / "eval/defect_holdout/partitions_a.json"
 SET_B = ROOT / "eval/defect_holdout/partitions_b.json"
 
 

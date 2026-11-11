@@ -6,16 +6,23 @@ model labels at all. A second returned workbook was **rejected as
 non-independent** — see [`contamination_h.md`](contamination_h.md). Every
 number here means "how well the deterministic rules agree with one careful
 reader", not human accuracy or a gold standard. `accepted_cases` is still 0.
+**Split I is also model-labelled**, but it exists for one purpose only: scoring
+an experimental co-occurrence probe that was designed on H. It is not part of
+the round table below and its numbers are not comparable with A–G — see
+[`cooccurrence_check.md`](cooccurrence_check.md).
 
 The 40 G rows were also annotated **blind by four independent readers** — see
 [`multi_annotator.md`](multi_annotator.md). The binary call replicates strongly
 (Fleiss κ = 0.922); the mode labels do not, and mode-level precision against them
 is 0.23–0.38.
 
-Eight **pairwise disjoint** splits exist (A–H). Each round is an error-analysis loop: read
-the misses/false positives of set *N*, change something on principle, then measure
-on a **fresh** set *N+1* that no change has ever seen. Numbers are never
-overwritten, so anyone can check whether a result came from tuning.
+Nine **pairwise disjoint** splits exist (A–I). The round table below covers
+A–G (model labels); H is the human round and the design set for the I probe.
+A–H follow the error-analysis loop: read the misses/false positives of set *N*,
+change something on principle, then measure on a **fresh** set *N+1* that no
+change has ever seen. I was drawn *after* the probe vocabulary was frozen and
+was scored once, with no edits afterwards. Numbers are never overwritten, so
+anyone can check whether a result came from tuning.
 
 ## The headline, in four lines
 
@@ -30,6 +37,12 @@ overwritten, so anyone can check whether a result came from tuning.
   far more positive than a real triage feed. Measured on a deliberately balanced
   50/50 split (set G), record-level precision is **0.632**, and the trivial
   "flag everything" rule scores **0.500 / 1.000** against it.
+- **Changing the rule's shape did not break the plateau.** An experimental
+  topic+fault co-occurrence probe on fresh split I recovered **0 of 4**
+  `data_integrity` rows and emitted **11 false positives**. It fits design set H
+  at 0.900 recall only because parts of its vocabulary were copied from H
+  titles. See [`cooccurrence_check.md`](cooccurrence_check.md) — `cte defects`
+  is unchanged and the probe is not a second engine.
 
 ### Human check on set G (4 readers)
 
@@ -219,9 +232,13 @@ no label edit.
 "overwrites action_name", "accepts a trailing newline" — none of which the general
 signals anticipated. The mode is conceptually right and measurably useless so far.
 
-This is the sixth time a phrase-level change produced no generalisation gain. The
-conclusion is not "try harder with phrases"; it is that **a topic-word + fault-word
-co-occurrence model is the only design that can express what the reader is doing.**
+This is the sixth time a phrase-level change produced no generalisation gain. At
+the time the proposed answer was a topic-word + fault-word co-occurrence model.
+**That design was later built, tested on a frozen new split I, and falsified** —
+0 of 4 `data_integrity` rows recovered, 11 false positives. See
+[`cooccurrence_check.md`](cooccurrence_check.md). Changing the shape of a word
+list is not the answer either; the missing piece is a judgement about
+grammatical roles.
 
 ## Method
 
@@ -246,7 +263,8 @@ co-occurrence model is the only design that can express what the reader is doing
   (Apache-2.0), dify 266 issues (Apache-2.0 with additional conditions). Both were
   expanded as later splits exhausted the earlier pools; without that, every split
   after D would have been aider-only and inflated by crash reports. A–G consumed
-  271 ids, leaving enough unused records to draw H after the 12-page expansion.
+  271 ids, leaving enough unused records to draw H and I (40 each) after the
+  12-page expansion.
 
 Reproduce (needs the local corpus snapshot; labels and splits are committed):
 
@@ -260,8 +278,10 @@ python scripts/eval_defects_holdout.py --holdout .local/corpus/holdoutG.jsonl \
 `out/` is gitignored, so the two headline runs are committed verbatim as
 [`results_f.json`](results_f.json) and [`results_g.json`](results_g.json) — generated
 output, never hand-edited, containing record ids and mode labels only. Earlier
-rounds' raw outputs are not committed; their numbers survive in the tables above and
-in the commit messages, which is the only place they can be checked against.
+rounds' raw outputs are **not** committed and cannot be recomputed: the taxonomy
+changed after round 6 and those labels were rewritten with the sets in view.
+[`historical_rounds.json`](historical_rounds.json) is an explicitly labelled
+`not_recomputed` transcription of the published table, not a fresh measurement.
 
 ## Per-mode detail on set F (clean)
 
@@ -307,9 +327,17 @@ That is the other honest limit: **most modes are simply too rare here to measure
 
 ## Backlog (design-level, not more phrases)
 
-- **Co-occurrence model**: require a topic token *and* a fault token in the same
-  clause. Every false positive since round 3 has been a topic word in neutral
-  prose; every miss has been a fault expressed in vocabulary the list lacks.
+- ~~**Co-occurrence model**: require a topic token *and* a fault token in the
+  same clause~~ — **built, tested on split I, and falsified (2026-11-11).**
+  0 of 4 real `data_integrity` rows recovered, 11 false positives, no
+  improvement over the phrase list. The hypothesis that "two words in one
+  clause" would distinguish a data fault from neutral prose was wrong: `double`
+  in *"retry delay appears to double"* and `skip` in `SKIP_DOM_SELECTION_TAG`
+  are not data defects. Split H's 0.600 / 0.900 is a fit-to-answer-key number
+  and is `publishable: false`. Full method and the frozen-vocabulary discipline:
+  [`cooccurrence_design.md`](cooccurrence_design.md),
+  [`cooccurrence_check.md`](cooccurrence_check.md). The remaining gap is a
+  judgement about grammatical roles, not another word list.
 - **Sentence-level, not clause-level**: markdown issue templates split clauses at
   every newline, which cuts a claim in half before it can be matched.
 - ~~**A human label pass** on one split~~ — done, set G, n = 39 (later four

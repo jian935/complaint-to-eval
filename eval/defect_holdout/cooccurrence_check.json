@@ -1,0 +1,283 @@
+{
+  "kind": "cooccurrence_probe_check",
+  "split": "I",
+  "n_records": 40,
+  "engine_version": "0.1.0-experimental",
+  "vocabulary_fingerprint": "0af2ac5712a1fe256b42fe4c81684f000269d155e7630c2df3c1f636eb873e23",
+  "disjoint_from_A_to_H": true,
+  "design_set": "H (NOT used for scoring)",
+  "labels": {
+    "path": "eval/defect_holdout/labels_holdout_i.jsonl",
+    "annotator": "model",
+    "labeler_knew_experiment": true,
+    "warning": "One model wrote the labels AND designed the probe. Labels were written before either engine was run on I, but this is NOT independent human judgement. Results are agreement-with-model-labels, not accuracy.",
+    "mode": "data_integrity",
+    "gold_rows": 4,
+    "class_prior": 0.1
+  },
+  "v0_1_phrase_engine": {
+    "true_positive": 0,
+    "false_positive": 1,
+    "false_negative": 4,
+    "true_negative": 35,
+    "predicted": 1,
+    "gold": 4,
+    "precision": 0.0,
+    "precision_ci95": [
+      0.0,
+      0.7934567085261071
+    ],
+    "recall": 0.0,
+    "recall_ci95": [
+      0.0,
+      0.48990002040399916
+    ],
+    "tp_ids": [],
+    "fp_ids": [
+      "dify-45291"
+    ],
+    "fn_ids": [
+      "aider-5508",
+      "dify-45390",
+      "dify-45423",
+      "dify-45555"
+    ]
+  },
+  "cooccurrence_probe": {
+    "true_positive": 0,
+    "false_positive": 11,
+    "false_negative": 4,
+    "true_negative": 25,
+    "predicted": 11,
+    "gold": 4,
+    "precision": 0.0,
+    "precision_ci95": [
+      2.7755575615628914e-17,
+      0.2588400172488141
+    ],
+    "recall": 0.0,
+    "recall_ci95": [
+      0.0,
+      0.48990002040399916
+    ],
+    "tp_ids": [],
+    "fp_ids": [
+      "aider-5165",
+      "aider-5620",
+      "aider-5623",
+      "dify-44790",
+      "dify-44973",
+      "dify-45002",
+      "dify-45006",
+      "dify-45086",
+      "dify-45291",
+      "dify-45323",
+      "dify-45400"
+    ],
+    "fn_ids": [
+      "aider-5508",
+      "dify-45390",
+      "dify-45423",
+      "dify-45555"
+    ]
+  },
+  "baseline_flag_everything_as_data_integrity": {
+    "true_positive": 4,
+    "false_positive": 36,
+    "false_negative": 0,
+    "true_negative": 0,
+    "predicted": 40,
+    "gold": 4,
+    "precision": 0.1,
+    "precision_ci95": [
+      0.03957888759557486,
+      0.23052074380473897
+    ],
+    "recall": 1.0,
+    "recall_ci95": [
+      0.5100999795960008,
+      1.0
+    ],
+    "tp_ids": [
+      "aider-5508",
+      "dify-45390",
+      "dify-45423",
+      "dify-45555"
+    ],
+    "fp_ids": [
+      "aider-5165",
+      "aider-5228",
+      "aider-5260",
+      "aider-5272",
+      "aider-5298",
+      "aider-5300",
+      "aider-5315",
+      "aider-5324",
+      "aider-5399",
+      "aider-5468",
+      "aider-5496",
+      "aider-5498",
+      "aider-5501",
+      "aider-5531",
+      "aider-5559",
+      "aider-5620",
+      "aider-5623",
+      "aider-5650",
+      "aider-5675",
+      "dify-44746",
+      "dify-44790",
+      "dify-44856",
+      "dify-44894",
+      "dify-44918",
+      "dify-44973",
+      "dify-45002",
+      "dify-45006",
+      "dify-45035",
+      "dify-45086",
+      "dify-45147",
+      "dify-45176",
+      "dify-45252",
+      "dify-45291",
+      "dify-45323",
+      "dify-45351",
+      "dify-45400"
+    ],
+    "fn_ids": []
+  },
+  "design_set_H_not_publishable": {
+    "role": "design_set_recovery",
+    "publishable": false,
+    "annotator": "human (one confirmed reader, v2 rule)",
+    "warning": "The vocabulary contains phrases copied verbatim from these H titles. This number measures fit to the answer key, not predictive performance. Never quote it.",
+    "precision": 0.6,
+    "recall": 0.9,
+    "predicted": 15,
+    "gold": 10,
+    "true_positive": 9
+  },
+  "probe_evidence": [
+    {
+      "record_id": "aider-5165",
+      "topic": "message",
+      "fault": "double",
+      "fault_family": "duplicated",
+      "quote": "  - retry delay appears to double in the message send loop",
+      "label_modes": [],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "aider-5620",
+      "topic": "block",
+      "fault": "skip",
+      "fault_family": "missing",
+      "quote": "One hallucinated absolute path in a SEARCH/REPLACE block then kills the whole session mid-edit-application instead of just skipping that hunk.",
+      "label_modes": [
+        "crash_or_error"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "aider-5623",
+      "topic": "message",
+      "fault": "swallow",
+      "fault_family": "missing",
+      "quote": "aider --message '<slash-command>' silently does nothing and exits 0 (SwitchCoder swallowed).",
+      "label_modes": [
+        "logic_or_validation"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-45291",
+      "topic": "page",
+      "fault": "lose",
+      "fault_family": "missing",
+      "quote": "[Bug] Agent resource access page loses its sidebar on refresh.",
+      "label_modes": [
+        "ui_or_ux"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-44973",
+      "topic": "query",
+      "fault": "double",
+      "fault_family": "duplicated",
+      "quote": "> The file-by-file list is below, scoped to **SQLAlchemy session, engine, query and result doubles in `api/tests/unit_tests/`** on checkout `1f500e52cc`.",
+      "label_modes": [],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-45400",
+      "topic": "response",
+      "fault": "instead of",
+      "fault_family": "wrong_value",
+      "quote": "At the iteration cap (`cot_agent_runner.py:199`), the run **raises `AgentMaxIterationError` even though the model already delivered its answer** — the user sees a failed run instea",
+      "label_modes": [
+        "logic_or_validation"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-45006",
+      "topic": "document",
+      "fault": "remove",
+      "fault_family": "missing",
+      "quote": "[Refactor/Chore] Remove obsolete New RAG documentation type suppressions.",
+      "label_modes": [],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-45002",
+      "topic": "value",
+      "fault": "missing",
+      "fault_family": "missing",
+      "quote": "Missing required values still block the request.",
+      "label_modes": [
+        "logic_or_validation"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-44790",
+      "topic": "metadata",
+      "fault": "skip",
+      "fault_family": "missing",
+      "quote": "The registration update needs SKIP_DOM_SELECTION_TAG while retaining the effect dependencies that keep variable metadata and callbacks current.",
+      "label_modes": [
+        "ui_or_ux"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-45086",
+      "topic": "file",
+      "fault": "drop",
+      "fault_family": "missing",
+      "quote": "catches the exception as `\"unknown error: 1 validation error ...\"` (lines 109, 152-153), so the tool call fails and the file card is dropped.",
+      "label_modes": [
+        "crash_or_error"
+      ],
+      "is_true_positive": false
+    },
+    {
+      "record_id": "dify-45323",
+      "topic": "token",
+      "fault": "double",
+      "fault_family": "duplicated",
+      "quote": "However, the time taken in version 1.18.0 is several times that of version 1.15.0, and the tokens consumed are double.",
+      "label_modes": [
+        "performance",
+        "regression"
+      ],
+      "is_true_positive": false
+    }
+  ],
+  "publishable": true,
+  "not_publishable_as": [
+    "human accuracy",
+    "gold standard",
+    "inter-annotator agreement",
+    "improvement over v0.1"
+  ]
+}

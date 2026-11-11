@@ -122,7 +122,13 @@ This project feeds promptfoo / Langfuse; it does not replace them.
    be answered with simulated data (simulation only verified the scoring
    pipeline: eval/defect_holdout/simulation_pipeline_check.md). Do not compute
    a new accuracy number from a user's corpus — there is nothing to compare it to.
-3. Be blunt about coverage: the engine is validated only for crashes. On the
+3. `cte cooccurrence` is an EXPERIMENTAL single-mode probe that FAILED on an
+   unseen split (0/4 `data_integrity` recovered, 11 false positives). Never
+   present it as an improvement, a second engine, or a replacement for
+   `cte defects`. If asked "what is next", say the plateau is a design limit:
+   changing the shape of a word list did not help either. Full writeup:
+   eval/defect_holdout/cooccurrence_check.md.
+4. Be blunt about coverage: the engine is validated only for crashes. On the
    newest clean split it caught 13 of 15 crash reports and 2 of 12 other defects.
    If a user's corpus is mostly UI/i18n/data bugs, say the tool is weak there
    before they rely on it.

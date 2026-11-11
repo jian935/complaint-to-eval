@@ -1,5 +1,14 @@
 """Deterministic failure-mode taxonomy for user complaints about AI agents.
 
+NOTE: there are TWO taxonomies in this package and they are not interchangeable.
+This file is the v0.1 **8 LLM-behaviour modes** for free-form feedback. Issue
+tracker / defect reports use the separate **10 defect modes** in
+``complaint_to_eval/defects.py`` documented in ``DEFECT_TAXONOMY.md``. English
+signals here deliberately have NO word boundary (feedback concatenates words);
+the defect taxonomy deliberately HAS one. Real issue corpora gave this taxonomy
+near-zero recall, which is why the project moved to defects: see
+``eval/defect_holdout/README.md``.
+
 Design rules carried over from the author's earlier keyword work (career-loop),
 re-targeted from job descriptions to user feedback:
 
