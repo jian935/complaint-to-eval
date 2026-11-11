@@ -171,6 +171,22 @@ class V2ArtefactTests(unittest.TestCase):
             self.assertIn("reason", item)
             self.assertIn("source", item)
 
+    def test_simulation_result_is_marked_unpublishable(self):
+        # A simulated second reader may verify the pipeline, never the claim.
+        d = json.loads((BASE / "simulation_pipeline_check.json").read_text(encoding="utf-8"))
+        self.assertEqual("simulation", d["kind"])
+        self.assertEqual("model", d["annotator"])
+        self.assertFalse(d["publishable"])
+        self.assertEqual(0, d["accepted_cases"])
+        self.assertIn("UNTESTED", d["decision"])
+        self.assertIn("silently dropped", d["pipeline_bug_found"])
+        self.assertGreaterEqual(len(d["variants"]), 2)
+        # the headline figure must not be disguised as a kappa we can quote
+        md = (BASE / "simulation_pipeline_check.md").read_text(encoding="utf-8")
+        self.assertIn("not a finding", md)
+        self.assertIn("NO_RED_FLAG", md)
+        self.assertIn("publishable: false", md)
+
 
 @unittest.skipUnless(importlib.util.find_spec("openpyxl"),
                      "openpyxl is not installed (CI runs dependency-free)")
@@ -204,6 +220,18 @@ class V2HelperTests(unittest.TestCase):
         self.assertEqual(["a", "b"], self.mod.split_secondary("a，b"))
         self.assertEqual(["a"], self.mod.split_secondary(" a "))
         self.assertEqual([], self.mod.split_secondary(""))
+
+    def test_fleiss_handles_unclear_as_a_third_category(self):
+        # Regression for the bug the simulation exposed: dropping 不确定 rows
+        # made kappa 1.000 no matter how much the two readers disagreed.
+        full = [["y", "y"], ["y", "n"], ["n", "n"], ["n", "u"], ["y", "u"]]
+        definite = [row for row in full if "u" not in row]
+        k_full = self.mod.fleiss_kappa(full, ["y", "n", "u"])
+        k_definite = self.mod.fleiss_kappa(definite, ["y", "n"])
+        self.assertLess(k_full, k_definite)
+        self.assertLess(k_full, 1.0)
+        self.assertEqual(1.0, self.mod.fleiss_kappa(
+            [["y", "y"], ["n", "n"]], ["y", "n", "u"]))
 
     def test_label_fingerprint_ignores_prose_but_not_labels(self):
         path = ROOT / "scripts" / "check_labeling_independence.py"

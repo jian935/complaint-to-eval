@@ -6,8 +6,11 @@ second returned workbook rejected as non-independent
 Sets A–G were labelled
 under v1, which never fixed granularity; their numbers are not comparable with
 H's. The rule has fixed *how a workbook is filled*, not whether two independent
-people now agree — no reader-to-reader agreement under v2 exists yet. See
-[`defect_holdout/human_agreement_v2.md`](defect_holdout/human_agreement_v2.md).
+people now agree — no reader-to-reader agreement under v2 exists, and the
+requester decided on 2026-11-11 not to collect one; simulated data was used only
+to verify the scoring pipeline. See both
+[`simulation_pipeline_check`](defect_holdout/simulation_pipeline_check.md) and
+[`human_agreement_v2`](defect_holdout/human_agreement_v2.md).
 
 ## Why this exists
 

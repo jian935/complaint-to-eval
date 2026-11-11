@@ -34,7 +34,7 @@ full rather than buried:
 | --- | --- |
 | "It finds failing behaviour interesting enough to test" | ⚠️ **Only for crashes.** 13 of 15 crash reports, 2 of 12 non-crash defects, on the newest random split. |
 | "The mode labels are right" | ⚠️ **Unsettled.** Against model labels 0.71–0.77; against **four blind human readers** on one split, **0.23–0.38**. Readers agree strongly on *whether* something is broken (Fleiss κ = 0.922), not on *which* mode. |
-| "Rewriting the annotation rule fixed the disagreement" | ❌ **Not tested yet.** One **human-confirmed** workbook on a fresh split under the rewritten one-label rule scores the engine at 0.545 / 0.429. A second returned workbook reproduced every label with paraphrased reasons and was rejected as non-independent, so there is still no reader-to-reader agreement under v2. |
+| "Rewriting the annotation rule fixed the disagreement" | ❌ **Not tested — and deliberately left untested.** One **human-confirmed** workbook under v2 scores the engine at 0.545 / 0.429. Two returned second workbooks were rejected as non-independent; a simulated one was used only to check the scoring pipeline ([details](eval/defect_holdout/simulation_pipeline_check.md)). No reader-to-reader κ under v2 is published. |
 | "It beats flagging everything" | ⚠️ **Only on precision, and only barely.** On a balanced 50/50 split: 0.632 precision / 0.600 recall, against **0.500 / 1.000** for "flag everything". |
 | "Precision 0.94 means it is accurate" | ❌ That figure comes from a feed that is **90% defect reports**. Reweighted to a 25%-defect queue it is **0.36**. |
 | "It produces a human-labelled eval set" | ❌ No. Split G has four independent human readers; split H has **one confirmed human reader** (one workbook, not a gold standard) and a rejected second workbook. `accepted_cases` is still `0`. |
@@ -224,8 +224,11 @@ and stripping signals left precision flat at 0.71–0.77. A phrase list cannot e
 "topic word plus fault word in the same clause", which is what a human reader is
 doing. That redesign is the next step, and it needs human labels to be judged at all.
 In parallel the annotation procedure was rewritten (v2: one primary mode fixed by
-symptom order); its effect on agreement between readers is still unmeasured — one
-reader on a fresh split cannot establish it.
+symptom order). Its effect on agreement between readers is **still unmeasured and
+will stay that way**: two returned second workbooks were rejected as
+non-independent, and a simulated second reader was used only to verify that the
+scoring pipeline works ([simulation_pipeline_check](eval/defect_holdout/simulation_pipeline_check.md)).
+A κ derived from your own data is not evidence about people.
 
 Contributions are welcome as **reverse tests**: a sentence the rules currently
 misclassify plus the correct mode. Do not send a new keyword without a case showing

@@ -86,7 +86,8 @@ times — the v1 "everything is logic" pattern was partly a template problem.
 **Do not compare 0.545 with G's 0.31.** H is 70% defective (G was 50/50), it was
 stratified rather than hand-picked, and the scoring instrument changed. Most
 importantly, **v2 exists to fix agreement between people and one reader cannot
-measure that** — no reader-to-reader κ under v2 exists yet. Full writeup, baselines
+measure that** — no reader-to-reader κ under v2 exists, and by decision of
+2026-11-11 none will be manufactured from simulated data. Full writeup, baselines
 and the disagreement table: [`human_agreement_v2.md`](human_agreement_v2.md).
 
 > **Contamination notice (2026-11-10).** A second filled workbook was returned
@@ -317,7 +318,10 @@ That is the other honest limit: **most modes are simply too rare here to measure
   [`multi_annotator.md`](multi_annotator.md).
 - ~~**A second human on the same rows**, to get reader-to-reader κ rather than
   human-vs-model~~ — done on G with four readers.
-- **A second reader on set H under the v2 rule.** This is the open one: the v2
-  procedure was written to fix between-reader disagreement, and it has never been
-  measured between readers. `scripts/eval_human_agreement_v2.py` accepts multiple
-  workbooks and adds Fleiss κ for both layers.
+- ~~**A second reader on set H under the v2 rule**~~ — **closed as untested by
+  decision (2026-11-11).** Two returned workbooks were rejected as
+  non-independent and the requester chose not to collect a third. The v2 claim
+  stays ❌ untested in both READMEs rather than being answered with generated
+  data. [`simulation_pipeline_check.md`](simulation_pipeline_check.md) records
+  the simulation that verified the *pipeline* (and caught a real κ bug); its
+  numbers are `kind: simulation`, `publishable: false`.

@@ -117,9 +117,11 @@ This project feeds promptfoo / Langfuse; it does not replace them.
    confirmed human reader** under a rewritten one-primary-mode rule
    (0.545 / 0.429): different split, different prior, one reader — do not
    compare it with the G numbers, and do not call it "human accuracy" or a gold
-   standard. A second returned workbook was rejected as non-independent, so
-   there is NO inter-annotator agreement under v2. Do not compute a new accuracy
-   number from a user's corpus — there is nothing to compare it to.
+   standard. Two returned second workbooks were rejected as non-independent, so
+   there is NO inter-annotator agreement under v2, and by decision it will not
+   be answered with simulated data (simulation only verified the scoring
+   pipeline: eval/defect_holdout/simulation_pipeline_check.md). Do not compute
+   a new accuracy number from a user's corpus — there is nothing to compare it to.
 3. Be blunt about coverage: the engine is validated only for crashes. On the
    newest clean split it caught 13 of 15 crash reports and 2 of 12 other defects.
    If a user's corpus is mostly UI/i18n/data bugs, say the tool is weak there

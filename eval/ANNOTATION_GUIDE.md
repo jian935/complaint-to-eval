@@ -4,7 +4,10 @@
 one confirmed human reader under v2, plus a second workbook rejected as
 non-independent — see
 [`defect_holdout/contamination_h.md`](defect_holdout/contamination_h.md).
-0 accepted cases.** Every other measurement is compared against
+0 accepted cases.** No reader-to-reader agreement under v2 is published; a
+simulated second reader was used only to check the scoring pipeline
+[`simulation_pipeline_check.md`](defect_holdout/simulation_pipeline_check.md).
+Every other measurement is compared against
 **model-generated** labels (`annotator: model`), and every result file says so. On
 split G the four readers agreed strongly on *whether* a row is a defect
 (Fleiss κ = 0.922) but not on its mode; single-mode labels fell inside the

@@ -108,11 +108,17 @@ workbook and exits `3` on a hit. The 2026-11-11 submission was caught this way.
 - **No reader-reader κ is computed from them.** `eval_human_agreement_v2.py`
   supports multiple workbooks, but running it on these two would produce the
   false result above, so the pair is excluded.
-- The v2 rule's effect on agreement between people remains **unmeasured**.
+- The v2 rule's effect on agreement between people remains **unmeasured**, and
+  by decision of 2026-11-11 will not be measured with simulated data. See
+  [`simulation_pipeline_check.md`](simulation_pipeline_check.md).
 - Set H still has no model label file; the "model labels only for A–G" honesty
   lock is unchanged.
 
-## What a valid next round needs
+## What a valid next round would need (kept for the record)
+
+No further round is planned. These are the conditions that were never met by the
+two returned workbooks; they are kept so a future reader knows what would have
+counted.
 
 1. A person who has not seen either filled workbook, working without a model
    filling the sheet for them.

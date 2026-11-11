@@ -1,0 +1,54 @@
+{
+  "kind": "simulation",
+  "publishable": false,
+  "annotator": "model",
+  "date": "2026-11-11",
+  "purpose": "Verify that the multi-reader statistics pipeline runs correctly. NOT an estimate of agreement between people.",
+  "decision": "The requester decided not to collect a second independent human reader for split H. The v2 hypothesis (that one primary mode by symptom order makes readers agree) is therefore left UNTESTED, not answered with simulated data.",
+  "generator": "scripts/make_simulated_reader.py (seed 20261111)",
+  "source": "Derived from the confirmed human H_r1 workbook by deterministic perturbation. Every simulated reader is statistically dependent on H_r1 by construction.",
+  "variants": [
+    {
+      "name": "identical",
+      "unclear_rows": 0,
+      "primary_swaps": 0,
+      "secondary_edits": 0,
+      "binary_fleiss_kappa_y_n_u": 1.0,
+      "binary_fleiss_kappa_definite_only": 1.0,
+      "primary_mode_fleiss_kappa": 1.0,
+      "primary_mode_fleiss_kappa_definite_only": 1.0,
+      "independence_check": "SUSPECT (exit 2)"
+    },
+    {
+      "name": "moderate",
+      "unclear_rows": 2,
+      "primary_swaps": 6,
+      "secondary_edits": 4,
+      "binary_fleiss_kappa_y_n_u": 0.89,
+      "binary_fleiss_kappa_definite_only": 1.0,
+      "primary_mode_fleiss_kappa": 0.743,
+      "primary_mode_fleiss_kappa_definite_only": 0.799,
+      "independence_check": "NO_RED_FLAG (exit 0)"
+    },
+    {
+      "name": "divergent",
+      "unclear_rows": 8,
+      "primary_swaps": 16,
+      "secondary_edits": 12,
+      "binary_fleiss_kappa_y_n_u": 0.63,
+      "binary_fleiss_kappa_definite_only": 1.0,
+      "primary_mode_fleiss_kappa": 0.221,
+      "primary_mode_fleiss_kappa_definite_only": 0.362,
+      "independence_check": "NO_RED_FLAG (exit 0)"
+    }
+  ],
+  "pipeline_bug_found": "Rows where either reader answered 不确定 were silently dropped from the binary Fleiss kappa. With that denominator, every variant scored 1.000 regardless of perturbation. Fixed: 不确定 is now a third category; the older flattering denominator is kept only as an explicitly labelled comparison figure.",
+  "why_this_cannot_be_quoted_as_agreement": [
+    "The number moves from 0.221 to 1.000 purely by turning a parameter in the generator. A statistic that can be dialled to any value proves nothing about people.",
+    "The simulated reader is derived from H_r1, so the two are not independent by construction.",
+    "check_labeling_independence.py returned NO_RED_FLAG for two of the three variants. That result does NOT certify independence or humanness; it only means the paraphrase signature was absent. The tool can falsify independence, never prove it."
+  ],
+  "what_is_now_verified": "The scorer computes Cohen's kappa for pairs, Fleiss kappa for both the binary and primary-mode layers, handles 不确定 as a third category, reports two denominators instead of picking one, and emits a per-row disagreement table. A real independent workbook could be scored without further code changes.",
+  "what_remains_unverified": "Whether two independent people agree more under v2 than under v1. No reader-to-reader kappa from real people exists under v2. Split G's four readers (Fleiss kappa 0.922 binary) remain the only multi-person data in this repository.",
+  "accepted_cases": 0
+}

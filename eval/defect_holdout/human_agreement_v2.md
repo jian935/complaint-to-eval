@@ -122,16 +122,21 @@ Three reasons, written down so a later reader cannot quietly drop them:
    number to a person-versus-machine number is the exact error this project keeps
    catching itself making.
 
-## What is still missing
+## What is still missing — and now deliberately left missing
 
-The v2 hypothesis is untested. To test it, a second person needs to fill the same
-40 rows blind, with no sight of the first workbook: same split, same task book,
-blank copy. Then:
+The v2 hypothesis is untested. Testing it needs a second person to fill the same
+40 rows blind, with no sight of the first workbook: reader-reader binary κ
+against v1's 0.922, primary-mode κ against v1's low cross-granularity numbers,
+and whether "one primary by symptom order" actually converges two people.
 
-- reader-reader binary κ under v2, against v1's 0.922
-- reader-reader primary-mode κ, against v1's low cross-granularity numbers
-- whether "one primary by symptom order" actually converges two people
+**On 2026-11-11 the requester decided not to collect that second reader** and
+authorised simulated data instead. Two returned "second" workbooks had already
+been rejected as non-independent, so a third attempt was not worth another
+round. The gap is therefore closed by *not claiming the result*, not by filling
+it with a generated reader.
 
-`scripts/eval_human_agreement_v2.py` already accepts several workbooks and will
-add Fleiss κ for both layers. Until that second workbook exists, nothing here
-should be quoted as evidence that the new rule is better.
+[`simulation_pipeline_check.md`](simulation_pipeline_check.md) records what the
+simulation was used for: verifying that the scorer computes both κ layers
+correctly, handling 不确定 as a third category and fixing a flattering-denominator
+bug. Its κ values range 0.221–1.000 depending on a generator parameter and are
+**not publishable**. Nothing here may be quoted as evidence that v2 is better.
