@@ -1,0 +1,13 @@
+{
+  "note": "Label fingerprints of workbooks already rejected as non-independent. No answer text, no reasons, no personal data is stored here. A fingerprint covers only the D/E/F columns (verdict / primary / secondary), so editing the free-text reason column cannot disguise a resubmission. See contamination_h.md.",
+  "fingerprint_definition": "sha256 of '\\n'.join('|'.join([row_id, verdict, primary, secondary]) for row_id in sorted(rows))",
+  "rejected": [
+    {
+      "name": "H_r2_unverified",
+      "date": "2026-11-10",
+      "label_fingerprint": "e81efa742fe21df72b057be1495e96526d467a80c570764f7513e82b51fded09",
+      "reason": "Every label matched the confirmed first H reader (binary and primary kappa 1.000), the optional cause column was identical on 40/40 rows, and the reasons were paraphrases (0.843 mean similarity, 0 byte-identical rows). Not an independent second reader.",
+      "source": "contamination_h.md"
+    }
+  ]
+}

@@ -18,12 +18,16 @@ Usage:
 
 Exit code 0 = no obvious non-independence found (NOT a certificate of blindness).
 Exit code 2 = suspicious; do not treat these as two independent readers.
+Exit code 3 = one workbook has the same *label* fingerprint as an already-
+rejected workbook (list: eval/defect_holdout/rejected_workbooks.json).
+Rewording free-text reasons does not change that fingerprint.
 """
 
 from __future__ import annotations
 
 import argparse
 import difflib
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -34,6 +38,24 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from complaint_to_eval.defects import DEFECT_MODES  # noqa: E402
+
+DEFAULT_REJECT_LIST = ROOT / "eval/defect_holdout/rejected_workbooks.json"
+
+
+def label_fingerprint(rows: dict) -> str:
+    """Hash the *labels* only (verdict / primary / secondary), not the prose.
+
+    Free-text reasons can be reworded, so a reason hash is useless as a
+    duplicate detector. Every label unchanged is exactly the signature of a
+    rejected workbook being handed back with a few sentences edited.
+    No answer text is stored by this function or in the reject list.
+    """
+    payload = "\n".join(
+        "|".join([rid, rows[rid]["verdict"], rows[rid]["primary"],
+                  rows[rid]["secondary"]])
+        for rid in sorted(rows)
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def read_workbook(path: Path) -> dict[str, dict]:
@@ -137,6 +159,9 @@ def main() -> int:
     ap.add_argument("--workbook", action="append", required=True,
                     help="repeat for each returned workbook (at least two)")
     ap.add_argument("--out", default=str(ROOT / "out/labeling_independence.json"))
+    ap.add_argument("--reject-list", default=str(DEFAULT_REJECT_LIST),
+                    help="fingerprints of workbooks already rejected; a hit "
+                         "means this is the same data handed back again")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
     if len(args.workbook) < 2:
@@ -147,16 +172,30 @@ def main() -> int:
         path = Path(raw)
         workbooks[path.stem] = read_workbook(path)
 
+    fingerprints = {n: label_fingerprint(w) for n, w in workbooks.items()}
+    reject_path = Path(args.reject_list)
+    rejected = {}
+    if reject_path.exists():
+        rejected = {r["label_fingerprint"]: r
+                    for r in json.loads(reject_path.read_text(encoding="utf-8"))["rejected"]}
+    duplicate_of = {
+        n: rejected[fp]["name"]
+        for n, fp in fingerprints.items() if fp in rejected
+    }
+
     names = list(workbooks)
     pairs = [compare(workbooks[a], workbooks[b], a, b)
              for i, a in enumerate(names) for b in names[i + 1:]]
     payload = {
         "workbooks": {n: {"rows": len(w),
-                          "answered_rows": sum(1 for r in w.values() if r["verdict"])}
+                          "answered_rows": sum(1 for r in w.values() if r["verdict"]),
+                          "label_fingerprint": fingerprints[n],
+                          "duplicate_of_rejected": duplicate_of.get(n)}
                       for n, w in workbooks.items()},
         "pairs": pairs,
-        "overall": "SUSPECT" if any(p["verdict"] == "SUSPECT" for p in pairs)
-                   else "NO_RED_FLAG",
+        "overall": ("REJECTED_DUPLICATE" if duplicate_of else
+                    "SUSPECT" if any(p["verdict"] == "SUSPECT" for p in pairs)
+                    else "NO_RED_FLAG"),
         "note": "This checks independence, not humanness. A model and a human "
                 "can agree for bad reasons; two models can agree perfectly.",
     }
@@ -165,6 +204,10 @@ def main() -> int:
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     if not args.quiet:
+        for n, prev in duplicate_of.items():
+            print(f"REJECTED DUPLICATE: {n} has the same label fingerprint as "
+                  f"the already-rejected workbook '{prev}'. Editing a few "
+                  f"reason sentences does not make it a new reader.")
         for p in pairs:
             print(f"{p['left']} vs {p['right']}: {p['verdict']}  "
                   f"({p['common_rows']} rows, {p['scored_rows']} scored)")
@@ -179,6 +222,8 @@ def main() -> int:
             for f in p["flags"]:
                 print(f"    - {f}")
         print(f"\nwrote {out}")
+    if duplicate_of:
+        return 3
     return 2 if payload["overall"] == "SUSPECT" else 0
 
 

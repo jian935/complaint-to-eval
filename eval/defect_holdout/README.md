@@ -95,8 +95,10 @@ and the disagreement table: [`human_agreement_v2.md`](human_agreement_v2.md).
 > paraphrases rather than independent writing. It is not a second reader. The
 > first workbook **is** confirmed human, so 0.545 / 0.429 is a genuine
 > engine-vs-person comparison — but from ONE reader, with no second opinion.
-> See [`contamination_h.md`](contamination_h.md). **The v2 hypothesis remains
-> untested; no reader-reader κ is published.**
+> See [`contamination_h.md`](contamination_h.md). The same labels were later
+> resubmitted with two reason sentences edited; a label-fingerprint reject list
+> now catches that as `exit 3`. **The v2 hypothesis remains untested; no
+> reader-reader κ is published.**
 
 ### Prior sensitivity (record level, from set G, n_clean = 20)
 

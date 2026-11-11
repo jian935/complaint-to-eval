@@ -149,13 +149,27 @@ class V2ArtefactTests(unittest.TestCase):
         self.assertNotIn("reader_reader", self.data)
         md = (BASE / "contamination_h.md").read_text(encoding="utf-8")
         for phrase in ("STILL untested", "must never be published", "paraphrase",
-                       "confirmed", "one reader"):
+                       "confirmed", "one reader", "Resubmission"):
             self.assertIn(phrase, md)
         # the confirmation AND the rejection must both be visible in the writeup
         text = WRITEUP.read_text(encoding="utf-8")
         self.assertIn("confirmed", text)
         self.assertIn("rejected", text)
         self.assertIn("untested", text)
+
+    def test_reject_list_stores_fingerprints_only(self):
+        # No answer text may enter the published reject list: it would leak
+        # the first reader's labels to the next annotator.
+        data = json.loads((BASE / "rejected_workbooks.json").read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(data["rejected"]), 1)
+        raw = (BASE / "rejected_workbooks.json").read_text(encoding="utf-8")
+        for mode in DEFECT_MODES:
+            self.assertNotIn(mode, raw)
+        for item in data["rejected"]:
+            self.assertEqual(64, len(item["label_fingerprint"]))
+            self.assertRegex(item["label_fingerprint"], r"^[0-9a-f]{64}$")
+            self.assertIn("reason", item)
+            self.assertIn("source", item)
 
 
 @unittest.skipUnless(importlib.util.find_spec("openpyxl"),
@@ -190,6 +204,26 @@ class V2HelperTests(unittest.TestCase):
         self.assertEqual(["a", "b"], self.mod.split_secondary("a，b"))
         self.assertEqual(["a"], self.mod.split_secondary(" a "))
         self.assertEqual([], self.mod.split_secondary(""))
+
+    def test_label_fingerprint_ignores_prose_but_not_labels(self):
+        path = ROOT / "scripts" / "check_labeling_independence.py"
+        spec = importlib.util.spec_from_file_location("independence_fp", path)
+        assert spec and spec.loader
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        a = {"r01": {"verdict": "是", "primary": "crash_or_error",
+                     "secondary": "config_or_env", "reason": "A 理由"},
+             "r02": {"verdict": "不是", "primary": "", "secondary": "",
+                     "reason": "B 理由"}}
+        b = {k: dict(v) for k, v in a.items()}
+        b["r01"]["reason"] = "换了个说法的理由"
+        b["r02"]["reason"] = "另一句完全不同的话"
+        self.assertEqual(mod.label_fingerprint(a), mod.label_fingerprint(b))
+
+        c = {k: dict(v) for k, v in a.items()}
+        c["r01"]["primary"] = "data_integrity"
+        self.assertNotEqual(mod.label_fingerprint(a), mod.label_fingerprint(c))
 
     def test_independence_checker_catches_a_paraphrase_and_passes_real_disagreement(self):
         path = ROOT / "scripts" / "check_labeling_independence.py"

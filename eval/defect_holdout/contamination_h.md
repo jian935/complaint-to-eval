@@ -1,11 +1,14 @@
 # A returned second workbook failed the independence check
 
 **Status: the v2 hypothesis is STILL untested.** A second filled workbook came
-back for the H split, but it is not an independent second reader. It is not used
+back for the H split, but it was not an independent second reader. The same
+labels were later resubmitted with two reason sentences edited (see
+[Resubmission](#resubmission-of-the-same-workbook-2026-11-11)). Neither is used
 for any reader-to-reader number in this repository.
 
 Raw output: [`contamination_h.json`](contamination_h.json). Reproduce with
-`scripts/check_labeling_independence.py` (exit code 2 = suspicious).
+`scripts/check_labeling_independence.py` (exit 2 = suspicious, exit 3 =
+duplicate of a rejected workbook).
 
 ## What happened
 
@@ -75,6 +78,29 @@ unknown the result was marked conditional; now that it is confirmed the status
 was upgraded and the numbers were left exactly as they were — the same
 `0.545 / 0.429`, recomputed from the same rows.
 
+## Resubmission of the same workbook (2026-11-11)
+
+A third workbook was returned, named as a fresh independent human round. It is
+**the same data as the rejected second workbook**, with two reason sentences
+edited:
+
+- 38 of 40 rows are byte-identical across all seven columns;
+- the two differences are prose only (`r16`: "one attachment link" → "two";
+  `r32`: a slightly shorter explanation of the same 不确定 verdict);
+- **D / E / F — the columns any statistic actually uses — are identical on all
+  40 rows**, so its label fingerprint
+  `e81efa74…fded09` is byte-for-byte the rejected workbook's;
+- against the confirmed first reader it still produces κ = 1.000 on both layers.
+
+Rewording reasons cannot create a new reader. It also cannot change a single
+published number: the scorer reads the verdict and the two category columns.
+
+To make this a one-line check instead of an argument, the reject list
+[`rejected_workbooks.json`](rejected_workbooks.json) now stores label
+fingerprints of rejected workbooks — **no answer text, no reasons, no personal
+data**. `check_labeling_independence.py` hashes D/E/F of every submitted
+workbook and exits `3` on a hit. The 2026-11-11 submission was caught this way.
+
 ## Disposition
 
 - Both workbooks are stored outside the repo under `.local/human_labeling/` as
@@ -93,7 +119,9 @@ was upgraded and the numbers were left exactly as they were — the same
 2. The blank workbook regenerated from `make_labeling_workbook.py --spec v2`;
    its 怎么填 sheet now states the independence requirement explicitly.
 3. On return: run `check_labeling_independence.py` **before** any agreement
-   statistic. A `NO_RED_FLAG` result is necessary, not sufficient.
+   statistic. A `NO_RED_FLAG` result is necessary, not sufficient; a
+   `REJECTED_DUPLICATE` (exit 3) means the same labels were handed back again,
+   however the prose was edited.
 4. Only then run `eval_human_agreement_v2.py` with both workbooks.
 
 This is the second time in this project that a result had to be discarded for
