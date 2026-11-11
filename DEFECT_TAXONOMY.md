@@ -24,6 +24,11 @@ workbook was rejected as non-independent — so v2 has **no**
 reader-to-reader result. See
 [`eval/defect_holdout/contamination_h.md`](eval/defect_holdout/contamination_h.md).
 `accepted_cases` is still 0 — a labelled split is not an accepted case set.
+Split I is model-labelled under the v1 multi-label convention and exists only to
+score an experimental probe that **failed** (0 of 4 `data_integrity` rows
+recovered, 11 false positives) — see
+[`eval/defect_holdout/cooccurrence_check.md`](eval/defect_holdout/cooccurrence_check.md).
+It does not change any number above.
 
 **Read this first: in practice the engine is a crash detector, and its precision is
 a function of how broken the queue is.** On the newest random split it found 13 of

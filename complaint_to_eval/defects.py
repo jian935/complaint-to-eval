@@ -7,7 +7,8 @@ are *software defect reports* (crashes, config, UI, i18n, data integrity,
 security), not natural-language complaints about model behaviour.
 
 This module classifies the text that actually occurs in issue trackers, so the
-pipeline can turn real defect reports into regression-test candidates.
+pipeline can turn real defect reports into evidence-backed triage *candidates* --
+the raw material for a regression suite, not the suite itself.
 
 Discipline carried over unchanged (see ANNOTATION_GUIDE.md):
 * No bare nouns; only specific multi-word signals.

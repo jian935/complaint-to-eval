@@ -161,7 +161,8 @@
       "topic": "message",
       "fault": "double",
       "fault_family": "duplicated",
-      "quote": "  - retry delay appears to double in the message send loop",
+      "evidence_start": 269,
+      "evidence_end": 275,
       "label_modes": [],
       "is_true_positive": false
     },
@@ -170,7 +171,8 @@
       "topic": "block",
       "fault": "skip",
       "fault_family": "missing",
-      "quote": "One hallucinated absolute path in a SEARCH/REPLACE block then kills the whole session mid-edit-application instead of just skipping that hunk.",
+      "evidence_start": 998,
+      "evidence_end": 1002,
       "label_modes": [
         "crash_or_error"
       ],
@@ -181,7 +183,8 @@
       "topic": "message",
       "fault": "swallow",
       "fault_family": "missing",
-      "quote": "aider --message '<slash-command>' silently does nothing and exits 0 (SwitchCoder swallowed).",
+      "evidence_start": 81,
+      "evidence_end": 88,
       "label_modes": [
         "logic_or_validation"
       ],
@@ -192,7 +195,8 @@
       "topic": "page",
       "fault": "lose",
       "fault_family": "missing",
-      "quote": "[Bug] Agent resource access page loses its sidebar on refresh.",
+      "evidence_start": 33,
+      "evidence_end": 37,
       "label_modes": [
         "ui_or_ux"
       ],
@@ -203,7 +207,8 @@
       "topic": "query",
       "fault": "double",
       "fault_family": "duplicated",
-      "quote": "> The file-by-file list is below, scoped to **SQLAlchemy session, engine, query and result doubles in `api/tests/unit_tests/`** on checkout `1f500e52cc`.",
+      "evidence_start": 442,
+      "evidence_end": 448,
       "label_modes": [],
       "is_true_positive": false
     },
@@ -212,7 +217,8 @@
       "topic": "response",
       "fault": "instead of",
       "fault_family": "wrong_value",
-      "quote": "At the iteration cap (`cot_agent_runner.py:199`), the run **raises `AgentMaxIterationError` even though the model already delivered its answer** — the user sees a failed run instea",
+      "evidence_start": 2447,
+      "evidence_end": 2457,
       "label_modes": [
         "logic_or_validation"
       ],
@@ -223,7 +229,8 @@
       "topic": "document",
       "fault": "remove",
       "fault_family": "missing",
-      "quote": "[Refactor/Chore] Remove obsolete New RAG documentation type suppressions.",
+      "evidence_start": 17,
+      "evidence_end": 23,
       "label_modes": [],
       "is_true_positive": false
     },
@@ -232,7 +239,8 @@
       "topic": "value",
       "fault": "missing",
       "fault_family": "missing",
-      "quote": "Missing required values still block the request.",
+      "evidence_start": 1189,
+      "evidence_end": 1196,
       "label_modes": [
         "logic_or_validation"
       ],
@@ -243,7 +251,8 @@
       "topic": "metadata",
       "fault": "skip",
       "fault_family": "missing",
-      "quote": "The registration update needs SKIP_DOM_SELECTION_TAG while retaining the effect dependencies that keep variable metadata and callbacks current.",
+      "evidence_start": 1037,
+      "evidence_end": 1041,
       "label_modes": [
         "ui_or_ux"
       ],
@@ -254,7 +263,8 @@
       "topic": "file",
       "fault": "drop",
       "fault_family": "missing",
-      "quote": "catches the exception as `\"unknown error: 1 validation error ...\"` (lines 109, 152-153), so the tool call fails and the file card is dropped.",
+      "evidence_start": 1409,
+      "evidence_end": 1413,
       "label_modes": [
         "crash_or_error"
       ],
@@ -265,7 +275,8 @@
       "topic": "token",
       "fault": "double",
       "fault_family": "duplicated",
-      "quote": "However, the time taken in version 1.18.0 is several times that of version 1.15.0, and the tokens consumed are double.",
+      "evidence_start": 1117,
+      "evidence_end": 1123,
       "label_modes": [
         "performance",
         "regression"

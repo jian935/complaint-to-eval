@@ -5,20 +5,36 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "complaint-to-eval"
 version = "0.2.0"
-description = "Turn real user complaints into reviewable agent regression-test candidates. Zero-key, deterministic, standard library only."
+description = "Evidence-backed defect triage for issue trackers: deterministic candidate labels, not a runnable regression suite. Zero-key, standard library only."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "jian935" }]
-keywords = ["llm", "agent", "evals", "feedback", "regression", "product-management"]
+keywords = [
+    "llm", "agent", "evals", "feedback", "issue-triage", "defect-taxonomy",
+    "regression", "product-management", "deterministic",
+]
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Bug Tracking",
     "Topic :: Software Development :: Quality Assurance",
 ]
+# Runtime is standard library only. openpyxl is needed to GENERATE labelling
+# workbooks, never to run the CLI, so it is optional rather than a dependency.
 dependencies = []
+
+[project.optional-dependencies]
+labeling = ["openpyxl>=3.1"]
+
+[project.urls]
+Homepage = "https://github.com/jian935/complaint-to-eval"
+Repository = "https://github.com/jian935/complaint-to-eval"
+Issues = "https://github.com/jian935/complaint-to-eval/issues"
+Changelog = "https://github.com/jian935/complaint-to-eval/blob/main/CHANGELOG.md"
 
 [project.scripts]
 cte = "complaint_to_eval.cli:main"

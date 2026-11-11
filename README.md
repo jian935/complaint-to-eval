@@ -1,6 +1,6 @@
 # complaint-to-eval
 
-**Your users already wrote your eval set. You just never turned it into one.**
+**Your users already reported what is broken. Nobody triaged it.**
 
 Turn raw complaints into **candidate triage labels** for AI tools: an
 evidence-backed defect taxonomy, a quote from the report behind every finding, and
@@ -111,6 +111,12 @@ pip install .
 cte defects --input issues.jsonl --real --out out/defects
 ```
 
+It also ships as an Agent Skill, so a coding assistant can use it directly:
+
+```bash
+npx skills add jian935/complaint-to-eval
+```
+
 `--real` is a declaration that you checked the licence and consent for that corpus.
 Use `--synthetic` for fabricated data. Omitting both marks the report
 `provenance: unspecified` and prints a warning.
@@ -140,6 +146,7 @@ Evidence offsets refer to the redacted text.
 | `cte validate --labels F.jsonl` | check label-file structure |
 | `cte taxonomy` | print the LLM-behaviour taxonomy and verify its invariants |
 | `cte defect-taxonomy` | print the defect taxonomy and verify its invariants |
+| `cte cooccurrence --input F --out D` | **EXPERIMENTAL** single-mode probe; published negative result |
 | `cte privacy --path DIR` | scan data files for residual personal data |
 
 Both analysis commands emit `report.json` / `defects.json`, a Markdown twin, and
@@ -188,8 +195,10 @@ crash; redaction happens first; one candidate per (record, mode).
 ## Honesty contract
 
 1. Everything generated is an unreviewed **candidate**. `accepted_cases` is always
-   `0`. One split carries human labels — that is a labelled split, not an accepted
-   case set. See [`eval/defect_holdout/human_agreement.md`](eval/defect_holdout/human_agreement.md).
+   `0`. Two splits carry human labels (G: four independent readers; H: one
+   confirmed reader) — that is a labelled split, not an accepted case set. See
+   [`multi_annotator.md`](eval/defect_holdout/multi_annotator.md) and
+   [`human_agreement_v2.md`](eval/defect_holdout/human_agreement_v2.md).
 2. `complaint_to_eval/demo.jsonl` is **fabricated**. It was written to contain the
    exact phrases in the taxonomy, so a high hit count is a property of how the file
    was authored, not evidence of quality. Every report repeats this.

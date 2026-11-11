@@ -16,8 +16,17 @@ granularity, not judgement. See
 [`defect_holdout/multi_annotator.md`](defect_holdout/multi_annotator.md).
 That finding produced [`GRANULARITY_RULE.md`](GRANULARITY_RULE.md) (v2), which
 set H used; results in
-[`defect_holdout/human_agreement_v2.md`](defect_holdout/human_agreement_v2.md). This
-guide has two parts because the repo carries two taxonomies:
+[`defect_holdout/human_agreement_v2.md`](defect_holdout/human_agreement_v2.md).
+
+**Split I is different again.** It is model-labelled under the **v1 multi-label
+convention** (`modes` is a list, `[]` means not a defect), because it exists only
+to score the co-occurrence probe. It is **not** a v2 single-primary row set and
+its labels must never be mixed with H's. The label writer knew what the
+experiment was for (`labeler_knew_experiment: true`), so I only ever yields
+"agreement with model labels". See
+[`defect_holdout/cooccurrence_check.md`](defect_holdout/cooccurrence_check.md).
+
+This guide has two parts because the repo carries two taxonomies:
 
 - **Part A — defect reports** (`cte defects`, 10 modes): the current focus, and the
   only path with published numbers.

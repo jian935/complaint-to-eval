@@ -31,15 +31,22 @@ in the local `main` branch only.
   a κ that can be dialled from 0.221 to 1.000 is not evidence.
 - `cte cooccurrence`: an **experimental** single-mode topic+fault probe,
   shipped with its frozen vocabulary fingerprint and a full negative result.
-  It is deliberately NOT wired into `cte defects`.
+  It is deliberately NOT wired into `cte defects`. Its committed result file
+  stores record ids, modes and character offsets only — never issue text.
 - `CONTRIBUTING.md`, this changelog, historical round snapshots for sets A–E,
   and consistent `partitions_a.json` / `labels_holdout_a.jsonl` naming.
+- Package metadata now states what the tool actually is (candidate labels, not
+  a runnable suite), declares `openpyxl` as an **optional** `labeling` extra
+  rather than a dependency, and carries project URLs. A new test asserts that
+  no public surface can reintroduce the old "minimal reproducible input" or
+  "regression-test candidates" claim, and that `pyproject.toml` never drifts
+  from `__version__`.
 
 ### Changed
 
 - Package version 0.1.0 → 0.2.0. `DEFECT_VERSION` stays `0.1.0-draft` —
   the taxonomy did not change, only the surrounding evaluation apparatus.
-- `test_holdout_labels.py` now covers set I as well; 106 tests pass.
+- `test_holdout_labels.py` now covers set I as well; 119 tests pass.
 
 ### Falsified (the important part)
 

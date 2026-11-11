@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+# Read-only: this workflow only runs tests and prints reports.
+permissions:
+  contents: read
+
 env:
   PYTHONIOENCODING: utf-8
 

@@ -63,7 +63,11 @@ python -m complaint_to_eval defects --input tests/fixtures/defect_input.jsonl \
   labelling workbooks, never to use the CLI.
 - Raw corpora live in `.local/corpus/` and are gitignored. **Never commit raw
   issue text, user IDs, phone numbers, or real submission data.** `eval/` is a
-  public directory: only ids, partitions, labels and aggregate numbers.
+  public directory: only ids, partitions, labels, offsets and aggregate numbers.
+  A committed result file may say *"record aider-5165, `message` + `double`,
+  chars 269-275"*; it may **not** contain the sentence those offsets point at.
+  Documentation files may quote a few words from a public issue title as
+  evidence, never a paragraph.
 - Keep LF line endings; several artefacts are byte-compared by tests.
 - New result files need a matching test in `tests/` that locks their numbers
   and their honesty fields. A number with no provenance is worse than no number.

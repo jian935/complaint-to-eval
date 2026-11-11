@@ -4,8 +4,10 @@
 different: **one confirmed human reader** under the rewritten v2 rule, and no
 model labels at all. A second returned workbook was **rejected as
 non-independent** — see [`contamination_h.md`](contamination_h.md). Every
-number here means "how well the deterministic rules agree with one careful
-reader", not human accuracy or a gold standard. `accepted_cases` is still 0.
+number here means "how well the deterministic rules agree with the label set
+they were scored against" — a human reader for G and H, a model-written label
+set for A–G and I. None of it is human accuracy or a gold standard, and
+`accepted_cases` is still 0.
 **Split I is also model-labelled**, but it exists for one purpose only: scoring
 an experimental co-occurrence probe that was designed on H. It is not part of
 the round table below and its numbers are not comparable with A–G — see
@@ -277,7 +279,8 @@ python scripts/eval_defects_holdout.py --holdout .local/corpus/holdoutG.jsonl \
 
 `out/` is gitignored, so the two headline runs are committed verbatim as
 [`results_f.json`](results_f.json) and [`results_g.json`](results_g.json) — generated
-output, never hand-edited, containing record ids and mode labels only. Earlier
+output, never hand-edited, containing record ids, mode labels and evidence
+offsets only — never the issue text those offsets point at. Earlier
 rounds' raw outputs are **not** committed and cannot be recomputed: the taxonomy
 changed after round 6 and those labels were rewritten with the sets in view.
 [`historical_rounds.json`](historical_rounds.json) is an explicitly labelled

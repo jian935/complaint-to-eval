@@ -5,7 +5,8 @@ second returned workbook rejected as non-independent
 (see [`defect_holdout/contamination_h.md`](defect_holdout/contamination_h.md)).**
 Sets A–G were labelled
 under v1, which never fixed granularity; their numbers are not comparable with
-H's. The rule has fixed *how a workbook is filled*, not whether two independent
+H's. **Split I is also v1 multi-label** (it only scores the co-occurrence probe)
+and this rule does not apply to it — do not read I's rows as v2 single-primary. The rule has fixed *how a workbook is filled*, not whether two independent
 people now agree — no reader-to-reader agreement under v2 exists, and the
 requester decided on 2026-11-11 not to collect one; simulated data was used only
 to verify the scoring pipeline. See both

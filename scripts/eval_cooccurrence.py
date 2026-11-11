@@ -118,11 +118,16 @@ def main() -> int:
             old_pred.add(rid)
         for hit in find_cooccurrence_hits(clean):
             new_pred.add(rid)
+            # Deliberately NO raw issue text here. This file is committed, so it
+            # follows the same rule as results_f/results_g: record ids, labels
+            # and offsets only. The quote is available at run time from the
+            # local corpus and is not redistributed.
             evidence.append({
                 "record_id": rid,
                 "topic": hit.topic, "fault": hit.fault,
                 "fault_family": hit.family,
-                "quote": hit.quote[:180],
+                "evidence_start": hit.start,
+                "evidence_end": hit.end,
                 "label_modes": labels[rid],
                 "is_true_positive": rid in gold,
             })

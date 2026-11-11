@@ -9,6 +9,12 @@ Raw data: [`cooccurrence_check.json`](cooccurrence_check.json) · Design note:
 [`cooccurrence_design.md`](cooccurrence_design.md) · Reproduce with
 `python scripts/eval_cooccurrence.py`.
 
+> **On the quotes below.** This page quotes a few **short phrases from public
+> issue titles** to show what the probe matched. The machine-readable result
+> file stores **record ids, modes and offsets only** — no issue text — the same
+> rule as `results_f.json` / `results_g.json`. The corpus itself is never
+> redistributed.
+
 ## The single most important number is a gap
 
 | Split | Role | Precision | Recall |

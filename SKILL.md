@@ -1,6 +1,6 @@
 ---
 name: complaint-to-eval
-description: Turn user complaints, GitHub issues, app reviews or support feedback into UNREVIEWED agent regression-test candidates with evidence quotes and a draft failure-mode taxonomy. Use when someone pastes a batch of negative feedback or issue exports and asks "what should we test", "help me build an eval set from these complaints", "which failure modes keep coming back", or wants to compare which complaints disappeared between two releases. Also triggers on "把这些吐槽变成评测集" and "看看用户反馈里该测什么". Does NOT run evals, does NOT score a model, and never reports a fix rate.
+description: Turn GitHub issues, bug reports, app reviews or support feedback into UNREVIEWED, evidence-backed defect-triage candidates (the raw material for a regression suite, not a runnable suite) with evidence quotes and a draft defect taxonomy. Use when someone pastes a batch of negative feedback or issue exports and asks "what should we test", "help me build an eval set from these complaints", "which failure modes keep coming back", or wants to compare which complaints disappeared between two releases. Also triggers on "把这些吐槽变成评测集" and "看看用户反馈里该测什么". Does NOT run evals, does NOT score a model, and never reports a fix rate.
 ---
 
 # Complaint to Eval
@@ -8,9 +8,11 @@ description: Turn user complaints, GitHub issues, app reviews or support feedbac
 ## Purpose
 
 Teams collect complaints but never turn them into tests. This skill turns a
-feedback corpus into a shortlist of **candidate** regression cases that a human
-can review, then stage into promptfoo / Langfuse. It answers one question only:
-**what is worth testing, and what is the evidence that a user actually said it?**
+defect corpus into a shortlist of **candidate triage labels**, each carrying the
+quote it came from, that a human can review and then stage into promptfoo /
+Langfuse. It answers one question only: **what is worth testing, and what is the
+evidence that a user actually said it?** The output is the raw material for a
+regression suite, not a runnable suite.
 
 It does not answer "is our agent good". It has no model, no labels, and no
 ground truth.
@@ -150,6 +152,7 @@ This project feeds promptfoo / Langfuse; it does not replace them.
 | `cte validate --labels F` | label-file structure check |
 | `cte taxonomy` / `cte defect-taxonomy` | print a taxonomy + verify invariants |
 | `cte privacy --path DIR` | residual personal-data scan |
+| `cte cooccurrence --input F --out D` | **experimental** probe; a published negative result |
 
 Requires `pip install .` (or run `python -m complaint_to_eval` from the repo
 root). Standard library only; no API key; fully offline.

@@ -1,6 +1,6 @@
 # complaint-to-eval
 
-**用户早就把评测集写好了，只是你没把它变成评测集。**
+**用户早就把哪里坏了写清楚了，只是没人去分诊。**
 
 把原始吐槽转成 AI 工具的**未复核分诊标签**：带原文证据的缺陷分类法、
 每条发现对应的原文引句、以及两个版本之间的 diff。确定性规则、纯标准库、
@@ -126,6 +126,7 @@ cte defects --input issues.jsonl --real --out out/defects
 | `cte taxonomy` | 打印 LLM 行为分类法并校验不变量 |
 | `cte defect-taxonomy` | 打印缺陷分类法并校验不变量 |
 | `cte privacy --path DIR` | 扫描数据文件里残留的个人信息 |
+| `cte cooccurrence --input F --out D` | **实验性**单类别探针；公开的负结果 |
 
 `run` 另外产出 `promptfoo-candidates.json`，故意**不是**可运行的 promptfoo 配置——
 把未复核的 candidate 直接塞进 CI，正是本项目要反对的做法。

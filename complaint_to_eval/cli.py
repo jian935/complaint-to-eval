@@ -264,7 +264,8 @@ def _cmd_privacy(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="cte",
-        description="Turn user complaints into UNREVIEWED agent regression-test candidates.",
+        description="Evidence-backed defect triage for issue trackers: deterministic "
+                    "candidate labels, not a runnable regression suite.",
     )
     parser.add_argument("--version", action="version", version=f"cte {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)

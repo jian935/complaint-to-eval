@@ -1,6 +1,8 @@
-"""complaint-to-eval: turn user complaints into reviewable regression candidates.
+"""complaint-to-eval: evidence-backed defect triage for issue-tracker text.
 
-Deterministic, standard-library only, zero API keys. Nothing here is an
+Deterministic, standard-library only, zero API keys. Output is a set of
+UNREVIEWED candidate labels with the quote each one came from -- the raw
+material for a regression suite, not the suite itself. Nothing here is an
 evaluation set until a human accepts the cases.
 """
 
