@@ -100,7 +100,10 @@ instead of replacing them; deduplicate by clause text before counting. See
 cte diff --base out/v1/report.json --head out/v2/report.json
 ```
 
-Say "resolved candidates", never "fix rate". A disappeared phrase is a
+Only `cte run`'s report.json is accepted: its cases have a stable `key`.
+`cte defects` writes defects.json with ordinal ids that can shift between runs,
+so it is refused with a readable error (exit 2), not a traceback and not an
+unreliable `resolved_candidates` count. Say "resolved candidates", never "fix rate". A disappeared phrase is a
 disappeared phrase, not proof that a defect was fixed.
 
 ### 6. Hand off downstream
@@ -153,7 +156,7 @@ This project feeds promptfoo / Langfuse; it does not replace them.
 | `cte demo` | FABRICATED wiring demo |
 | `cte defects --input F --out D [--real\|--synthetic]` | defect modes (10) for issue trackers |
 | `cte run --input F --out D [--real\|--synthetic]` | LLM-behaviour modes (8) for feedback text |
-| `cte diff --base A --head B` | candidate diff between runs |
+| `cte diff --base A --head B` | candidate diff between two `cte run` report.json files (not defects.json) |
 | `cte validate --labels F` | label-file structure check |
 | `cte taxonomy` / `cte defect-taxonomy` | print a taxonomy + verify invariants |
 | `cte privacy --path DIR` | residual personal-data scan |

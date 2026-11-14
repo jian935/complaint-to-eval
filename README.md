@@ -148,7 +148,7 @@ Evidence offsets refer to the redacted text.
 | `cte demo` | run the built-in FABRICATED demo dataset |
 | `cte run --input F --out D [--synthetic\|--real]` | LLM-behaviour modes (8) over feedback text |
 | `cte defects --input F --out D [--synthetic\|--real]` | defect modes (10) over issue-tracker text |
-| `cte diff --base A.json --head B.json` | diff two runs (candidates only) |
+| `cte diff --base A.json --head B.json` | diff two `cte run` report.json files (candidates only; not defects.json) |
 | `cte validate --labels F.jsonl` | check label-file structure |
 | `cte taxonomy` | print the LLM-behaviour taxonomy and verify its invariants |
 | `cte defect-taxonomy` | print the defect taxonomy and verify its invariants |
@@ -228,7 +228,10 @@ crash; redaction happens first; one candidate per (record, mode).
    can also be contaminated by a non-independent second pass — see
    [contamination_h.md](eval/defect_holdout/contamination_h.md).
 5. `cte diff` compares matched phrases on candidates. It reports
-   `resolved_candidates`, explicitly **not** a fix rate.
+   `resolved_candidates`, explicitly **not** a fix rate. It takes `cte run`'s
+   `report.json`, whose cases carry a stable `key`; `cte defects` writes
+   `defects.json` with ordinal ids that can shift between runs, so it is
+   refused with a readable error (exit 2) instead of unreliable counts.
 6. When human labels disagree with the rules, fix the labels, not the engine.
    Rules in [eval/ANNOTATION_GUIDE.md](eval/ANNOTATION_GUIDE.md).
 7. Raw corpora belong in `.local/` (gitignored). Only aggregate numbers and redacted

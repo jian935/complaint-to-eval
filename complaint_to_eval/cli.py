@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from . import __version__
@@ -79,9 +80,16 @@ def _cmd_run(args: argparse.Namespace) -> int:
 
 
 def _cmd_diff(args: argparse.Namespace) -> int:
-    base = json.loads(Path(args.base).read_text(encoding="utf-8"))
-    head = json.loads(Path(args.head).read_text(encoding="utf-8"))
-    result = compare(base, head)
+    try:
+        base = json.loads(Path(args.base).read_text(encoding="utf-8"))
+        head = json.loads(Path(args.head).read_text(encoding="utf-8"))
+        result = compare(base, head)
+    except json.JSONDecodeError as exc:
+        print(f"error: --base/--head must be JSON report files: {exc}", file=sys.stderr)
+        return 2
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
     text = json.dumps(result, ensure_ascii=False, indent=2)
     if args.out:
         target = Path(args.out)
@@ -283,7 +291,7 @@ def build_parser() -> argparse.ArgumentParser:
     origin.add_argument("--real", action="store_true", help="licence and consent checked")
     run.set_defaults(func=_cmd_run)
 
-    diff = sub.add_parser("diff", help="compare two report.json files")
+    diff = sub.add_parser("diff", help="compare two cte run report.json files")
     diff.add_argument("--base", required=True)
     diff.add_argument("--head", required=True)
     diff.add_argument("--out", default="")

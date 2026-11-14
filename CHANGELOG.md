@@ -67,6 +67,17 @@ has never been a `v0.1.0` tag or an earlier GitHub Release in this repository.
   vocabulary were copied from H titles. The plateau is a design limit, not a
   missing word. See `eval/defect_holdout/cooccurrence_check.md`.
 
+### Post-release patch (no version bump, no new tag)
+
+- `cte diff` now refuses `cte defects`' `defects.json` with a readable error
+  and exit code 2 instead of raising `KeyError: 'key'`. Its cases use ordinal
+  ids that can shift between runs, so diffing them would produce unreliable
+  `resolved_candidates`; supporting that input was deliberately declined.
+- English / Chinese READMEs and `SKILL.md` now state the input contract
+  explicitly. Three new tests lock the error shape, missing required fields
+  and a traceback-free CLI failure; 126 tests pass.
+- No engine rules, labels, result files or published numbers changed.
+
 ### Known limitations
 
 - All A–G/I labels are **model-generated**; only G (four readers) and H (one

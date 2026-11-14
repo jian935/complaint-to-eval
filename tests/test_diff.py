@@ -47,6 +47,36 @@ class TestDiff(unittest.TestCase):
         result = compare(_report([], "a"), _report([], "b"))
         self.assertIn("NOT a measured fix rate", result["summary"]["note"])
 
+    def test_rejects_defects_json_shape_with_a_readable_error(self):
+        bad = {"findings": [{"record_id": "r1", "mode": "crash_or_error"}]}
+        with self.assertRaises(ValueError) as ctx:
+            compare(bad, _report([], "head"))
+        self.assertIn("report.json", str(ctx.exception))
+        self.assertIn("defects.json", str(ctx.exception))
+
+    def test_rejects_case_missing_required_fields(self):
+        bad = _report([{"key": "a"}], "base")
+        with self.assertRaises(ValueError) as ctx:
+            compare(bad, _report([], "head"))
+        self.assertIn("missing", str(ctx.exception))
+
+    def test_cli_returns_2_instead_of_a_traceback(self):
+        import argparse
+        import contextlib
+        import io
+        from unittest.mock import patch
+
+        from complaint_to_eval.cli import _cmd_diff
+
+        buf = io.StringIO()
+        ns = argparse.Namespace(base="a.json", head="b.json", out="")
+        with patch("complaint_to_eval.cli.Path.read_text",
+                   return_value='{"findings": []}'), contextlib.redirect_stderr(buf):
+            rc = _cmd_diff(ns)
+        self.assertEqual(2, rc)
+        self.assertIn("report.json", buf.getvalue())
+        self.assertNotIn("Traceback", buf.getvalue())
+
 
 class TestExporters(unittest.TestCase):
     def setUp(self):

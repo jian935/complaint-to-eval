@@ -127,7 +127,7 @@ cte defects --input issues.jsonl --real --out out/defects
 | `cte demo` | 跑内置**编造**示例数据 |
 | `cte run --input F --out D [--synthetic\|--real]` | 8 类 LLM 行为模式，用于反馈式文本 |
 | `cte defects --input F --out D [--synthetic\|--real]` | 10 类缺陷模式，用于 issue 追踪器文本 |
-| `cte diff --base A.json --head B.json` | 对比两次运行（仅 candidate） |
+| `cte diff --base A.json --head B.json` | 对比两次 `cte run` 运行（仅 report.json / candidate；不接受 defects.json） |
 | `cte validate --labels F.jsonl` | 检查标注文件结构 |
 | `cte taxonomy` | 打印 LLM 行为分类法并校验不变量 |
 | `cte defect-taxonomy` | 打印缺陷分类法并校验不变量 |
@@ -186,7 +186,9 @@ cte defects --input issues.jsonl --real --out out/defects
    I 是词表冻结后才抽出的探针验证集）。某一套的漏判一旦被读过，
    那套就永久污染；所有结论都在「没有任何改动看过」的那套上测。旧数字不覆盖、不删除。
 5. `cte diff` 比的是 candidate 上命中的短语，报的是 `resolved_candidates`，
-   明确**不是**修复率。
+   明确**不是**修复率。它只吃 `cte run` 的 `report.json`（每条有稳定的 `key`）；
+   `cte defects` 产出的 `defects.json` 用的是序号 id，跨运行会漂移，
+   因此明确拒绝（退出码 2），而不是算出一个不可靠的数字。
 6. 人工标注与规则冲突时，**改标注，不改引擎**。完整规则见
    [eval/ANNOTATION_GUIDE.md](eval/ANNOTATION_GUIDE.md)。
 7. 原始语料放 `.local/`（已 gitignore）；公开仓库只放聚合数字与脱敏后的引用。
