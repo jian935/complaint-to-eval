@@ -4,10 +4,11 @@ All notable changes to this project are documented here. This project publishes
 its negative results with the same prominence as its features — several entries
 below are things that **did not work**.
 
-## 0.2.0 — local, not yet pushed / not yet tagged
+## 0.2.0 — 2026-11-14
 
-Released state on GitHub is still **v0.1.0**. Everything in this section exists
-in the local `main` branch only.
+First tagged release of the 0.2.0 line: tag `v0.2.0` on `main`. Before this push
+the public repository sat at an **untagged v0.1 snapshot** (`01dd1e7`); there
+has never been a `v0.1.0` tag or an earlier GitHub Release in this repository.
 
 ### Added
 
@@ -85,5 +86,7 @@ in the local `main` branch only.
 Initial release: 8-mode LLM-behaviour taxonomy, offline deterministic CLI,
 `npx skills add jian935/complaint-to-eval` installable, MIT, CI green, demo gif.
 Later measurement on real issue corpora found near-zero recall for that
-taxonomy, which is what motivated 0.2.0. The v0.1.0 tag's attachments (gif,
-zip) belong to that snapshot and must not be mixed with 0.2.0 artefacts.
+taxonomy, which is what motivated 0.2.0. **No `v0.1.0` tag or Release exists.**
+The demo GIF in `assets/` comes from that period and is a repository file, not
+a release asset; do not mix files from the old `main` snapshot with the
+`v0.2.0` tag.
