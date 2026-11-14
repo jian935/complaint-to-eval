@@ -10,6 +10,12 @@
 + 触发它的那句话，**不是可运行的测试用例**。把候选变成能对着构建跑的东西，
 是人工那一步——本项目刻意停在这一步之前。
 
+**已发表数字的适用范围。** 本仓库所有数字都来自英文 issue 追踪器（aider / dify），
+不是一般意义上的「用户吐槽」、应用评论或客服工单。中文信号**未验证**
+（Chinese signals are UNVERIFIED）：`complaint_to_eval/defects.py` 里带一份中文
+信号表，但**没有任何中文评测切分**。语料、许可与复现步骤见
+[`eval/DATA_CARD.md`](eval/DATA_CARD.md)。
+
 ![complaint-to-eval 在终端跑 demo](assets/demo.gif)
 
 _由 `scripts/make_demo_gif.py` 在仓库自带的 fixture 上直接跑真实 `cte defects`

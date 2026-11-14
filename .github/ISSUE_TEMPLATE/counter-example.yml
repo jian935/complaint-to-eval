@@ -1,0 +1,61 @@
+name: "反向测试 / Counter-example"
+description: "提交一条规则引擎误报或漏报的脱敏文本片段（不是 bug 反馈，是评测反例）"
+title: "[counter-example] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这个模板用来收集**反向测试**：一条引擎不该命中、或本该命中却漏掉的文本。
+
+        两条硬规矩：
+        1. **只贴脱敏后的短片段**，不要贴 issue 全文、不要贴用户名 / 邮箱 /
+           手机号 / 内部工单号 / 私有产品数据。公开仓库会永久保留你写的内容。
+        2. **反例不会被用来直接改词表**。本仓库四轮加词和一次换词表形状都已在
+           未见集上被证伪；读过某个切分的漏判后，该切分即被污染，任何改动都必须在
+           一个全新、与 A–I 不相交的切分上验证。详见
+           `eval/ANNOTATION_GUIDE.md` 的 A4 节。
+
+  - type: textarea
+    id: quote
+    attributes:
+      label: "脱敏后的文本片段"
+      description: "一到三句话即可；请自行删除所有标识符。"
+      placeholder: "例如：导出后行数变少了，但没有报错。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: engine_output
+    attributes:
+      label: "引擎实际输出"
+      description: "贴 `cte defects` 的候选 JSON 或 report 摘要，以及所用命令与版本。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "你认为正确的判定"
+      description: "是 / 不是缺陷；若认为是，给出主类别并写一句理由。"
+    validations:
+      required: true
+
+  - type: input
+    id: provenance
+    attributes:
+      label: "来源与 licence / 许可"
+      description: "数据来源（哪个公开仓库 / 哪类文本）、许可或 ToS 是否允许公开展示这段引用。"
+      placeholder: "例如：某 Apache-2.0 仓库的公开 issue，允许短引用"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: "确认"
+      options:
+        - label: "我确认这段文本不含个人信息，且我有权公开它。"
+          required: true
+        - label: "我理解这只是未复核的反例，不会自动变成标签或评测集（`accepted_cases` 恒为 0）。"
+          required: true

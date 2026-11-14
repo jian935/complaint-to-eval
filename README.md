@@ -12,6 +12,12 @@ is a classified report plus the sentence that triggered it — *not* a runnable 
 case. Turning that into something you can execute against a build is the human step
 this project deliberately stops short of.
 
+**Scope of the published evidence.** Every number in this repo was measured on
+English-language issue trackers (aider, dify) — not on general user complaints,
+app reviews or support tickets. Chinese signals are UNVERIFIED: a Chinese signal
+list ships in `complaint_to_eval/defects.py`, but no Chinese evaluation split
+exists. Corpus, licences and reproduction steps: [`eval/DATA_CARD.md`](eval/DATA_CARD.md).
+
 ![complaint-to-eval running the demo in a terminal](assets/demo.gif)
 
 _Generated from a real `cte defects` run on the committed fixture by
@@ -202,12 +208,18 @@ crash; redaction happens first; one candidate per (record, mode).
 2. `complaint_to_eval/demo.jsonl` is **fabricated**. It was written to contain the
    exact phrases in the taxonomy, so a high hit count is a property of how the file
    was authored, not evidence of quality. Every report repeats this.
-3. Precision/recall figures exist **only** in `eval/defect_holdout/README.md`, only
-   for `cte defects`, and against **model-generated labels** (`annotator: model`) —
-   never described as human accuracy — with **one exception**: split G has 39 human
-   labels, scored separately in `human_agreement.md`. Quote the range, not one point, quote
-   the trivial baselines alongside it, and **always state the class mix**: a
-   precision measured on a 90%-defect feed is not a claim about a real queue.
+3. Precision/recall figures are **quoted** on this page and in
+   `DEFECT_TAXONOMY.md`; the measurements and their inputs live in
+   `eval/defect_holdout/`. They cover `cte defects` only. Most are against
+   **model-generated labels** (`annotator: model`) and are never described as
+   human accuracy; the human-labelled splits are scored **separately and never
+   averaged** with them — G has four blind readers
+   ([`multi_annotator.md`](eval/defect_holdout/multi_annotator.md)), H has one
+   confirmed reader under v2
+   ([`human_agreement_v2.md`](eval/defect_holdout/human_agreement_v2.md)).
+   Quote the range, not one point, quote the trivial baselines alongside it, and
+   **always state the class mix**: a precision measured on a 90%-defect feed is
+   not a claim about a real queue.
 4. Nine disjoint hold-out splits exist (A–I; G is the balanced 50/50 one, H is
    stratified and has no model labels, I was drawn after the probe vocabulary
    was frozen). Once a split's misses have been read, that

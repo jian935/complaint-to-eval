@@ -1,0 +1,76 @@
+name: "新语料 / New corpus"
+description: "提议一份可用于独立验证的新语料（中文语料、非 AI 领域 issue、真实用户反馈）"
+title: "[corpus] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        当前 744 条语料全部来自 aider / dify 两个英文 issue 追踪器，本仓库所有数字
+        都只在这个范围内成立。**中文信号未验证**，领域外推也未验证。
+
+        这份模板只登记「提议」，不等于语料已被接收。原始语料一律放 `.local/`
+        （gitignored），公开仓库只存 id、标签与字符偏移，不存原文。
+
+  - type: input
+    id: source
+    attributes:
+      label: "来源"
+      description: "仓库 / 数据集 / 渠道名称与链接，以及是否为快照而非实时抓取。"
+    validations:
+      required: true
+
+  - type: input
+    id: licence
+    attributes:
+      label: "licence / 许可与再分发条件"
+      description: "明确写出许可证名称；若有附加条款或 ToS 限制，请一并说明。"
+      placeholder: "例如：Apache-2.0；或「内部工单，仅可本地使用，不可公开」"
+    validations:
+      required: true
+
+  - type: input
+    id: size_language
+    attributes:
+      label: "规模与语言"
+      description: "大致条数、主要语言、时间跨度。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: privacy
+    attributes:
+      label: "脱敏与个人信息"
+      description: "是否含用户名 / 邮箱 / 手机号 / 内部标识；打算如何处理。"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: purpose
+    attributes:
+      label: "拟用途"
+      options:
+        - "验证中文信号（目前未验证）"
+        - "领域外推（非 AI 工具 / 非 issue 追踪器）"
+        - "补充低缺陷先验的负样本"
+        - "其他（在下方说明）"
+    validations:
+      required: true
+
+  - type: textarea
+    id: split_plan
+    attributes:
+      label: "独立性说明"
+      description: "新切分必须使用新 salt、且与 A–I 全部不相交；标签在冻结后只评一次。请说明你打算怎么保证。"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: "确认"
+      options:
+        - label: "我确认有权使用该语料，且不会把原文贴进公开 issue。"
+          required: true
+        - label: "我理解标签必须标明 `annotator: model` 或真人身份，不得混用，也不得冒充金标准。"
+          required: true

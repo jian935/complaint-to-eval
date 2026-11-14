@@ -6,6 +6,10 @@ claim was fixed, but nothing stopped it (or the equally wrong
 "regression-test candidates") from reappearing in `pip show`, the skill
 description or `cte --help`. These tests are that stop.
 
+Later locks cover three more ways a published page can drift out of date:
+stale status sentences about human labels, the unverified Chinese signals,
+and the fact that every measurement comes from English issue trackers.
+
 `CHANGELOG.md` is deliberately NOT scanned: it is allowed to quote the old
 claim when recording that it was wrong.
 """
@@ -31,7 +35,17 @@ BANNED = (
     "最小可复现输入",
 )
 
-#: Every surface a user sees before reading the code.
+#: Sentences that were true in v0.1 and became false once human readers
+#: labelled splits G and H. They must not return to any user-visible surface.
+STALE_STATUS_CLAIMS = (
+    "no precision / recall number is claimed anywhere",
+    "there is no human-labelled set yet",
+    "the only precision/recall figures that exist are in",
+)
+
+#: Every surface a user sees before reading the code. `taxonomy.py` and
+#: `pipeline.py` were added after an audit found an outdated status sentence
+#: in the former's docstring that none of the earlier locks covered.
 SURFACES = (
     "README.md",
     "README.zh-CN.md",
@@ -43,6 +57,19 @@ SURFACES = (
     "complaint_to_eval/cli.py",
     "complaint_to_eval/defects.py",
     "complaint_to_eval/cooccurrence.py",
+    "complaint_to_eval/taxonomy.py",
+    "complaint_to_eval/pipeline.py",
+)
+
+#: The whole evaluation corpus is English. A Chinese signal list exists in
+#: `defects.py`, but it has never been measured. Every entry point must say so
+#: in the same machine-checkable words.
+ZH_BOUNDARY_MARKER = "Chinese signals are UNVERIFIED"
+ZH_BOUNDARY_SURFACES = (
+    "README.md",
+    "README.zh-CN.md",
+    "DEFECT_TAXONOMY.md",
+    "SKILL.md",
 )
 
 
@@ -56,6 +83,48 @@ class PublicClaimTests(unittest.TestCase):
                     f"{name} still asserts '{phrase}'. Findings are evidence-"
                     f"backed candidate labels, not runnable cases.",
                 )
+
+    def test_no_stale_status_claim_on_any_surface(self):
+        for name in SURFACES:
+            text = (ROOT / name).read_text(encoding="utf-8").lower()
+            for phrase in STALE_STATUS_CLAIMS:
+                self.assertNotIn(
+                    phrase, text,
+                    f"{name} still says '{phrase}'. Splits G (four readers) "
+                    f"and H (one confirmed reader) are human-labelled.",
+                )
+
+    def test_chinese_signal_boundary_is_visible_everywhere(self):
+        for name in ZH_BOUNDARY_SURFACES:
+            text = (ROOT / name).read_text(encoding="utf-8")
+            self.assertIn(
+                ZH_BOUNDARY_MARKER, text,
+                f"{name} must state that the Chinese signals were never "
+                f"validated; every evaluation split is English.",
+            )
+
+    def test_front_page_states_the_corpus_scope(self):
+        en = (ROOT / "README.md").read_text(encoding="utf-8")
+        zh = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+        self.assertIn("English-language issue trackers", en)
+        self.assertIn("英文 issue 追踪器", zh)
+        for text in (en, zh):
+            self.assertIn("aider", text)
+            self.assertIn("dify", text)
+
+    def test_corpus_card_and_issue_templates_are_present(self):
+        card = ROOT / "eval" / "DATA_CARD.md"
+        self.assertTrue(card.is_file(), "the corpus/reproduction card is missing")
+        card_text = card.read_text(encoding="utf-8")
+        self.assertIn("Apache-2.0", card_text)
+        self.assertIn("gitignored", card_text)
+        for name in ("counter-example.yml", "new-corpus.yml"):
+            template = ROOT / ".github" / "ISSUE_TEMPLATE" / name
+            self.assertTrue(template.is_file(), f"missing issue template {name}")
+            self.assertIn(
+                "licen", template.read_text(encoding="utf-8").lower(),
+                f"{name} must ask about the source licence",
+            )
 
     def test_front_page_still_carries_its_self_refutation(self):
         en = (ROOT / "README.md").read_text(encoding="utf-8")

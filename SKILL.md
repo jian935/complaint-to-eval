@@ -1,6 +1,6 @@
 ---
 name: complaint-to-eval
-description: Turn GitHub issues, bug reports, app reviews or support feedback into UNREVIEWED, evidence-backed defect-triage candidates (the raw material for a regression suite, not a runnable suite) with evidence quotes and a draft defect taxonomy. Use when someone pastes a batch of negative feedback or issue exports and asks "what should we test", "help me build an eval set from these complaints", "which failure modes keep coming back", or wants to compare which complaints disappeared between two releases. Also triggers on "把这些吐槽变成评测集" and "看看用户反馈里该测什么". Does NOT run evals, does NOT score a model, and never reports a fix rate.
+description: Turn GitHub issues, bug reports, app reviews or support feedback into UNREVIEWED, evidence-backed defect-triage candidates (the raw material for a regression suite, not a runnable suite) with evidence quotes and a draft defect taxonomy. Use when someone pastes a batch of negative feedback or issue exports and asks "what should we test", "help me build an eval set from these complaints", "which failure modes keep coming back", or wants to compare which complaints disappeared between two releases. Also triggers on "把这些吐槽变成评测集" and "看看用户反馈里该测什么". Does NOT run evals, does NOT score a model, and never reports a fix rate. Chinese signals are UNVERIFIED and the only measured corpus is English issue-tracker text.
 ---
 
 # Complaint to Eval
@@ -32,6 +32,10 @@ ground truth.
   so any figure would be self-scored.
 - Auditing numbers inside AI output (that is the `ai-claim-audit` skill).
 - Deciding whether an A/B experiment can ship (that is `experiment-copilot`).
+- Assuming the Chinese signal list works. Chinese signals are UNVERIFIED: every
+  evaluation split is English text from aider / dify issue trackers, and no
+  published number transfers to Chinese reports, app reviews or support tickets.
+  See `eval/DATA_CARD.md`.
 
 ## Workflow
 
@@ -109,12 +113,13 @@ This project feeds promptfoo / Langfuse; it does not replace them.
 
 1. Every generated case is an unreviewed **candidate**. Never call it a label,
    a ground truth, or an eval set. `accepted_cases` is always 0.
-2. The only precision/recall figures that exist are in
-   `eval/defect_holdout/README.md`, measured against **model** labels on the A–G
-   disjoint splits. Cite the range (mode-level precision 0.71-0.77) and say
-   "model-labelled", never "human accuracy". **Split G also has four blind human
-   readers**: they agree strongly on whether something is a defect (Fleiss
-   κ = 0.922) but not on the mode, and against them mode-level precision is
+2. Precision/recall figures are quoted on the README landing pages and in
+   `DEFECT_TAXONOMY.md`; the measurements and their inputs live in
+   `eval/defect_holdout/`. A–G are disjoint **model-labelled** splits: cite the
+   range (mode-level precision 0.71-0.77) and say "model-labelled", never
+   "human accuracy". **Split G also has four blind human readers**: they agree
+   strongly on whether something is a defect (Fleiss κ = 0.922) but not on the
+   mode, and against them mode-level precision is
    **0.23-0.38** — so treat 0.71-0.77 as an upper bound. **Split H has one
    confirmed human reader** under a rewritten one-primary-mode rule
    (0.545 / 0.429): different split, different prior, one reader — do not
@@ -134,12 +139,12 @@ This project feeds promptfoo / Langfuse; it does not replace them.
    newest clean split it caught 13 of 15 crash reports and 2 of 12 other defects.
    If a user's corpus is mostly UI/i18n/data bugs, say the tool is weak there
    before they rely on it.
-4. The built-in demo is FABRICATED. Never quote its hit count as evidence.
-5. Never add a keyword without a failing example and a precision check against
+5. The built-in demo is FABRICATED. Never quote its hit count as evidence.
+6. Never add a keyword without a failing example and a precision check against
    labelled data. No bare nouns (a topic word is not a defect claim); English
    signals match on a start-of-word boundary; quoted code is blanked before
    matching.
-6. Redact before quoting, logging, or publishing.
+7. Redact before quoting, logging, or publishing.
 
 ## Command reference
 

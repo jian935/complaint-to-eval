@@ -76,6 +76,11 @@ full investigation (kept local; it is not shipped).
 
 ## Matching rules (same discipline as the LLM taxonomy, three deliberate changes)
 
+**Chinese signals are UNVERIFIED.** `defects.py` ships a Chinese signal list,
+but every hold-out split (A–I) is English text from aider / dify issue trackers.
+No number in this document says anything about Chinese reports; that list is
+unmeasured, not validated. See [`eval/DATA_CARD.md`](eval/DATA_CARD.md).
+
 - **No bare nouns.** Only fault-shaped signals. `security`, `locale`, `layout`,
   `sidebar`, `tooltip`, `chevron`, `performance`, `latency` were **removed** in
   round 5 because they fire on topics, not claims: "security concerns", "delivery,

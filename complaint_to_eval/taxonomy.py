@@ -25,8 +25,13 @@ re-targeted from job descriptions to user feedback:
 * When human labels disagree with this file, fix the labels, not this file.
   The taxonomy is a measuring instrument; it may not define its own target.
 
-v0.1 is a DRAFT. No precision / recall number is claimed anywhere, because
-there is no human-labelled set yet. See eval/ANNOTATION_GUIDE.md.
+v0.1 is a DRAFT, and **this taxonomy** still has no human-labelled set: the
+human readers in this repository labelled the separate 10-mode defect path in
+``complaint_to_eval/defects.py``, not these eight behaviour modes. The
+precision / recall figures published in ``eval/defect_holdout/`` describe that
+defect path only, mostly against model-generated labels; none validates this
+file and none is a claim about human accuracy. Chinese signals are UNVERIFIED:
+every evaluation split is English. See eval/ANNOTATION_GUIDE.md.
 """
 
 from __future__ import annotations
